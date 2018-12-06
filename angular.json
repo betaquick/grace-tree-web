@@ -20,13 +20,9 @@
               "src/assets",
               "src/favicon.ico"
             ],
-            "styles": [
-              "src/app/core/preloader/preloader.scss",
-              "src/styles.scss"
-            ],
+            "styles": [],
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
-              "src/app/core/preloader/preloader.js",
               "node_modules/popper.js/dist/umd/popper.js",
               "node_modules/bootstrap/js/dist/util.js",
               "node_modules/bootstrap/js/dist/modal.js",
@@ -100,7 +96,6 @@
             "tsConfig": "src/tsconfig.spec.json",
             "scripts": [
               "node_modules/jquery/dist/jquery.js",
-              "src/app/core/preloader/preloader.js",
               "node_modules/bootstrap/js/dist/util.js",
               "node_modules/popper.js/dist/umd/popper.js",
               "node_modules/bootstrap/js/dist/modal.js",
