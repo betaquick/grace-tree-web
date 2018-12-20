@@ -1,33 +1,27 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ToastrModule } from 'ngx-toastr';
+
+import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
+import { AuthComponent } from './layout/auth/auth.component';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {SharedModule} from './shared/shared.module';
 
-// https://github.com/ocombe/ng2-translate/issues/218
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AuthComponent,
   ],
   imports: [
-    HttpClientModule,
-    BrowserAnimationsModule, // required for ng2-tag-input
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
-    })
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    SharedModule,
+    ToastrModule.forRoot()
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }

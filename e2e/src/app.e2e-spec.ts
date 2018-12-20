@@ -7,8 +7,8 @@ describe('grace-tree-web App', function () {
     page = new GraceTreeWebPage();
   });
 
-  it('should display Angle in h1 tag', () => {
+  it('should display welcome message', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Angle');
+    expect(page.getParagraphText()).toEqual('Welcome to app!');
   });
 });

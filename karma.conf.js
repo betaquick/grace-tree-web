@@ -3,33 +3,20 @@
 
 module.exports = function (config) {
   config.set({
-    basePath: './',
-    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    basePath: '',
+    frameworks: ['jasmine', '@angular/cli'],
     plugins: [
       require('karma-jasmine'),
       require('karma-chrome-launcher'),
-      require('karma-phantomjs-launcher'),
       require('karma-jasmine-html-reporter'),
       require('karma-coverage-istanbul-reporter'),
-      require('@angular-devkit/build-angular/plugins/karma')
+      require('@angular/cli/plugins/karma')
     ],
-    client: {
+    client:{
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-    files: [
-
-      {pattern: 'src/assets/**/*', watched: false, included: false, served: true},
-    ],
-    proxies: {
-      '/assets/': '/base/src/assets/'
-    },
-    preprocessors: {},
-    mime: {
-      'text/x-typescript': ['ts', 'tsx']
-    },
     coverageIstanbulReporter: {
-      dir: require('path').join(__dirname, '../coverage'),
-      reports: ['html', 'lcovonly'],
+      reports: [ 'html', 'lcovonly' ],
       fixWebpackSourcePaths: true
     },
     angularCli: {
@@ -40,17 +27,7 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadlessNoSandbox'], // , 'PhantomJS'],
-    customLaunchers: {
-      ChromeHeadlessNoSandbox: {
-        base: 'ChromeHeadless',
-        flags: ['--no-sandbox']
-      }
-    },
-    singleRun: false,
-    captureTimeout: 60000, // it was already there
-    browserDisconnectTimeout: 60000,
-    browserDisconnectTolerance: 1,
-    browserNoActivityTimeout: 60000 //by default 10000
+    browsers: ['Chrome'],
+    singleRun: false
   });
 };
