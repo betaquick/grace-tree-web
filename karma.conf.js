@@ -40,7 +40,8 @@ module.exports = function (config) {
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['ChromeHeadlessNoSandbox'], // , 'PhantomJS'],
+    // browsers: ['PhantomJS'],
+    browsers: ['ChromeHeadlessNoSandbox'],
     customLaunchers: {
       ChromeHeadlessNoSandbox: {
         base: 'ChromeHeadless',
