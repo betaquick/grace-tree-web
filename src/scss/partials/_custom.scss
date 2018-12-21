@@ -1301,6 +1301,11 @@ canvas {
 .j-forms .span6 {
   width: 50%;
 }
+
+.j-forms label {
+  width: 100%;
+}
+
 .j-forms [class*="span"] {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;

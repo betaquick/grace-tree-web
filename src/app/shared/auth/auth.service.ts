@@ -22,6 +22,17 @@ export interface ResetCredentials {
   confirmPassword?: string;
 }
 
+export interface BusinessInfo {
+  companyId?: number;
+  companyName?: string;
+  website?: string;
+  companyAddress?: number;
+  userRole?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+}
+
 
 @Injectable()
 export class AuthService {
@@ -124,7 +135,7 @@ export class AuthService {
       ) as Observable<Credentials>;
   }
 
-  // Login User...
+  // Register User...
   register(user: IUser): Observable<Credentials> {
     return this.http.post(`${AppConfig.API_URL}/auth/register`, user)
       .pipe(
@@ -143,6 +154,25 @@ export class AuthService {
       ) as Observable<Credentials>;
   }
 
+  // Register User...
+  addBusinessInfo(businessInfo: BusinessInfo): Observable<any> {
+    return this.http.post(`${AppConfig.API_URL}/user/business`, businessInfo)
+      .pipe(
+        map(response => response['body']),
+        tap(data => {
+          /* AuthService.setToken(credentials.token);
+          AuthService.setUser(JSON.stringify({
+            userId: credentials.user.userId,
+            firstName: credentials.user.firstnname,
+            lastName: credentials.user.lastnname,
+            email: credentials.user.email
+          }));
+
+          this._isLoggedIn.next(true); */
+          console.log(data);
+        })
+      ) as Observable<Credentials>;
+  }
 
   // Request Password for password reset...
   requestResetPasswordToken(email: string): Observable<any> {

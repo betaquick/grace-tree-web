@@ -29,6 +29,13 @@ const routes: Routes = [
           title: 'Tree Service Registration',
           userType: UserTypes.TreeAdmin
         }
+      },
+      {
+        path: 'tree-service/business/add',
+        loadChildren: './add-business/add-business.module#AddBusinessModule',
+        data: {
+          title: 'Add Business Information'
+        }
       }
     ]
   }
