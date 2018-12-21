@@ -114,10 +114,28 @@ export class AuthService {
           AuthService.setToken(credentials.token);
           AuthService.setUser(JSON.stringify({
             userId: credentials.user.userId,
-            first_name: credentials.user.first_name,
-            last_name: credentials.user.last_name,
-            email: credentials.user.email,
-            roles: credentials.roles
+            firstName: credentials.user.firstnname,
+            lastName: credentials.user.lastnname,
+            email: credentials.user.email
+          }));
+
+          this._isLoggedIn.next(true);
+        })
+      ) as Observable<Credentials>;
+  }
+
+  // Login User...
+  register(user: IUser): Observable<Credentials> {
+    return this.http.post(`${AppConfig.API_URL}/auth/register`, user)
+      .pipe(
+        map(response => response['body']),
+        tap(credentials => {
+          AuthService.setToken(credentials.token);
+          AuthService.setUser(JSON.stringify({
+            userId: credentials.user.userId,
+            firstName: credentials.user.firstnname,
+            lastName: credentials.user.lastnname,
+            email: credentials.user.email
           }));
 
           this._isLoggedIn.next(true);

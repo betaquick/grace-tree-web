@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { AuthService } from '../../../shared/auth/auth.service';
@@ -17,7 +17,6 @@ export class LoginComponent implements OnInit {
   user = new User();
   loading: boolean;
   errorMessage: string;
-
 
   constructor(
     private router: Router,

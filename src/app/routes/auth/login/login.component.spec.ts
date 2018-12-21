@@ -1,7 +1,8 @@
-import { HttpClientModule, HttpErrorResponse } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { AuthService } from '../../../shared/auth/auth.service';
 import { LoginComponent } from './login.component';
@@ -19,6 +20,7 @@ describe('LoginComponent', () => {
     TestBed.configureTestingModule({
       imports: [FormsModule, HttpClientModule],
       declarations: [ LoginComponent ],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA],
       providers: [
         {provide: Router, useValue: routerSpy},
         {provide: AuthService, useValue: authServiceSpy}

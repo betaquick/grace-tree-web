@@ -1245,3 +1245,81 @@ canvas {
     display: none;
   }
 }
+
+.list-modal {
+  padding: 15px;
+}
+
+.modal .text-center {
+  margin: 0;
+}
+
+.logo {
+  margin-bottom: 0;
+  color: #fff !important;
+}
+
+.cus-switch span{
+  padding: 0 !important;
+}
+
+.login-card.auth-body {
+  width: 500px;
+}
+
+.j-forms {
+  background: none;
+  border: none;
+  color: rgba(0,0,0,.54);
+  font: 16px 'Open Sans',Helvetica,Arial,sans-serif;
+  line-height: 1;
+}
+
+.j-forms .unit {
+  position: relative;
+  margin-bottom: 25px;
+}
+
+.j-forms input[type="text"], .j-forms input[type="password"], .j-forms input[type="email"], 
+.j-forms input[type="search"], .j-forms input[type="url"], .j-forms textarea, .j-forms select {
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  background: #fff;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  color: rgba(0,0,0,.87);
+  display: block;
+  font-family: inherit;
+  font-size: 16px;
+  height: 48px;
+  padding: 10px 15px;
+  width: 100%;
+  outline: none;
+}
+
+.j-forms .span6 {
+  width: 50%;
+}
+.j-forms [class*="span"] {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  float: left;
+  padding-left: 10px;
+  padding-right: 10px;
+  position: relative;
+}
+
+.j-forms .j-row {
+  margin: 0 -10px;
+  height: 73px;
+}
+
+.alert {
+  margin-bottom: 0rem;
+}
+
+button.close {
+  margin-top: 0;
+}

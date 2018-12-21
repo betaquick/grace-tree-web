@@ -1,5 +1,6 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
+import { UserTypes } from '@betaquick/grace-tree-constants';
 
 const routes: Routes = [
   {
@@ -14,8 +15,20 @@ const routes: Routes = [
         loadChildren: './login/login.module#LoginModule'
       },
       {
-        path: 'registration',
-        loadChildren: './registration/registration.module#RegistrationModule'
+        path: 'register',
+        loadChildren: './registration/registration.module#RegistrationModule',
+        data: {
+          title: 'User Registration',
+          userType: UserTypes.General
+        }
+      },
+      {
+        path: 'tree-service/register',
+        loadChildren: './registration/registration.module#RegistrationModule',
+        data: {
+          title: 'Tree Service Registration',
+          userType: UserTypes.TreeAdmin
+        }
       }
     ]
   }
