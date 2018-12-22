@@ -15,6 +15,16 @@ export interface IEmail {
   isVerified?: boolean;
 }
 
+export interface IAddress {
+  userAddressId?: number;
+  userId?: number;
+  street?: string;
+  city?: string;
+  state?: string;
+  zip?: string;
+  deliveryInstruction?: string;
+}
+
 export interface IUser {
   userId?: number;
   firstName?: string;
@@ -24,6 +34,7 @@ export interface IUser {
   confirmPassword?: string;
   phones?: Array<IPhone>;
   emails?: Array<IEmail>;
+  addresses?: Array<IAddress>;
   userType?: String;
 }
 
@@ -37,6 +48,7 @@ export class User implements IUser {
   public confirmPassword?: string;
   public phones?: Array<IPhone>;
   public emails?: Array<IEmail>;
+  public addresses?: Array<IAddress>;
   public userType?: string;
 
   constructor() {

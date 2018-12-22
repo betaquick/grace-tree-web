@@ -23,6 +23,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'delivery/add',
+        loadChildren: './delivery/delivery.module#DeliveryModule',
+        data: {
+          title: 'Delivery Information',
+        }
+      },
+      {
         path: 'tree-service/register',
         loadChildren: './registration/registration.module#RegistrationModule',
         data: {

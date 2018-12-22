@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { map, tap } from 'rxjs/operators';
 import * as jwt_decode from 'jwt-decode';
 
-import { IUser } from '../meta-data/user';
+import { IUser, IAddress } from '../meta-data/user';
 import { AppConfig } from '../../app.config';
 
 export const TOKEN_NAME = 'jwt_token';
@@ -154,24 +154,29 @@ export class AuthService {
       ) as Observable<Credentials>;
   }
 
-  // Register User...
+  // Add business info...
   addBusinessInfo(businessInfo: BusinessInfo): Observable<any> {
     return this.http.post(`${AppConfig.API_URL}/user/business`, businessInfo)
       .pipe(
-        map(response => response['body']),
-        tap(data => {
-          /* AuthService.setToken(credentials.token);
-          AuthService.setUser(JSON.stringify({
-            userId: credentials.user.userId,
-            firstName: credentials.user.firstnname,
-            lastName: credentials.user.lastnname,
-            email: credentials.user.email
-          }));
+        map(response => response['body'])
+      );
+  }
 
-          this._isLoggedIn.next(true); */
-          console.log(data);
-        })
-      ) as Observable<Credentials>;
+  // Add business info...
+  getProducts(): Observable<any> {
+    return this.http.get(`${AppConfig.API_URL}/products`)
+      .pipe(
+        map(response => response['body']['products'])
+      );
+  }
+  
+
+  // Add business info...
+  addDeliveryInfo(deliveryInfo: {products: any, address: IAddress }): Observable<any> {
+    return this.http.post(`${AppConfig.API_URL}/user/new-delivery-info`, deliveryInfo)
+      .pipe(
+        map(response => response['body'])
+      );
   }
 
   // Request Password for password reset...

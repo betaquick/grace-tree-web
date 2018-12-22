@@ -88,7 +88,7 @@ export class RegistrationComponent implements OnInit {
             if (this.user.userType === UserTypes.TreeAdmin) {
               this.router.navigate(['/auth/tree-service/business/add']);
             } else {
-              this.router.navigate(['/home']);
+              this.router.navigate(['/auth/delivery/add']);
             }
           }
         },
