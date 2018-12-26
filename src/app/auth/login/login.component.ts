@@ -55,10 +55,7 @@ export class LoginComponent implements OnInit {
 
           return this.router.navigate(['/user']);
         },
-        (err) => {
-          const message = _.get(err, 'error.body', 'Something went wrong. Please contact support');
-          this.toastr.error(message);
-        }
+        (err) => this.toastr.error(err)
       );
   }
 }
