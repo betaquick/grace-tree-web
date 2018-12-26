@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {_throw} from 'rxjs/observable/throw';
 import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators';
 import * as jwt_decode from 'jwt-decode';
@@ -9,6 +8,7 @@ import { SessionStorage } from 'ngx-store';
 
 import { AppConfig } from '../app.config';
 import { AuthDetails, Credentials, User, RegisterUser } from '../shared/models/user-model';
+import { utils } from '../shared/utils';
 
 @Injectable()
 export class AuthService {
@@ -26,7 +26,8 @@ export class AuthService {
     return this.http
       .post(`${AppConfig.API_URL}/auth/register`, regUser)
       .pipe(
-        map(this.handleSuccessAuth.bind(this))
+        map(this.handleSuccessAuth.bind(this)),
+        catchError(utils.handleError)
       );
   }
 
@@ -34,7 +35,8 @@ export class AuthService {
     return this.http
       .post(`${AppConfig.API_URL}/auth/login`, authUser)
       .pipe(
-        map(this.handleSuccessAuth.bind(this))
+        map(this.handleSuccessAuth.bind(this)),
+        catchError(utils.handleError)
       );
   }
 

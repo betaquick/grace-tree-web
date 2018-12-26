@@ -49,10 +49,7 @@ export class UserRegistrationComponent implements OnInit {
     .pipe(finalize(() => this.loading = false))
       .subscribe(
         () => this.router.navigate(['/user']),
-        err => {
-          const message = _.get(err, 'error.body', 'Something went wrong. Please contact support');
-          this.toastr.error(message);
-        }
+        err => this.toastr.error(err)
       );
   }
 

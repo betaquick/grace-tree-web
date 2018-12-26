@@ -14,7 +14,7 @@ pipelines:
       - npm install
       - npm run lint
       - npm run build
-      # - npm run test-coverage
+      - npm run test-coverage
       # - sonar-scanner
   branches:
     master:
@@ -27,4 +27,4 @@ pipelines:
         - npm run lint
         - npm run build:prod
         # - sonar-scanner
-        # - aws s3 sync --delete dist/. s3://gracetreeservices.com
+        - aws s3 sync --delete dist/. s3://gracetreeservices.com

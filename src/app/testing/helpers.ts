@@ -1,5 +1,5 @@
 import { defer } from 'rxjs/observable/defer';
-import { Injectable } from '@angular/core';
+import { Injectable, Component } from '@angular/core';
 import { NavigationEnd } from '@angular/router';
 import { Subject } from 'rxjs/Subject';
 
@@ -31,3 +31,8 @@ export class RouterStub {
     this.subject.next(ne);
   }
 }
+
+@Component({
+  template: ''
+})
+export class DummyComponent { }
