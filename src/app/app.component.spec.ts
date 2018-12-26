@@ -1,33 +1,31 @@
-/* tslint:disable:no-unused-variable */
-
 import { TestBed, async } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { TranslateModule } from '@ngx-translate/core';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 
-import { APP_BASE_HREF } from '@angular/common';
+describe('AppComponent', () => {
+  let fixture;
+  let app;
 
-describe('App: GraceTreeWeb', () => {
-  beforeEach(() => {
-
-    jasmine.DEFAULT_TIMEOUT_INTERVAL = 60000;
-
+  beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
       imports: [
-        TranslateModule.forRoot(),
+        RouterTestingModule
       ],
-      providers: [
-        {provide: APP_BASE_HREF, useValue: '/'}
-      ]
-    });
-  });
-
-  it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+      declarations: [
+        AppComponent,
+        SpinnerComponent
+      ],
+    }).compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(AppComponent);
+        app = fixture.debugElement.componentInstance;
+      });
   }));
 
+  it(`should have as title 'Grace Tree'`, async(() => {
+    app = fixture.debugElement.componentInstance;
+    expect(app).toBeTruthy();
+    expect(app.title).toEqual('Grace Tree');
+  }));
 });

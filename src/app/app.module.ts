@@ -1,33 +1,47 @@
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'; // this is needed!
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule, HttpClient } from '@angular/common/http';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { WebStorageModule } from 'ngx-store';
+import { ClickOutsideModule } from 'ng-click-outside';
+import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 
+import { TitleComponent } from './layout/title/title.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-// https://github.com/ocombe/ng2-translate/issues/218
-export function createTranslateLoader(http: HttpClient) {
-  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
-}
+import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
+import { CompanyModule } from './company/company.module';
+import { httpInterceptorProviders } from './http-interceptor';
+import { layoutProviders, ToastrConfig } from './layout';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SpinnerComponent,
+    TitleComponent
+  ],
+  providers: [
+    httpInterceptorProviders,
+    layoutProviders
   ],
   imports: [
+    CommonModule,
     HttpClientModule,
-    BrowserAnimationsModule, // required for ng2-tag-input
-    TranslateModule.forRoot({
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (createTranslateLoader),
-        deps: [HttpClient]
-      }
-    })
+    BrowserModule,
+    BrowserAnimationsModule,
+    AppRoutingModule,
+    PerfectScrollbarModule,
+    ClickOutsideModule,
+    ToastrModule.forRoot(ToastrConfig),
+    WebStorageModule,
+    AuthModule,
+    UserModule,
+    CompanyModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule {
-}
+export class AppModule { }

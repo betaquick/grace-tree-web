@@ -1,0 +1,98 @@
+<section class="login p-fixed d-flex text-center bg-primary common-img-bg">
+  <!-- Container-fluid starts -->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- Authentication card start -->
+        <div class="login-card card-block auth-body mr-auto ml-auto">
+          <form class="md-float-material j-forms" #registerForm="ngForm" (ngSubmit)="register()">
+            <div class="text-center">
+              <h3 class="logo">Green Tree</h3>
+            </div>
+            <div class="auth-box">
+              <div class="row m-b-20">
+                <div class="col-md-12">
+                  <h3 class="text-left">Company Registration</h3>
+                </div>
+              </div>
+              <p class="text-inverse b-b-default text-right">
+                <a [routerLink]="['/user-registration']">Register as user</a>
+              </p>
+
+              <!-- start name -->
+              <div class="j-row">
+                <div class="span6 unit">
+                  <div class="input">
+                    <input type="text" class="form-control" placeholder="First Name" name="firstName" [(ngModel)]="user.firstName"
+                      required>
+                  </div>
+                </div>
+                <div class="span6 unit">
+                  <div class="input">
+                    <input type="text" class="form-control" placeholder="Last Name" name="lastName" [(ngModel)]="user.lastName"
+                      required>
+                  </div>
+                </div>
+              </div>
+              <div class="j-row">
+                <div class="span6 unit">
+                  <div class="input">
+                    <input type="text" class="form-control" name="primarynum" placeholder="Primary Phone Number"
+                      [(ngModel)]="user.phones[0].phoneNumber" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="unit">
+                <div class="input">
+                  <input type="email" id="primaryemail" name="primaryemail" placeholder="Primary Email" [(ngModel)]="user.emails[0].emailAddress"
+                    required>
+                </div>
+              </div>
+              <!-- end name email -->
+              <!-- start password -->
+              <div class="j-row">
+                <div class="span6 unit">
+                  <div class="input">
+                    <input type="password" id="password" name="password" placeholder="Password" [(ngModel)]="user.password"
+                      required>
+                  </div>
+                </div>
+                <div class="span6 unit">
+                  <div class="input">
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm Password"
+                      [(ngModel)]="user.confirmPassword" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
+                    [disabled]="!registerForm.form.valid || loading">Continue</button>
+                </div>
+              </div>
+              <hr />
+              <div class="row">
+                <div class="col-md-8">
+                  <p class="text-inverse text-left m-b-0">Already have an account?</p>
+                </div>
+                <div class="col-md-4">
+                  <p class="text-inverse text-right">
+                    <b>
+                      <a [routerLink]="['/login']">Sign In</a>
+                    </b>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </form>
+          <!-- end of form -->
+        </div>
+        <!-- Authentication card end -->
+      </div>
+      <!-- end of col-sm-12 -->
+    </div>
+    <!-- end of row -->
+  </div>
+  <!-- end of container-fluid -->
+</section>
