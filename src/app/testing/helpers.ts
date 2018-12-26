@@ -1,7 +1,7 @@
 import { defer } from 'rxjs/observable/defer';
 import { Injectable } from '@angular/core';
 import { NavigationEnd } from '@angular/router';
-import {Subject} from "rxjs";
+import { Subject } from 'rxjs/Subject';
 
 /** Create async observable that emits-once and completes
  *  after a JS engine turn */
@@ -27,7 +27,7 @@ export class RouterStub {
   }
 
   triggerNavEvents(url) {
-    let ne = new NavigationEnd(0, url, null);
+    const ne = new NavigationEnd(0, url, null);
     this.subject.next(ne);
   }
 }

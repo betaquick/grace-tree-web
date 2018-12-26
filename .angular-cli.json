@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "project": {
-    "name": "gradient-able-v1.7.0"
+    "name": "grace-tree-services-v0.0.1"
   },
   "apps": [
     {

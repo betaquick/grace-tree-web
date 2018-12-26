@@ -12,19 +12,19 @@ pipelines:
       - node
       script: # Modify the commands below to build your repository.
       - npm install
-      - ng lint
-      - ng build
-      - ng test --watch=false --code-coverage=true --source-map
+      - npm run lint
+      - npm run build
+      - npm test-coverage
       # - sonar-scanner
   branches:
     master:
     - step:
         name: Deploy to S3
-        deployment: test
+        deployment: prod
         image: betaquick/awscli:bleeding
         script:
         - npm install
         - npm run lint
-        - npm run build:test
+        - npm run build:prod
         # - sonar-scanner
         - aws s3 sync --delete dist/. s3://gracetreeservices.com

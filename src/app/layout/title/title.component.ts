@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {Router, NavigationEnd, ActivatedRoute} from '@angular/router';
-import {isUndefined} from "util";
+import {isUndefined} from 'util';
 
 @Component({
   selector: 'app-title',
@@ -25,7 +25,7 @@ export class TitleComponent {
           });
         } while (currentRoute);
         if (title !== undefined ) {
-          this.titleService.setTitle(title + ' | Gradient Able Angular 5+');
+          this.titleService.setTitle(title + ' | Grace Tree Service');
         }
       });
   }
