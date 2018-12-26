@@ -20,7 +20,7 @@ pipelines:
     master:
     - step:
         name: Deploy to S3
-        deployment: prod
+        deployment: production
         image: betaquick/awscli:bleeding
         script:
         - npm install
