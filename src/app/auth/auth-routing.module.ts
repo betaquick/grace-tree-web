@@ -4,7 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './login/login.component';
 import { UserRegistrationComponent } from './user-registration/user-registration.component';
-import { CompanyRegistrationComponent } from './company-registration/company-registration.component';
+import { CompanyBaseRegistrationComponent } from './company-registration/company-base-registration';
+import { CompanyRegistrationComponent } from './company-registration/registration/company-registration.component';
 import { AddBusinessComponent } from './company-registration/add-business/add-business.component';
 
 const routes: Routes = [
@@ -12,10 +13,10 @@ const routes: Routes = [
   { path: 'user-registration', component: UserRegistrationComponent },
   {
     path: 'company-registration',
-    component: CompanyRegistrationComponent,
-    canActivateChild: [AuthGuard],
+    component: CompanyBaseRegistrationComponent,
     children: [
-      { path: 'add-business', component: AddBusinessComponent }
+      { path: '', component: CompanyRegistrationComponent },
+      { path: 'add-business', canActivateChild: [AuthGuard], component: AddBusinessComponent }
     ]
   }
 ];

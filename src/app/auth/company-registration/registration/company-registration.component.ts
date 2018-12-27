@@ -5,8 +5,8 @@ import { UserTypes, PhoneTypes } from '@betaquick/grace-tree-constants';
 import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 
-import { AuthService } from '../auth.service';
-import { RegisterUser, Email, Phone } from '../../shared/models/user-model';
+import { AuthService } from '../../auth.service';
+import { RegisterUser, Email, Phone } from '../../../shared/models/user-model';
 
 @Component({
   selector: 'app-company-registration',

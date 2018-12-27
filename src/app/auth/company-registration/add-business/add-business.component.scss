@@ -1,5 +1,5 @@
 %redbox {
-  border-color: #FF5370;	
+  border-color: #FF5370;
 }
 
 #companyName.form-control-danger {
@@ -7,7 +7,7 @@
 }
 
 #companyAddress.form-control-danger {
-	@extend %redbox
+  @extend %redbox
 }
 
 #city.form-control-danger {
@@ -15,13 +15,13 @@
 }
 
 #zip.form-control-danger {
-	@extend %redbox
+  @extend %redbox
 }
 
 #website.form-control-danger {
-	@extend %redbox
+  @extend %redbox
 }
 
 .alert {
-	margin-bottom: 5px;
+  margin-bottom: 5px;
 }

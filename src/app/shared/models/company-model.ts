@@ -1,4 +1,4 @@
-export interface IState {
+export class State {
   name: string;
   abbr: string;
 }

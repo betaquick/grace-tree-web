@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
 import { states, RoleTypes } from '@betaquick/grace-tree-constants';
-import { BusinessInfo, IState } from '../../../shared/models/company-model';
+import { BusinessInfo, State } from '../../../shared/models/company-model';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
@@ -14,7 +14,7 @@ import { ToastrService } from 'ngx-toastr';
 export class AddBusinessComponent implements OnInit {
   businessInfo: BusinessInfo;
   loading: boolean;
-  stateArray: IState[] = states;
+  stateArray: State[] = states;
 
   constructor(
     private authService: AuthService,
