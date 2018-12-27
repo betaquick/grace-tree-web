@@ -51,8 +51,3 @@ export class RegisterUser {
   confirmPassword: string;
   userType: string;
 }
-
-export class Business extends Address {
-  name: string;
-  website?: string;
-}

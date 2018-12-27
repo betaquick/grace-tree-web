@@ -19,34 +19,43 @@
                 <a [routerLink]="['/user-registration']">Register as user</a>
               </p>
               <div class="col-sm-12">
-                <div class="alert alert-danger background-danger" *ngIf="firstName.dirty && firstName.errors?.required">First name is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="lastName.dirty && lastName.errors?.required">Last name is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="number.dirty && number.errors?.required">Phone number is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="number.dirty && number.errors?.phone">Phone number is not valid</div>
-                <div class="alert alert-danger background-danger" *ngIf="password.dirty && password.errors?.required">Password is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="password.dirty && password.errors?.minlength">Passwors is too short</div>
-                <div class="alert alert-danger background-danger" *ngIf="confirmPassword.dirty && confirmPassword.errors?.equalTo">Password is not the same</div>
-                <div class="alert alert-danger background-danger" *ngIf="email.dirty && email.errors?.required">Email is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="email.dirty && email.errors?.email">Email is invalid</div>
+                <div class="alert alert-danger background-danger" *ngIf="firstName.dirty && firstName.errors?.required">First
+                  name is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="lastName.dirty && lastName.errors?.required">Last
+                  name is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="number.dirty && number.errors?.required">Phone
+                  number is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="number.dirty && number.errors?.phone">Phone
+                  number is not valid</div>
+                <div class="alert alert-danger background-danger" *ngIf="password.dirty && password.errors?.required">Password
+                  is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="password.dirty && password.errors?.minlength">Passwors
+                  is too short</div>
+                <div class="alert alert-danger background-danger" *ngIf="confirmPassword.dirty && confirmPassword.errors?.equalTo">Password
+                  is not the same</div>
+                <div class="alert alert-danger background-danger" *ngIf="email.dirty && email.errors?.required">Email
+                  is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="email.dirty && email.errors?.email">Email is
+                  invalid</div>
               </div>
               <!-- start name -->
               <div class="j-row">
                 <div class="span6 unit">
                   <div class="input">
                     <input [ngClass]="{'form-control-danger': firstName.dirty && firstName.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
-                      type="text" class="form-control" #firstName="ngModel" placeholder="Owner's First Name" id="firstName" name="firstName" [(ngModel)]="user.firstName"
-                      required>
+                      type="text" class="form-control" #firstName="ngModel" placeholder="Owner's First Name" id="firstName"
+                      name="firstName" [(ngModel)]="user.firstName" required>
                   </div>
                 </div>
                 <div class="span6 unit">
                   <div class="input">
-                    <input [ngClass]="{'form-control-danger': lastName.dirty && lastName.invalid}" [ngModelOptions]="{updateOn: 'blur'}" 
-                      type="text" class="form-control" #lastName="ngModel" placeholder="Owner's Last Name" id="lastName" name="lastName" [(ngModel)]="user.lastName"
-                      required>
+                    <input [ngClass]="{'form-control-danger': lastName.dirty && lastName.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                      type="text" class="form-control" #lastName="ngModel" placeholder="Owner's Last Name" id="lastName"
+                      name="lastName" [(ngModel)]="user.lastName" required>
                   </div>
                 </div>
               </div>
-              
+
               <div class="j-row">
                 <div class="span6 unit">
                   <div class="input">
@@ -68,19 +77,20 @@
                 <div class="span6 unit">
                   <div class="input">
                     <input [ngClass]="{'form-control-danger': password.dirty && password.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
-                      type="password" id="password" name="password" #password="ngModel" placeholder="Password" [(ngModel)]="user.password"
-                      required minlength="5">
+                      type="password" id="password" name="password" #password="ngModel" placeholder="Password"
+                      [(ngModel)]="user.password" required minlength="5">
                   </div>
                 </div>
                 <div class="span6 unit">
                   <div class="input" class="form-group">
-                    <input [ngClass]="{'form-control-danger': confirmPassword.dirty && confirmPassword.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
-                      type="password" id="confirmPassword" name="confirmPassword" #confirmPassword="ngModel" placeholder="Confirm Password"
-                      [(ngModel)]="user.confirmPassword" [equalTo]="password" />
+                    <input [ngClass]="{'form-control-danger': confirmPassword.dirty && confirmPassword.invalid}"
+                      [ngModelOptions]="{updateOn: 'blur'}" type="password" id="confirmPassword" name="confirmPassword"
+                      #confirmPassword="ngModel" placeholder="Confirm Password" [(ngModel)]="user.confirmPassword"
+                      [equalTo]="password" />
                   </div>
                 </div>
               </div>
-              
+
               <div class="j-row">
                 <div class="col-12">
                   <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"

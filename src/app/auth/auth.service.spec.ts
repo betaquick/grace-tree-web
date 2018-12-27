@@ -1,10 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { PhoneTypes } from '@betaquick/grace-tree-constants';
+import { PhoneTypes, RoleTypes } from '@betaquick/grace-tree-constants';
 
 import { AuthService } from './auth.service';
 import { AuthDetails, RegisterUser } from '../shared/models/user-model';
 import { AppConfig } from '../app.config';
+import { BusinessInfo } from '../shared/models/company-model';
 
 describe('AuthService', () => {
   let httpMock;
@@ -70,6 +71,47 @@ describe('AuthService', () => {
         );
 
       const req = httpMock.expectOne(`${AppConfig.API_URL}/auth/register`);
+      req.flush('System Error', { status: 500, statusText: 'System Error' });
+      httpMock.verify();
+    });
+  });
+
+  describe('Add a new business', () => {
+    let businessInfo: BusinessInfo;
+    const response = {company: {companyId: 1, companyName: 'Test Company'}};
+
+    beforeEach(() => {
+      businessInfo = new BusinessInfo();
+      businessInfo.companyName = 'Test Company';
+      businessInfo.companyAddress = 'Test Address';
+      businessInfo.city = 'City';
+      businessInfo.state = 'AL';
+      businessInfo.zip = '23401';
+      businessInfo.website = 'example.com';
+    });
+
+    it('add a new business - returns company', () => {
+      authService.addBusinessInfo(businessInfo)
+        .subscribe(
+          data => {
+            expect(data.body).toEqual(response);
+          }
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/business`);
+      expect(req.request.method).toBe('POST');
+      req.flush({body: response});
+      httpMock.verify();
+    });
+
+    it('Error: add a new business - server returns error', () => {
+      authService.addBusinessInfo(businessInfo)
+        .subscribe(
+          data => fail('Request failed'),
+          err => expect(err).toEqual('Something went wrong. Please contact support!')
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/business`);
       req.flush('System Error', { status: 500, statusText: 'System Error' });
       httpMock.verify();
     });
