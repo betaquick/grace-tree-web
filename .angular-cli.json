@@ -22,7 +22,8 @@
         "../node_modules/bootstrap/scss/bootstrap.scss",
         "../node_modules/font-awesome-scss/scss/font-awesome.scss",
         "assets/icon/themify-icons/themify-icons.css",
-        "scss/style.scss"
+        "scss/style.scss",
+        "styles.scss"
       ],
       "scripts": [],
       "environmentSource": "environments/environment.ts",

@@ -5,7 +5,7 @@
       <div class="col-sm-12">
         <!-- Authentication card start -->
         <div class="login-card card-block auth-body mr-auto ml-auto">
-          <form class="md-float-material j-forms" #loginForm="ngForm" (ngSubmit)="logIn()" novalidate>
+          <form class="md-float-material j-forms" #loginForm="ngForm" (ngSubmit)="logIn(loginForm, email)" novalidate>
             <div class="text-center">
               <h3 class="logo">Green Tree</h3>
             </div>
@@ -17,13 +17,24 @@
               </div>
               <hr />
               <div class="unit">
-                <div class="input">
-                  <input type="email" id="email" name="email" placeholder="Primary Email" [(ngModel)]="authUser.email" required>
+                <div class="input" class="form-group" [ngClass]="{'has-danger': email.dirty && email.invalid}">
+                  <input [ngClass]="{'form-control-danger': email.dirty && email.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                    type="email" id="email" name="email" #email="ngModel" placeholder="Primary Email" [(ngModel)]="authUser.email" required email>
+                    <div class="col-form-label" *ngIf="email.errors">
+                      {{email.blur}}
+                      <div *ngIf="email.dirty && email.errors?.required">Email is required</div>
+                      <div *ngIf="email.dirty && email.errors?.email">Email is invalid</div>
+                    </div>
                 </div>
               </div>
-              <div class="unit">
+              <div class="unit" class="form-group" [ngClass]="{'has-danger': password.dirty && password.invalid}">
                 <div class="input">
-                  <input type="password" id="password" name="password" placeholder="Password" [(ngModel)]="authUser.password" required>
+                  <input [ngClass]="{'form-control-danger': password.dirty && password.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                    type="password" id="password" name="password" #password="ngModel" placeholder="Password" [(ngModel)]="authUser.password" required minlength="5">
+                  <div class="col-form-label" *ngIf="password.errors">
+                      <div *ngIf="password.dirty && password.errors?.required">Password is required</div>
+                      <div *ngIf="password.dirty && password.errors?.minlength">Password is too short</div>
+                    </div>
                 </div>
               </div>
               <div class="row m-t-25 text-left">

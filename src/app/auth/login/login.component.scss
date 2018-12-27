@@ -1,3 +1,15 @@
 .signin {
   padding: 7% 0 5%;
 }
+
+%redbox {
+  border-color: #FF5370;	
+}
+
+#email.form-control-danger {
+  @extend %redbox
+}
+
+#password.form-control-danger {
+	@extend %redbox
+}
