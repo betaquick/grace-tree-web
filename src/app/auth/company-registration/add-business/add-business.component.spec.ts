@@ -66,7 +66,6 @@ describe('AddBusinessComponent', () => {
       businessInfo.companyAddress = 'Test Address';
       businessInfo.city = 'City';
       businessInfo.state = states[0].abbr;
-      businessInfo.userRole = RoleTypes.Admin;
       businessInfo.zip = '23401';
       businessInfo.website = 'example.com';
     });

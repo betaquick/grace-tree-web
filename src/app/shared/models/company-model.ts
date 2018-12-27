@@ -8,7 +8,6 @@ export class BusinessInfo {
   companyName: string;
   website: string;
   companyAddress: string;
-  userRole: string;
   city: string;
   state: string;
   zip: string;

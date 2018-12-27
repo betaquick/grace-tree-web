@@ -35,8 +35,6 @@ export class AddBusinessComponent implements OnInit {
 
     this.loading = true;
 
-    this.businessInfo.userRole = RoleTypes.Admin;
-
     this.authService.addBusinessInfo(this.businessInfo)
     .pipe(finalize(() => this.loading = false))
       .subscribe(
