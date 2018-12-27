@@ -1,0 +1,31 @@
+%redbox {
+  border-color: #FF5370;	
+}
+
+#firstName.form-control-danger {
+  @extend %redbox
+}
+
+#lastName.form-control-danger {
+	@extend %redbox
+}
+
+#number.form-control-danger {
+  @extend %redbox
+}
+
+#password.form-control-danger {
+	@extend %redbox
+}
+
+#email.form-control-danger {
+  @extend %redbox
+}
+
+#confirmPassword.form-control-danger {
+	@extend %redbox
+}
+
+.alert {
+	margin-bottom: 5px;
+}
