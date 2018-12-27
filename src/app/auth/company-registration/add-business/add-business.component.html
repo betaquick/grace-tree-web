@@ -18,8 +18,8 @@
               <div class="col-sm-12">
                 <div class="alert alert-danger background-danger" *ngIf="companyName.dirty && companyName.errors?.required">Company
                   name is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="companyAddress.dirty && companyAddress.errors?.required">Company
-                  address is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="companyAddress.dirty && companyAddress.errors?.required">Street
+                  is required</div>
                 <div class="alert alert-danger background-danger" *ngIf="city.dirty && city.errors?.required">City
                   is required</div>
                 <div class="alert alert-danger background-danger" *ngIf="zip.dirty && zip.errors?.required">Zip
@@ -39,8 +39,8 @@
               <div class="unit">
                 <div class="input">
                   <input [ngClass]="{'form-control-danger': companyAddress.dirty && companyAddress.invalid}"
-                    [ngModelOptions]="{updateOn: 'blur'}" type="text" placeholder="Business Address" #companyAddress="ngModel"
-                    id="companyAddress" name="companyAddress" [(ngModel)]="businessInfo.companyAddress" required>
+                    [ngModelOptions]="{updateOn: 'blur'}" type="text" placeholder="Street" #companyAddress="ngModel" id="companyAddress"
+                    name="companyAddress" [(ngModel)]="businessInfo.companyAddress" required>
                 </div>
               </div>
               <div class="unit">
