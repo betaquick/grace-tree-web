@@ -7,7 +7,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { WebStorageModule } from 'ngx-store';
 import { ClickOutsideModule } from 'ng-click-outside';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { CustomFormsModule } from 'ng2-validation';
+import { CustomFormsModule } from 'ng5-validation';
 
 import { TitleComponent } from './layout/title/title.component';
 import { SpinnerComponent } from './shared/spinner/spinner.component';
