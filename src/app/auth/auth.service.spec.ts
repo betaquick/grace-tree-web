@@ -82,13 +82,13 @@ describe('AuthService', () => {
 
     beforeEach(() => {
       businessInfo = new BusinessInfo();
-      businessInfo.companyName = 'Test Company',
-      businessInfo.companyAddress = 'Test Address',
-      businessInfo.city = 'City',
-      businessInfo.state = 'AL',
-      businessInfo.userRole = RoleTypes.Admin,
-      businessInfo.zip = '23401',
-      businessInfo.website = 'example.com'
+      businessInfo.companyName = 'Test Company';
+      businessInfo.companyAddress = 'Test Address';
+      businessInfo.city = 'City';
+      businessInfo.state = 'AL';
+      businessInfo.userRole = RoleTypes.Admin;
+      businessInfo.zip = '23401';
+      businessInfo.website = 'example.com';
     });
 
     it('add a new business - returns company', () => {

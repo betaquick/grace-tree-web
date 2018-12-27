@@ -62,13 +62,13 @@ describe('AddBusinessComponent', () => {
     beforeEach(() => {
       navigateStub = spyOn(routerStub, 'navigate');
       businessInfo = new BusinessInfo();
-      businessInfo.companyName = 'Test Company',
-      businessInfo.companyAddress = 'Test Address',
-      businessInfo.city = 'City',
-      businessInfo.state = states[0].abbr,
-      businessInfo.userRole = RoleTypes.Admin,
-      businessInfo.zip = '23401',
-      businessInfo.website = 'example.com'
+      businessInfo.companyName = 'Test Company';
+      businessInfo.companyAddress = 'Test Address';
+      businessInfo.city = 'City';
+      businessInfo.state = states[0].abbr;
+      businessInfo.userRole = RoleTypes.Admin;
+      businessInfo.zip = '23401';
+      businessInfo.website = 'example.com';
     });
 
     it('should successfully add a new business - navigate to company', fakeAsync(() => {
