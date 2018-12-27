@@ -48,7 +48,7 @@ export class CompanyRegistrationComponent implements OnInit {
     this.authService.register(this.user)
     .pipe(finalize(() => this.loading = false))
       .subscribe(
-        () => this.router.navigate(['/company']),
+        () => this.router.navigate(['/company-registration/add-business']),
         err => this.toastr.error(err)
       );
   }

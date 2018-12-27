@@ -1,0 +1,27 @@
+%redbox {
+  border-color: #FF5370;	
+}
+
+#companyName.form-control-danger {
+  @extend %redbox
+}
+
+#companyAddress.form-control-danger {
+	@extend %redbox
+}
+
+#city.form-control-danger {
+  @extend %redbox
+}
+
+#zip.form-control-danger {
+	@extend %redbox
+}
+
+#website.form-control-danger {
+	@extend %redbox
+}
+
+.alert {
+	margin-bottom: 5px;
+}

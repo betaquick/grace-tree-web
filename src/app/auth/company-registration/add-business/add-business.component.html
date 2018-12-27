@@ -1,74 +1,94 @@
 <section class="login p-fixed d-flex text-center bg-primary common-img-bg">
-	<!-- Container-fluid starts -->
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-12">
-				<!-- Authentication card start -->
-				<div class="login-card card-block auth-body mr-auto ml-auto">
-					<form class="md-float-material j-forms">
-						<div class="text-center">
-							<h3 class="logo">Green Tree</h3>
-						</div>
-						<div class="auth-box">
-							<div class="row m-b-20">
-								<div class="col-md-12">
-									<h3 class="text-left">Business Information</h3>
-								</div>
-							</div>
+  <!-- Container-fluid starts -->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <!-- Authentication card start -->
+        <div class="login-card card-block auth-body mr-auto ml-auto">
+          <form class="md-float-material j-forms" #businessForm="ngForm" (ngSubmit)="addBusinessInfo()">
+            <div class="text-center">
+              <h3 class="logo">Green Tree</h3>
+            </div>
+            <div class="auth-box">
+              <div class="row m-b-20">
+                <div class="col-md-12">
+                  <h3 class="text-left">Business Information</h3>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="alert alert-danger background-danger" *ngIf="companyName.dirty && companyName.errors?.required">Company
+                  name is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="companyAddress.dirty && companyAddress.errors?.required">Company
+                  address is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="city.dirty && city.errors?.required">City
+                  is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="zip.dirty && zip.errors?.required">Zip
+                  code is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="website.dirty && website.errors?.required">Website
+                  is required</div>
+              </div>
 
-							<!-- start name -->
-							<div class="unit">
-								<div class="input">
-									<input type="text" placeholder="Business Name" name="">
-								</div>
-							</div>
-							<div class="unit">
-								<div class="input">
-									<input type="text" placeholder="Business Address" name="">
-								</div>
-							</div>
-							<div class="unit">
-								<div class="input">
-									<input type="text" placeholder="City" name="city">
-								</div>
-							</div>
-							<!-- end name -->
-							<!-- start gender -->
-							<div class="unit">
-								<label class="input select">
-                      <select name="state">
-                        <option value="none" selected="selected" disabled="">select state...</option>
-                        <option value="male">GA</option>
-                        <option value="female">BD</option>
-                        <option value="other">SN</option>
-                      </select>
-                      <i></i>
-                    </label>
-							</div>
-							<div class="unit">
-								<div class="input">
-									<input type="text" placeholder="Zip Code" name="zipcode">
-								</div>
-							</div>
-							<div class="unit">
-								<div class="input">
-									<input type="text" placeholder="Business Website" name="website">
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-12">
-									<button type="button" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20">Register</button>
-								</div>
-							</div>
-						</div>
-					</form>
-					<!-- end of form -->
-				</div>
-				<!-- Authentication card end -->
-			</div>
-			<!-- end of col-sm-12 -->
-		</div>
-		<!-- end of row -->
-	</div>
-	<!-- end of container-fluid -->
+              <!-- start name -->
+              <div class="unit">
+                <div class="input">
+                  <input [ngClass]="{'form-control-danger': companyName.dirty && companyName.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                    type="text" placeholder="Business Name" #companyName="ngModel" id="companyName" name="companyName"
+                    [(ngModel)]="businessInfo.companyName" required>
+                </div>
+              </div>
+              <div class="unit">
+                <div class="input">
+                  <input [ngClass]="{'form-control-danger': companyAddress.dirty && companyAddress.invalid}"
+                    [ngModelOptions]="{updateOn: 'blur'}" type="text" placeholder="Business Address" #companyAddress="ngModel"
+                    id="companyAddress" name="companyAddress" [(ngModel)]="businessInfo.companyAddress" required>
+                </div>
+              </div>
+              <div class="unit">
+                <div class="input">
+                  <input [ngClass]="{'form-control-danger': city.dirty && city.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                    type="text" placeholder="City" #city="ngModel" id="city" name="city" [(ngModel)]="businessInfo.city"
+                    required>
+                </div>
+              </div>
+              <!-- end name -->
+              <!-- start gender -->
+              <div class="unit">
+                <label class="input select">
+                  <select name="state" name="state" [(ngModel)]="businessInfo.state">
+                    <option *ngFor="let state of stateArray;" value="{{state.abbr}}">{{state.name}}</option>
+                  </select>
+                  <i></i>
+                </label>
+              </div>
+              <div class="unit">
+                <div class="input">
+                  <input [ngClass]="{'form-control-danger': zip.dirty && zip.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                    type="text" placeholder="Zip Code" #zip="ngModel" id="zip" name="zip" [(ngModel)]="businessInfo.zip"
+                    required>
+                </div>
+              </div>
+              <div class="unit">
+                <div class="input">
+                  <input [ngClass]="{'form-control-danger': website.dirty && website.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                    type="text" placeholder="Business Website" #website="ngModel" id="website" name="website" name="website"
+                    [(ngModel)]="businessInfo.website" required>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
+                    [disabled]="!businessForm.form.valid || loading">Register</button>
+                </div>
+              </div>
+            </div>
+          </form>
+          <!-- end of form -->
+        </div>
+        <!-- Authentication card end -->
+      </div>
+      <!-- end of col-sm-12 -->
+    </div>
+    <!-- end of row -->
+  </div>
+  <!-- end of container-fluid -->
 </section>

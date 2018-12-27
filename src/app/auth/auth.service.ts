@@ -9,11 +9,12 @@ import { SessionStorage } from 'ngx-store';
 import { AppConfig } from '../app.config';
 import { AuthDetails, Credentials, User, RegisterUser } from '../shared/models/user-model';
 import { utils } from '../shared/utils';
+import { BusinessInfo } from '../shared/models/company-model';
 
 @Injectable()
 export class AuthService {
 
-  public isLoggedIn = false;
+  @SessionStorage() isLoggedIn = false;
 
   @SessionStorage() token = '';
   @SessionStorage() user: User = new User();
@@ -40,7 +41,16 @@ export class AuthService {
       );
   }
 
+  addBusinessInfo(businessInfo: BusinessInfo) {
+    return this.http
+      .post(`${AppConfig.API_URL}/user/business`, businessInfo)
+      .pipe(
+        catchError(utils.handleError)
+      );
+  }
+
   private handleSuccessAuth(response) {
+
     const credentials = _.get(response, 'body');
     this.token = _.get(credentials, 'token');
     this.user = _.get(credentials, 'user');
