@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ng5-validation';
 
 import { LoginComponent } from './login/login.component';
 import { AuthRoutingModule } from './auth-routing.module';
@@ -14,6 +15,7 @@ import { AddBusinessComponent } from './company-registration/add-business/add-bu
   imports: [
     CommonModule,
     FormsModule,
+    CustomFormsModule,
     AuthRoutingModule
   ],
   providers: [

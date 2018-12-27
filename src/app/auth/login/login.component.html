@@ -21,7 +21,6 @@
                   <input [ngClass]="{'form-control-danger': email.dirty && email.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
                     type="email" id="email" name="email" #email="ngModel" placeholder="Primary Email" [(ngModel)]="authUser.email" required email>
                     <div class="col-form-label" *ngIf="email.errors">
-                      {{email.blur}}
                       <div *ngIf="email.dirty && email.errors?.required">Email is required</div>
                       <div *ngIf="email.dirty && email.errors?.email">Email is invalid</div>
                     </div>
