@@ -11,7 +11,6 @@ export const layoutProviders = [
 
 export const ToastrConfig = {
   closeButton: true,
-  timeOut: 10000,
-  tapToDismiss: true,
-  disableTimeOut: true
+  timeOut: 8000,
+  tapToDismiss: true
 };

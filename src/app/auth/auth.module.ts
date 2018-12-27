@@ -8,6 +8,7 @@ import { UserRegistrationComponent } from './user-registration/user-registration
 import { CompanyRegistrationComponent } from './company-registration/company-registration.component';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
+import { AddBusinessComponent } from './company-registration/add-business/add-business.component';
 
 @NgModule({
   imports: [
@@ -22,7 +23,8 @@ import { AuthGuard } from './auth.guard';
   declarations: [
     LoginComponent,
     UserRegistrationComponent,
-    CompanyRegistrationComponent
+    CompanyRegistrationComponent,
+    AddBusinessComponent
   ]
 })
 export class AuthModule {}

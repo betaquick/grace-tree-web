@@ -18,7 +18,6 @@ export class Address {
   city?: string;
   state?: string;
   zip?: string;
-  deliveryInstruction?: string;
 }
 
 export class User {
@@ -51,4 +50,9 @@ export class RegisterUser {
   password: string;
   confirmPassword: string;
   userType: string;
+}
+
+export class Business extends Address {
+  name: string;
+  website?: string;
 }
