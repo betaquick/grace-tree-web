@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ng5-validation';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { UserRegistrationComponent } from './user-registration.component';
@@ -25,7 +26,7 @@ describe('UserRegistrationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes(routes), FormsModule, ToastrModule.forRoot({})],
+      imports: [RouterTestingModule.withRoutes(routes), FormsModule, CustomFormsModule, ToastrModule.forRoot({})],
       declarations: [ UserRegistrationComponent, DummyComponent ],
       providers: [
         {provide: AuthService, useValue: jasmine.createSpyObj('authServiceStub', ['register'])},

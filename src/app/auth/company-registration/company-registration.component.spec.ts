@@ -4,6 +4,7 @@ import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { CustomFormsModule } from 'ng5-validation';
 
 import { CompanyRegistrationComponent } from './company-registration.component';
 import { AuthService } from '../auth.service';
@@ -26,7 +27,7 @@ describe('CompanyRegistrationComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes(routes), FormsModule, ToastrModule.forRoot({})],
+      imports: [RouterTestingModule.withRoutes(routes), FormsModule, CustomFormsModule, ToastrModule.forRoot({})],
       declarations: [ CompanyRegistrationComponent, DummyComponent ],
       providers: [
         {provide: AuthService, useValue: jasmine.createSpyObj('authServiceStub', ['register'])},
