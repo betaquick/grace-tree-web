@@ -12,8 +12,8 @@ import { AddBusinessComponent } from './company-registration/add-business/add-bu
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
-  { 
-    path: 'user-registration', 
+  {
+    path: 'user-registration',
     component: UserBaseRegistrationComponent,
     children: [
       { path: '', component: UserRegistrationComponent },

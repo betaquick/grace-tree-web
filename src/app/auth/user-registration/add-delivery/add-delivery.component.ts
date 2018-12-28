@@ -62,7 +62,7 @@ export class AddDeliveryComponent implements OnInit {
         status: utils.getBoolean(status)
       };
     });
-    
+
     this.deliveryInfo.userProducts = userProducts;
 
     this.loading = true;

@@ -24,9 +24,9 @@ describe('AddDeliveryComponent', () => {
   ];
   const products = [{
     active: 1,
-    createdAt: "2018-12-22T08:54:17.000Z",
-    productCode: "chips",
-    productDesc: "Wood Chips",
+    createdAt: '2018-12-22T08:54:17.000Z',
+    productCode: 'chips',
+    productDesc: 'Wood Chips',
     productId: 1,
   }];
 
@@ -69,7 +69,7 @@ describe('AddDeliveryComponent', () => {
     let navigateStub;
     const response = {
       delivery: {
-        userId: 1, 
+        userId: 1,
         userProducts: [{
           productId: 1,
           status: true

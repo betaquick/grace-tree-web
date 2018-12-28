@@ -58,7 +58,7 @@ export class AuthService {
         catchError(utils.handleError)
       );
   }
-  
+
   addDeliveryInfo(deliveryInfo: DeliveryInfo) {
     return this.http.post(`${AppConfig.API_URL}/user/new-delivery-info`, deliveryInfo)
       .pipe(

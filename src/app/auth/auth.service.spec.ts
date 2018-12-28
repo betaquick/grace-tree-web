@@ -121,9 +121,9 @@ describe('AuthService', () => {
     const response = {
       products: [{
         active: 1,
-        createdAt: "2018-12-22T08:54:17.000Z",
-        productCode: "chips",
-        productDesc: "Wood Chips",
+        createdAt: '2018-12-22T08:54:17.000Z',
+        productCode: 'chips',
+        productDesc: 'Wood Chips',
         productId: 1,
       }]
     };
@@ -159,7 +159,7 @@ describe('AuthService', () => {
     let deliveryInfo: DeliveryInfo;
     const response = {
       delivery: {
-        userId: 1, 
+        userId: 1,
         userProducts: [{
           productId: 1,
           status: true
