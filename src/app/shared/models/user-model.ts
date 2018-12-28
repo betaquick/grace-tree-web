@@ -1,3 +1,5 @@
+import { Product } from './product-model';
+
 export class Phone {
   userPhoneId?: number;
   userId?: number;
@@ -50,4 +52,15 @@ export class RegisterUser {
   password: string;
   confirmPassword: string;
   userType: string;
+}
+
+export class UserProduct extends Product {
+  userProductId?: number;
+  userId?: number;
+  status: boolean;
+}
+
+export class DeliveryInfo {
+  userProducts: Array<UserProduct>;
+  address: Address;
 }

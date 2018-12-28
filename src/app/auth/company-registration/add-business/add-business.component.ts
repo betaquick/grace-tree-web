@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { finalize } from 'rxjs/operators';
-import { states, RoleTypes } from '@betaquick/grace-tree-constants';
+import { states } from '@betaquick/grace-tree-constants';
 import { BusinessInfo, State } from '../../../shared/models/company-model';
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router';

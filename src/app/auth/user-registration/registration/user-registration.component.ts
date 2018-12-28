@@ -5,8 +5,8 @@ import { UserTypes, PhoneTypes } from '@betaquick/grace-tree-constants';
 import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 
-import { RegisterUser, Email, Phone } from '../../shared/models/user-model';
-import { AuthService } from '../auth.service';
+import { RegisterUser, Email, Phone } from '../../../shared/models/user-model';
+import { AuthService } from '../../auth.service';
 
 @Component({
   selector: 'app-user-registration',
@@ -48,7 +48,7 @@ export class UserRegistrationComponent implements OnInit {
     this.authService.register(this.user)
     .pipe(finalize(() => this.loading = false))
       .subscribe(
-        () => this.router.navigate(['/user']),
+        () => this.router.navigate(['/user-registration/add-delivery']),
         err => this.toastr.error(err)
       );
   }

@@ -1,5 +1,5 @@
 %redbox {
-  border-color: #FF5370;	
+  border-color: #FF5370;
 }
 
 #firstName.form-control-danger {
@@ -7,7 +7,7 @@
 }
 
 #lastName.form-control-danger {
-	@extend %redbox
+  @extend %redbox
 }
 
 #number.form-control-danger {
@@ -15,7 +15,7 @@
 }
 
 #password.form-control-danger {
-	@extend %redbox
+  @extend %redbox
 }
 
 #email.form-control-danger {
@@ -23,9 +23,9 @@
 }
 
 #confirmPassword.form-control-danger {
-	@extend %redbox
+  @extend %redbox
 }
 
 .alert {
-	margin-bottom: 5px;
+  margin-bottom: 5px;
 }
