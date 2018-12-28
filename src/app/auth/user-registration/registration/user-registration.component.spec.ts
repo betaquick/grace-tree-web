@@ -7,9 +7,9 @@ import { CustomFormsModule } from 'ng5-validation';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 import { UserRegistrationComponent } from './user-registration.component';
-import { AuthService } from '../auth.service';
-import { DummyComponent, asyncData, asyncError } from '../../testing/helpers';
-import { RegisterUser } from '../../shared/models/user-model';
+import { AuthService } from '../../auth.service';
+import { DummyComponent, asyncData, asyncError } from '../../../testing/helpers';
+import { RegisterUser } from '../../../shared/models/user-model';
 
 describe('UserRegistrationComponent', () => {
   let component: UserRegistrationComponent;

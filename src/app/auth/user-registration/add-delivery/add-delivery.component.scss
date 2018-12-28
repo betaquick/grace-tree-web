@@ -1,0 +1,26 @@
+%redbox {
+  border-color: #FF5370;	
+}
+
+#street.form-control-danger {
+  @extend %redbox
+}
+
+#city.form-control-danger {
+	@extend %redbox
+}
+
+#zip.form-control-danger {
+  @extend %redbox
+}
+
+.alert {
+	margin-bottom: 5px;
+}
+
+span {
+  text-align: left;
+  width: 100%;
+  display: inline-block;
+  padding-bottom: 10px;
+}

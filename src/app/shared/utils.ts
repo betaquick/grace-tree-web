@@ -1,4 +1,4 @@
-import {_throw} from 'rxjs/observable/throw';
+import { _throw } from 'rxjs/observable/throw';
 import { HttpErrorResponse } from '@angular/common/http';
 import * as _ from 'lodash';
 
@@ -14,5 +14,19 @@ export const utils = {
     const errorMsg = (body instanceof String) ? body : 'Something went wrong. Please contact support!';
     // return an observable with a user-facing error message
     return _throw(errorMsg);
+  },
+
+  getBoolean(value): boolean {
+    switch (value) {
+      case true:
+      case 'true':
+      case 1:
+      case '1':
+      case 'on':
+      case 'yes':
+        return true;
+      default:
+        return false;
+    }
   }
 };

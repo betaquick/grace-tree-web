@@ -7,9 +7,10 @@ import * as _ from 'lodash';
 import { SessionStorage } from 'ngx-store';
 
 import { AppConfig } from '../app.config';
-import { AuthDetails, Credentials, User, RegisterUser } from '../shared/models/user-model';
+import { AuthDetails, Credentials, User, RegisterUser, DeliveryInfo } from '../shared/models/user-model';
 import { utils } from '../shared/utils';
 import { BusinessInfo } from '../shared/models/company-model';
+import { Product } from '../shared/models/product-model';
 
 @Injectable()
 export class AuthService {
@@ -45,6 +46,23 @@ export class AuthService {
     return this.http
       .post(`${AppConfig.API_URL}/user/business`, businessInfo)
       .pipe(
+        map(response => response['body']),
+        catchError(utils.handleError)
+      );
+  }
+
+  getProducts(): Observable<Product[]> {
+    return this.http.get(`${AppConfig.API_URL}/products`)
+      .pipe(
+        map(response => response['body']['products']),
+        catchError(utils.handleError)
+      );
+  }
+  
+  addDeliveryInfo(deliveryInfo: DeliveryInfo) {
+    return this.http.post(`${AppConfig.API_URL}/user/new-delivery-info`, deliveryInfo)
+      .pipe(
+        map(response => response['body']),
         catchError(utils.handleError)
       );
   }

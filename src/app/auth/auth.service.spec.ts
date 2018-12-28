@@ -3,7 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { PhoneTypes, RoleTypes } from '@betaquick/grace-tree-constants';
 
 import { AuthService } from './auth.service';
-import { AuthDetails, RegisterUser } from '../shared/models/user-model';
+import { AuthDetails, RegisterUser, DeliveryInfo } from '../shared/models/user-model';
 import { AppConfig } from '../app.config';
 import { BusinessInfo } from '../shared/models/company-model';
 
@@ -94,7 +94,7 @@ describe('AuthService', () => {
       authService.addBusinessInfo(businessInfo)
         .subscribe(
           data => {
-            expect(data.body).toEqual(response);
+            expect(data).toEqual(response);
           }
         );
 
@@ -112,6 +112,103 @@ describe('AuthService', () => {
         );
 
       const req = httpMock.expectOne(`${AppConfig.API_URL}/user/business`);
+      req.flush('System Error', { status: 500, statusText: 'System Error' });
+      httpMock.verify();
+    });
+  });
+
+  describe('Get list of products', () => {
+    const response = {
+      products: [{
+        active: 1,
+        createdAt: "2018-12-22T08:54:17.000Z",
+        productCode: "chips",
+        productDesc: "Wood Chips",
+        productId: 1,
+      }]
+    };
+
+    it('Get list of products - returns products', () => {
+      authService.getProducts()
+        .subscribe(
+          data => {
+            expect(data).toEqual(response.products);
+          }
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/products`);
+      expect(req.request.method).toBe('GET');
+      req.flush({body: response});
+      httpMock.verify();
+    });
+
+    it('Error: get list of products - server returns error', () => {
+      authService.getProducts()
+        .subscribe(
+          data => fail('Request failed'),
+          err => expect(err).toEqual('Something went wrong. Please contact support!')
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/products`);
+      req.flush('System Error', { status: 500, statusText: 'System Error' });
+      httpMock.verify();
+    });
+  });
+
+  describe('Add delivery info', () => {
+    let deliveryInfo: DeliveryInfo;
+    const response = {
+      delivery: {
+        userId: 1, 
+        userProducts: [{
+          productId: 1,
+          status: true
+        }],
+        address: {
+          street: 'Test',
+          state: 'LA',
+          city: 'Test',
+          zip: '23401'
+        }
+      }
+    };
+
+    beforeEach(() => {
+      deliveryInfo = new DeliveryInfo();
+      deliveryInfo.address = {
+        street: 'Test',
+        state: 'LA',
+        city: 'Test',
+        zip: '23401'
+      };
+      deliveryInfo.userProducts = [{
+        productId: 1,
+        status: true
+      }];
+    });
+
+    it('add a delivery info - returns delivery', () => {
+      authService.addDeliveryInfo(deliveryInfo)
+        .subscribe(
+          data => {
+            expect(data).toEqual(response);
+          }
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/new-delivery-info`);
+      expect(req.request.method).toBe('POST');
+      req.flush({body: response});
+      httpMock.verify();
+    });
+
+    it('Error: add delivery info - server returns error', () => {
+      authService.addDeliveryInfo(deliveryInfo)
+        .subscribe(
+          data => fail('Request failed'),
+          err => expect(err).toEqual('Something went wrong. Please contact support!')
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/new-delivery-info`);
       req.flush('System Error', { status: 500, statusText: 'System Error' });
       httpMock.verify();
     });

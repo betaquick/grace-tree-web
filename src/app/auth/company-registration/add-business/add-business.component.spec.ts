@@ -9,7 +9,7 @@ import { AddBusinessComponent } from './add-business.component';
 import { AuthService } from '../../auth.service';
 import { DummyComponent, asyncData, asyncError } from '../../../testing/helpers';
 import { BusinessInfo } from '../../../shared/models/company-model';
-import { RoleTypes, states } from '@betaquick/grace-tree-constants';
+import { states } from '@betaquick/grace-tree-constants';
 
 describe('AddBusinessComponent', () => {
   let component: AddBusinessComponent;
