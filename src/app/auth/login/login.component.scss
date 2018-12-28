@@ -3,7 +3,7 @@
 }
 
 %redbox {
-  border-color: #FF5370;	
+  border-color: #FF5370;
 }
 
 #email.form-control-danger {
@@ -11,5 +11,5 @@
 }
 
 #password.form-control-danger {
-	@extend %redbox
+  @extend %redbox
 }

@@ -1,5 +1,5 @@
 %redbox {
-  border-color: #FF5370;	
+  border-color: #FF5370;
 }
 
 #street.form-control-danger {
@@ -7,7 +7,7 @@
 }
 
 #city.form-control-danger {
-	@extend %redbox
+  @extend %redbox
 }
 
 #zip.form-control-danger {
@@ -15,7 +15,7 @@
 }
 
 .alert {
-	margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 span {
