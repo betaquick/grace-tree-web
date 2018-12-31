@@ -41,5 +41,4 @@ export class AgreementComponent implements OnInit {
         err => this.toastr.error(err)
       );
   }
-  
 }
