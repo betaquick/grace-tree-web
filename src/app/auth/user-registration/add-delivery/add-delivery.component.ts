@@ -70,7 +70,7 @@ export class AddDeliveryComponent implements OnInit {
     this.authService.addDeliveryInfo(this.deliveryInfo)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-        () => this.router.navigate(['/user']),
+        () => this.router.navigate(['/user-registration/agreement']),
         err => this.toastr.error(err)
       );
   }

@@ -8,6 +8,7 @@ import { AuthRoutingModule } from './auth-routing.module';
 import { UserBaseRegistrationComponent } from './user-registration/user-base-registration';
 import { UserRegistrationComponent } from './user-registration/registration/user-registration.component';
 import { AddDeliveryComponent } from './user-registration/add-delivery/add-delivery.component';
+import { AgreementComponent } from './user-registration/agreement/agreement.component';
 import { CompanyBaseRegistrationComponent } from './company-registration/company-base-registration';
 import { CompanyRegistrationComponent } from './company-registration/registration/company-registration.component';
 import { AuthService } from './auth.service';
@@ -30,6 +31,7 @@ import { AddBusinessComponent } from './company-registration/add-business/add-bu
     UserBaseRegistrationComponent,
     UserRegistrationComponent,
     AddDeliveryComponent,
+    AgreementComponent,
     CompanyBaseRegistrationComponent,
     CompanyRegistrationComponent,
     AddBusinessComponent
