@@ -67,6 +67,14 @@ export class AuthService {
       );
   }
 
+  acceptAgreement() {
+    return this.http.post(`${AppConfig.API_URL}/user/agreement`, null)
+      .pipe(
+        map(response => response['body']),
+        catchError(utils.handleError)
+      );
+  }
+
   private handleSuccessAuth(response) {
 
     const credentials = _.get(response, 'body');

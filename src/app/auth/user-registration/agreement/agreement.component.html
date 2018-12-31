@@ -1,0 +1,73 @@
+<section class="register p-fixed d-flex common-img-bg">
+  <!-- Container-fluid starts -->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="login-card card-block auth-body mr-auto ml-auto">
+          <form class="md-float-material" #agreementForm="ngForm" (ngSubmit)="acceptAgreement()">
+            <div class="text-center">
+              <h3 class="logo">Green Tree</h3>
+            </div>
+            <div class="auth-box">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3 class="text-center txt-primary">Terms and Conditions</h3>
+                </div>
+              </div>
+              <hr />
+              <div class="col-sm-12">
+                <div class="alert alert-danger background-danger" *ngIf="agreement.dirty && agreement.errors?.required">Please
+                  accept agreement</div>
+              </div>
+
+              <div class="terms">
+                <p>I understand that by signing up to participate in this totally free program, I am agreeing to do
+                  these four things:</p>
+                <ol class="list-modal">
+                  <li>Informing GTS when I am ready to receive a delivery.</li><br>
+                  <li>Informing GTS every time I receive a delivery.</li><br>
+                  <li>Informing GTS of my status going forward after receiving a delivery; if I am ready for another
+                    delivery or if I would like to wait or be marked inactive for a period of time.</li><br>
+                  <li>Informing GTS of any changes to my profile, including keeping the dumping location updated and
+                    current.</li>
+                </ol>
+                <p>
+                  <b>*DISCLAIMER:</b>
+                  Grace Tree Products & Services is, for the most part, a free, information management service designed
+                  to put people that want wood products in touch with people that have wood products to give away.
+                  GTP&S has no employees or authority over the tree
+                  service companies participating in the program. Any issues or problems regarding a delivery should be
+                  resolved between the recipient and the delivering tree service company.
+                </p>
+              </div>
+              <div class="row m-t-25 m-b-25 text-left">
+                <div class="col-sm-12 col-xs-12">
+                  <div class="checkbox-fade fade-in-primary">
+                    <label>
+                      <input type="checkbox" [(ngModel)]="acceptAcceptment" #agreement="ngModel" name="agreement" id="agreement" required>
+                      <span class="cr">
+                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                      </span>
+                      <span class="text-inverse">I agree with the terms and conditions</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="j-row">
+                <div class="col-12">
+                  <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
+                    [disabled]="!agreementForm.form.valid || loading">Submit</button>
+                </div>
+              </div>
+            </div>
+          </form>
+          <!-- end of form -->
+        </div>
+        <!-- Authentication card end -->
+      </div>
+      <!-- end of col-sm-12 -->
+    </div>
+    <!-- end of row -->
+  </div>
+  <!-- end of container-fluid -->
+</section>

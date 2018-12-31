@@ -214,6 +214,36 @@ describe('AuthService', () => {
     });
   });
 
+  describe('Accept agreement', () => {
+    const response = { user: {userId: 1}};
+
+    it('accept agreement - returns user', () => {
+      authService.acceptAgreement()
+        .subscribe(
+          data => {
+            expect(data).toEqual(response);
+          }
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/agreement`);
+      expect(req.request.method).toBe('POST');
+      req.flush({body: response});
+      httpMock.verify();
+    });
+
+    it('Error: accept agreement - server returns error', () => {
+      authService.acceptAgreement()
+        .subscribe(
+          data => fail('Request failed'),
+          err => expect(err).toEqual('Something went wrong. Please contact support!')
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/agreement`);
+      req.flush('System Error', { status: 500, statusText: 'System Error' });
+      httpMock.verify();
+    });
+  });
+
   describe('login a new user', () => {
     let authUser: AuthDetails;
     const response = {token: 'TOKEN', user: {userId: 1}};
