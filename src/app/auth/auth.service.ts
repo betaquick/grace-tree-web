@@ -75,8 +75,16 @@ export class AuthService {
       );
   }
 
-  verify(body: Email | Phone, verifyType: string) {
+  /* verify(body: Email | Phone, verifyType: string) {
     return this.http.post(`${AppConfig.API_URL}/auth/verify`, { body, verifyType })
+      .pipe(
+        map(response => response['body']),
+        catchError(utils.handleError)
+      );
+  } */
+
+  validateToken(verifyType: string, token: string) {
+    return this.http.put(`${AppConfig.API_URL}/auth/validate/${verifyType}/${token}`, null)
       .pipe(
         map(response => response['body']),
         catchError(utils.handleError)

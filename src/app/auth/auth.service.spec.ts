@@ -244,39 +244,33 @@ describe('AuthService', () => {
     });
   });
 
-  describe('Verification process', () => {
-    let email: Email;
+  describe('Validation process', () => {
+    const token = 'token';
+    const verifyType = VerificationTypes.Email;
     const response = { user: {userId: 1}};
 
-    beforeEach(() => {
-      email = {
-        emailAddress: 'test@email.com',
-        primary: true
-      };
-    });
-
     it('Verify process - returns user', () => {
-      authService.verify(email, VerificationTypes.Email)
+      authService.validateToken(verifyType, token)
         .subscribe(
           data => {
             expect(data).toEqual(response);
           }
         );
 
-      const req = httpMock.expectOne(`${AppConfig.API_URL}/auth/verify`);
-      expect(req.request.method).toBe('POST');
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/auth/validate/${verifyType}/${token}`);
+      expect(req.request.method).toBe('PUT');
       req.flush({body: response});
       httpMock.verify();
     });
 
     it('Error: verify process - server returns error', () => {
-      authService.verify(email, VerificationTypes.Email)
+      authService.validateToken(verifyType, token)
         .subscribe(
           data => fail('Request failed'),
           err => expect(err).toEqual('Something went wrong. Please contact support!')
         );
 
-      const req = httpMock.expectOne(`${AppConfig.API_URL}/auth/verify`);
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/auth/validate/${verifyType}/${token}`);
       req.flush('System Error', { status: 500, statusText: 'System Error' });
       httpMock.verify();
     });

@@ -4,17 +4,20 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng5-validation';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
+import { VerificationTypes } from '@betaquick/grace-tree-constants';
 
-import { VerificationComponent } from './verification.component';
-import { AuthService } from '../auth.service';
-import { DummyComponent, asyncData, asyncError } from '../../testing/helpers';
+import { UserVerificationComponent } from './user-verification.component';
+import { AuthService } from '../../auth.service';
+import { DummyComponent, asyncData, asyncError } from '../../../testing/helpers';
 
-describe('VerificationComponent', () => {
-  let component: VerificationComponent;
-  let fixture: ComponentFixture<VerificationComponent>;
+describe('UserVerificationComponent', () => {
+  let component: UserVerificationComponent;
+  let fixture: ComponentFixture<UserVerificationComponent>;
   let authServiceSpy;
   let toastrStub;
   let routerStub;
+  const token = 'token';
+  let verifyType = VerificationTypes.Email;
 
   const response = {
     user: {
@@ -36,15 +39,11 @@ describe('VerificationComponent', () => {
   ];
 
   beforeEach(async(() => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['verify']);
-    authServiceSpy = {
-      ...authServiceSpy,
-      user: response.user
-    };
+    authServiceSpy = jasmine.createSpyObj('AuthService', ['validateToken']);
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes(routes), FormsModule, CustomFormsModule, ToastrModule.forRoot({})],
-      declarations: [ VerificationComponent, DummyComponent ],
+      declarations: [ UserVerificationComponent, DummyComponent ],
       providers: [
         {provide: AuthService, useValue: authServiceSpy},
         {provide: ToastrService, useValue: jasmine.createSpyObj('toastrStub', ['success', 'error'])}
@@ -52,7 +51,7 @@ describe('VerificationComponent', () => {
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(VerificationComponent);
+    fixture = TestBed.createComponent(UserVerificationComponent);
     component = fixture.componentInstance;
 
     routerStub = TestBed.get(Router);
@@ -67,7 +66,7 @@ describe('VerificationComponent', () => {
 
   it('should create verification component', () => {
     expect(component).toBeTruthy();
-    expect(authServiceSpy.verify).toBeDefined();
+    expect(authServiceSpy.validateToken).toBeDefined();
     expect(toastrStub.success).toBeDefined();
     expect(toastrStub.error).toBeDefined();
     expect(routerStub).toBeDefined();
@@ -76,9 +75,9 @@ describe('VerificationComponent', () => {
 
   describe('Send email verification', () => {
     it('should successfully send email verification - show toast success', fakeAsync(() => {
-      authServiceSpy.verify.and.returnValue(asyncData(response));
+      authServiceSpy.validateToken.and.returnValue(asyncData(response));
       expect(component.loading).toEqual(false);
-      component.verifyEmail();
+      component.validateToken(verifyType, token);
       expect(component.loading).toEqual(true);
       tick(100);
       expect(toastrStub.success.calls.count()).toEqual(1);
@@ -86,9 +85,9 @@ describe('VerificationComponent', () => {
     }));
 
     it('Error: fails sending email verification - show toast error', fakeAsync(() => {
-      authServiceSpy.verify.and.returnValue(asyncError(new Error()));
+      authServiceSpy.validateToken.and.returnValue(asyncError(new Error()));
       expect(component.loading).toEqual(false);
-      component.verifyEmail();
+      component.validateToken(verifyType, token);
       expect(component.loading).toEqual(true);
       tick(100);
       expect(toastrStub.success.calls.count()).toEqual(0);
@@ -97,10 +96,14 @@ describe('VerificationComponent', () => {
   });
 
   describe('Send phone verification', () => {
+    beforeEach(async(() => {
+      verifyType = VerificationTypes.SMS;
+    }));
+
     it('should successfully send phone verification - show toast success', fakeAsync(() => {
-      authServiceSpy.verify.and.returnValue(asyncData(response));
+      authServiceSpy.validateToken.and.returnValue(asyncData(response));
       expect(component.loading).toEqual(false);
-      component.verifyPhone();
+      component.validateToken(verifyType, token);
       expect(component.loading).toEqual(true);
       tick(100);
       expect(toastrStub.success.calls.count()).toEqual(1);
@@ -108,9 +111,9 @@ describe('VerificationComponent', () => {
     }));
 
     it('Error: fails sending phone verification - show toast error', fakeAsync(() => {
-      authServiceSpy.verify.and.returnValue(asyncError(new Error()));
+      authServiceSpy.validateToken.and.returnValue(asyncError(new Error()));
       expect(component.loading).toEqual(false);
-      component.verifyPhone();
+      component.validateToken(verifyType, token);
       expect(component.loading).toEqual(true);
       tick(100);
       expect(toastrStub.success.calls.count()).toEqual(0);

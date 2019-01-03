@@ -6,11 +6,12 @@ import { LoginComponent } from './login/login.component';
 import { UserBaseRegistrationComponent } from './user-registration/user-base-registration';
 import { UserRegistrationComponent } from './user-registration/registration/user-registration.component';
 import { AddDeliveryComponent } from './user-registration/add-delivery/add-delivery.component';
+import { UserVerificationComponent } from './user-registration/verification/user-verification.component';
 import { AgreementComponent } from './user-registration/agreement/agreement.component';
 import { CompanyBaseRegistrationComponent } from './company-registration/company-base-registration';
 import { CompanyRegistrationComponent } from './company-registration/registration/company-registration.component';
 import { AddBusinessComponent } from './company-registration/add-business/add-business.component';
-import { VerificationComponent } from './verification/verification.component';
+import { CompanyVerificationComponent } from './company-registration/verification/company-verification.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -20,7 +21,9 @@ const routes: Routes = [
     children: [
       { path: '', component: UserRegistrationComponent },
       { path: 'add-delivery', canActivateChild: [AuthGuard], component: AddDeliveryComponent },
-      { path: 'agreement', canActivateChild: [AuthGuard], component: AgreementComponent }
+      { path: 'agreement', canActivateChild: [AuthGuard], component: AgreementComponent },
+      { path: 'verification', canActivateChild: [AuthGuard], component: UserVerificationComponent },
+      { path: 'verification/:verifyType/:token', canActivateChild: [AuthGuard], component: UserVerificationComponent }
     ]
   },
   {
@@ -28,10 +31,11 @@ const routes: Routes = [
     component: CompanyBaseRegistrationComponent,
     children: [
       { path: '', component: CompanyRegistrationComponent },
-      { path: 'add-business', canActivateChild: [AuthGuard], component: AddBusinessComponent }
+      { path: 'add-business', canActivateChild: [AuthGuard], component: AddBusinessComponent },
+      { path: 'verification', canActivateChild: [AuthGuard], component: CompanyVerificationComponent },
+      { path: 'verification/:verifyType/:token', canActivateChild: [AuthGuard], component: CompanyVerificationComponent }
     ]
-  },
-  { path: 'verification', canActivateChild: [AuthGuard], component: VerificationComponent },
+  }
 ];
 
 @NgModule({

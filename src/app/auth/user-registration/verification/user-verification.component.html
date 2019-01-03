@@ -19,18 +19,21 @@
               <p>In order to be able to proceed, we need to confirm your identity. Help us confirm your identity by
                 completing these two simple steps.
               </p>
+              <p>We sent the verification link to your primary email address and phone number. Please click on the link to verify your identity.</p>
               <p><strong>Account Verification Status:</strong></p>
               <ul class="chart">
                 <li [ngClass]="{'unverified': !email.isVerified, 'verified': email.isVerified}">Email Address</li>
                 <li [ngClass]="{'unverified': !phone.isVerified, 'verified': phone.isVerified}">Phone Number</li>
               </ul>
+              <p class="m-t-25 text-primary" *ngIf="!email.isVerified && !phone.isVerified">Your account has been fully verified, which means you can
+                now proceed to the <a [routerLink]="['/login']">login page</a></p>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="row" *ngIf="!email.isVerified">
+    <!--<div class="row" *ngIf="!email.isVerified">
       <div class="col-sm-12">
         <div class="login-card card-block auth-body mr-auto ml-auto">
           <div class="auth-box">
@@ -98,6 +101,6 @@
           </div>
         </div>
       </div>
-    </div>
+    </div>-->
   </div>
 </section>

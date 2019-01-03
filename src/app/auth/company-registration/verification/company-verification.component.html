@@ -1,0 +1,106 @@
+<section class="register p-fixed d-flex common-img-bg">
+    <!-- Container-fluid starts -->
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="login-card card-block auth-body mr-auto ml-auto">
+            <div class="text-center">
+              <h3 class="logo">Green Tree</h3>
+            </div>
+            <div class="auth-box">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3 class="text-center txt-primary">Account Verification</h3>
+                </div>
+              </div>
+              <hr />
+  
+              <div class="terms">
+                <p>In order to be able to proceed, we need to confirm your identity. Help us confirm your identity by
+                  completing these two simple steps.
+                </p>
+                <p>We sent the verification link to your primary email address and phone number. Please click on the link to verify your identity.</p>
+                <p><strong>Account Verification Status:</strong></p>
+                <ul class="chart">
+                  <li [ngClass]="{'unverified': !email.isVerified, 'verified': email.isVerified}">Email Address</li>
+                  <li [ngClass]="{'unverified': !phone.isVerified, 'verified': phone.isVerified}">Phone Number</li>
+                </ul>
+                <p class="m-t-25 text-primary" *ngIf="!email.isVerified && !phone.isVerified">Your account has been fully verified, which means you can
+                  now proceed to the <a [routerLink]="['/login']">login page</a></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <!--<div class="row" *ngIf="!email.isVerified">
+        <div class="col-sm-12">
+          <div class="login-card card-block auth-body mr-auto ml-auto">
+            <div class="auth-box">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3 class="text-center txt-primary">Email Address</h3>
+                </div>
+              </div>
+              <hr />
+  
+              <div class="terms">
+                <p>
+                  A verification link has been sent to this email address. Didn't get the link? Please confirm the email
+                  address provided and click the send button.
+                </p>
+  
+                <div>
+                  <form class="j-forms" novalidate #emailForm="ngForm" (ngSubmit)="verifyEmail()">
+                    <label class="label" for="email">Send verification link</label>
+                    <div class="span8">
+                      <input [ngClass]="{'form-control-danger': email.dirty && email.invalid}" #emailText="ngModel" id="email"
+                        name="email" type="email" [(ngModel)]="email.emailAddress" required>
+                    </div>
+                    <div class="btn-group">
+                      <button class="btn btn-primary submit" type="submit" [disabled]="!emailForm.form.valid || loading">Send</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="row" *ngIf="!phone.isVerified">
+        <div class="col-sm-12">
+          <div class="login-card card-block auth-body mr-auto ml-auto">
+            <div class="auth-box">
+              <div class="row">
+                <div class="col-md-12">
+                  <h3 class="text-center txt-primary">Phone Number</h3>
+                </div>
+              </div>
+              <hr />
+  
+              <div class="terms">
+                <p>
+                  A verification link has been sent to this phone number. Didn't get the link? Please confirm the phone
+                  number provided and click the send button.
+                </p>
+  
+                <div>
+                  <form class="j-forms" novalidate #phoneForm="ngForm" (ngSubmit)="verifyPhone()">
+                    <label class="label" for="phone">Send verification link</label>
+                    <div class="span8">
+                      <input [ngClass]="{'form-control-danger': phone.dirty && phone.invalid}" #phoneText="ngModel" id="phone"
+                        name="phone" type="text" [(ngModel)]="phone.phoneNumber" required>
+                    </div>
+                    <div class="btn-group">
+                      <button class="btn btn-primary submit" type="submit" [disabled]="!phoneForm.form.valid || loading">Send</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>-->
+    </div>
+  </section>

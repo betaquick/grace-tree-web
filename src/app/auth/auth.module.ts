@@ -14,7 +14,8 @@ import { CompanyRegistrationComponent } from './company-registration/registratio
 import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { AddBusinessComponent } from './company-registration/add-business/add-business.component';
-import { VerificationComponent } from './verification/verification.component';
+import { CompanyVerificationComponent } from './company-registration/verification/company-verification.component';
+import { UserVerificationComponent } from './user-registration/verification/user-verification.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { VerificationComponent } from './verification/verification.component';
     CompanyBaseRegistrationComponent,
     CompanyRegistrationComponent,
     AddBusinessComponent,
-    VerificationComponent
+    CompanyVerificationComponent,
+    UserVerificationComponent
   ]
 })
 export class AuthModule {}
