@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
-import { PhoneTypes, RoleTypes } from '@betaquick/grace-tree-constants';
+import { PhoneTypes, RoleTypes, VerificationTypes } from '@betaquick/grace-tree-constants';
 
 import { AuthService } from './auth.service';
-import { AuthDetails, RegisterUser, DeliveryInfo } from '../shared/models/user-model';
+import { AuthDetails, RegisterUser, DeliveryInfo, Email } from '../shared/models/user-model';
 import { AppConfig } from '../app.config';
 import { BusinessInfo } from '../shared/models/company-model';
 
@@ -239,6 +239,44 @@ describe('AuthService', () => {
         );
 
       const req = httpMock.expectOne(`${AppConfig.API_URL}/user/agreement`);
+      req.flush('System Error', { status: 500, statusText: 'System Error' });
+      httpMock.verify();
+    });
+  });
+
+  describe('Verification process', () => {
+    let email: Email;
+    const response = { user: {userId: 1}};
+
+    beforeEach(() => {
+      email = {
+        emailAddress: 'test@email.com',
+        primary: true
+      };
+    });
+
+    it('Verify process - returns user', () => {
+      authService.verify(email, VerificationTypes.Email)
+        .subscribe(
+          data => {
+            expect(data).toEqual(response);
+          }
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/auth/verify`);
+      expect(req.request.method).toBe('POST');
+      req.flush({body: response});
+      httpMock.verify();
+    });
+
+    it('Error: verify process - server returns error', () => {
+      authService.verify(email, VerificationTypes.Email)
+        .subscribe(
+          data => fail('Request failed'),
+          err => expect(err).toEqual('Something went wrong. Please contact support!')
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/auth/verify`);
       req.flush('System Error', { status: 500, statusText: 'System Error' });
       httpMock.verify();
     });

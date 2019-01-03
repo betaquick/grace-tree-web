@@ -7,7 +7,7 @@ import * as _ from 'lodash';
 import { SessionStorage } from 'ngx-store';
 
 import { AppConfig } from '../app.config';
-import { AuthDetails, Credentials, User, RegisterUser, DeliveryInfo } from '../shared/models/user-model';
+import { AuthDetails, Credentials, User, RegisterUser, DeliveryInfo, Email, Phone } from '../shared/models/user-model';
 import { utils } from '../shared/utils';
 import { BusinessInfo } from '../shared/models/company-model';
 import { Product } from '../shared/models/product-model';
@@ -69,6 +69,14 @@ export class AuthService {
 
   acceptAgreement() {
     return this.http.post(`${AppConfig.API_URL}/user/agreement`, null)
+      .pipe(
+        map(response => response['body']),
+        catchError(utils.handleError)
+      );
+  }
+
+  verify(body: Email | Phone, verifyType: string) {
+    return this.http.post(`${AppConfig.API_URL}/auth/verify`, { body, verifyType })
       .pipe(
         map(response => response['body']),
         catchError(utils.handleError)

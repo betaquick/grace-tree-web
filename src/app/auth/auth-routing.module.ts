@@ -10,6 +10,7 @@ import { AgreementComponent } from './user-registration/agreement/agreement.comp
 import { CompanyBaseRegistrationComponent } from './company-registration/company-base-registration';
 import { CompanyRegistrationComponent } from './company-registration/registration/company-registration.component';
 import { AddBusinessComponent } from './company-registration/add-business/add-business.component';
+import { VerificationComponent } from './verification/verification.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -29,7 +30,8 @@ const routes: Routes = [
       { path: '', component: CompanyRegistrationComponent },
       { path: 'add-business', canActivateChild: [AuthGuard], component: AddBusinessComponent }
     ]
-  }
+  },
+  { path: 'verification', canActivateChild: [AuthGuard], component: VerificationComponent },
 ];
 
 @NgModule({
