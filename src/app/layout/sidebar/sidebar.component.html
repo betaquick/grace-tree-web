@@ -1,0 +1,31 @@
+<nav class="pcoded-navbar">
+  <div class="sidebar_toggle">
+    <a href="#">
+      <i class="icon-close icons"></i>
+    </a>
+  </div>
+  <div class="pcoded-inner-navbar main-menu">
+
+    <div class="pcoded-navigation-label">{{menuItems.getAll().label}}</div>
+    <ul class="pcoded-item pcoded-left-item">
+      <li [routerLinkActive]="['active']" *ngFor="let asideItem of menuItems.getAll().main">
+        <a [routerLink]="['/', asideItem.main_state, asideItem.state]" *ngIf="asideItem.main_state; else mainContent">
+          <span class="pcoded-micon">
+            <i class="{{ asideItem.icon }}"></i>
+            <b>{{ asideItem.short_label }}</b>
+          </span>
+          <span class="pcoded-mtext">{{ asideItem.name }}</span>
+        </a>
+        <ng-template #mainContent>
+          <a [routerLink]="['/', asideItem.state]">
+            <span class="pcoded-micon">
+              <i class="{{ asideItem.icon }}"></i>
+              <b>{{ asideItem.short_label }}</b>
+            </span>
+            <span class="pcoded-mtext">{{ asideItem.name }}</span>
+          </a>
+        </ng-template>
+      </li>
+    </ul>
+  </div>
+</nav>

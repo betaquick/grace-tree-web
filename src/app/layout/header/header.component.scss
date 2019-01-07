@@ -1,0 +1,40 @@
+.pcoded-header {
+  position: fixed;
+  z-index: 1028;
+  background: linear-gradient(to right, #4099ff, #73b4ff);
+  width: 100%;
+  box-shadow: 0 0 11px rgba(0, 0, 0, 0.13);
+  height: 56px;
+
+  a {
+    color: #fff;
+  }
+
+  .logo {
+    margin-bottom: 0;
+    font-size: 22px;
+    color: #fff !important;
+  }
+
+  .search-btn {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 45px;
+  }
+
+  .header-notification.active {
+    &::before {
+      content: "";
+      border: 10px solid transparent;
+      border-left-color: #fff;
+      border-top-color: #fff;
+      position: absolute;
+      border-radius: 5px;
+      bottom: -32px;
+      right: 20px;
+      box-shadow: -11px -11px 35px 0 rgba(0, 0, 0, 0.25);
+      transform: rotate(45deg);
+      z-index: 9;
+    }
+  }
+}

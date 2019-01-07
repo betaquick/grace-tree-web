@@ -29,6 +29,7 @@ export class User {
   email?: string;
   phone?: string;
   password?: string;
+  confirmPassword?: string;
   phones?: Array<Phone>;
   emails?: Array<Email>;
   addresses?: Array<Address>;

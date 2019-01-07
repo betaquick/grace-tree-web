@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { map, catchError } from 'rxjs/operators';
-import * as jwt_decode from 'jwt-decode';
 import * as _ from 'lodash';
 import { SessionStorage } from 'ngx-store';
 
@@ -98,6 +97,10 @@ export class AuthService {
     this.user = _.get(credentials, 'user');
     this.isLoggedIn = true;
     return credentials;
+  }
+
+  setUser(user: User) {
+    this.user = user;
   }
 
   logout() {

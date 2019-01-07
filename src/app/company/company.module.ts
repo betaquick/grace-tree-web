@@ -3,13 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { CompanyRoutingModule } from './company-routing.module';
 import { CompanyDashboardComponent } from './company-dashboard/company-dashboard.component';
-import { CompanyComponent } from './company/company.component';
+import { ContainerComponent } from '../layout/container/container.component';
 
 @NgModule({
   imports: [
     CommonModule,
     CompanyRoutingModule
   ],
-  declarations: [CompanyDashboardComponent, CompanyComponent]
+  declarations: [CompanyDashboardComponent]
 })
 export class CompanyModule { }
