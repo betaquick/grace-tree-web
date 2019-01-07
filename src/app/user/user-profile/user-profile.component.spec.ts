@@ -42,7 +42,7 @@ describe('UserProfileComponent', () => {
     authServiceSpy = {
       ...authServiceSpy,
       user: response
-    }
+    };
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes(routes), FormsModule, CustomFormsModule, ToastrModule.forRoot({})],
