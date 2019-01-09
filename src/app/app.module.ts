@@ -19,7 +19,6 @@ import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { CompanyModule } from './company/company.module';
 import { httpInterceptorProviders } from './http-interceptor';
-import { AuthService } from './auth/auth.service';
 import { layoutProviders, ToastrConfig } from './layout';
 import { MenuItems } from './shared/menu-items/menu-items';
 import { UserService } from './user/user.service';
@@ -36,7 +35,6 @@ import { UserService } from './user/user.service';
   providers: [
     httpInterceptorProviders,
     layoutProviders,
-    AuthService,
     UserService,
     MenuItems
   ],
