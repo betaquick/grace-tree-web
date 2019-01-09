@@ -1,15 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { CustomFormsModule } from 'ng5-validation';
 
 import { UserRoutingModule } from './user-routing.module';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
-import { UserComponent } from './user/user.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    UserRoutingModule
+    UserRoutingModule,
+    FormsModule,
+    CustomFormsModule
   ],
-  declarations: [UserDashboardComponent, UserComponent]
+  declarations: [UserDashboardComponent, UserProfileComponent]
 })
 export class UserModule { }

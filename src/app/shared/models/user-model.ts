@@ -28,7 +28,6 @@ export class User {
   lastName?: string;
   email?: string;
   phone?: string;
-  password?: string;
   phones?: Array<Phone>;
   emails?: Array<Email>;
   addresses?: Array<Address>;
