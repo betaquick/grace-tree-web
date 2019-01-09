@@ -1,25 +1,22 @@
 import { async, ComponentFixture, TestBed, inject, fakeAsync, tick } from '@angular/core/testing';
 import { Router } from '@angular/router';
-import { Location } from '@angular/common';
 import { RouterTestingModule } from '@angular/router/testing';
 import { FormsModule } from '@angular/forms';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { CustomFormsModule } from 'ng5-validation';
 
 import { UserProfileComponent } from './user-profile.component';
-import { AuthService } from '../../auth/auth.service';
 import { UserService } from '../user.service';
 import { DummyComponent, asyncData, asyncError } from '../../testing/helpers';
+import { RegisterUser } from '../../shared/models/user-model';
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
   let fixture: ComponentFixture<UserProfileComponent>;
-  let authServiceSpy;
   let userServiceStub;
   let toastrStub;
   let routerStub;
   const response = {
-    userId: 1,
     firstName: 'Test',
     lastName: 'Account',
     emails: [{
@@ -30,7 +27,7 @@ describe('UserProfileComponent', () => {
       phoneNumber: '1234567890',
       primary: true,
     }]
-  };
+  } as RegisterUser;
 
   const routes = [
     { path: 'user-registration', component: DummyComponent },
@@ -38,9 +35,9 @@ describe('UserProfileComponent', () => {
   ];
 
   beforeEach(async(() => {
-    authServiceSpy = jasmine.createSpyObj('AuthService', ['validateToken']);
-    authServiceSpy = {
-      ...authServiceSpy,
+    userServiceStub = jasmine.createSpyObj('AuthService', ['updateProfile']);
+    userServiceStub = {
+      ...userServiceStub,
       user: response
     };
 
@@ -48,8 +45,7 @@ describe('UserProfileComponent', () => {
       imports: [RouterTestingModule.withRoutes(routes), FormsModule, CustomFormsModule, ToastrModule.forRoot({})],
       declarations: [UserProfileComponent, DummyComponent],
       providers: [
-        { provide: UserService, useValue: jasmine.createSpyObj('userServiceStub', ['updateProfile']) },
-        { provide: AuthService, useValue: authServiceSpy },
+        { provide: UserService, useValue: userServiceStub },
         { provide: ToastrService, useValue: jasmine.createSpyObj('toastrStub', ['success', 'error']) }
       ]
     })

@@ -99,10 +99,6 @@ export class AuthService {
     return credentials;
   }
 
-  setUser(user: User) {
-    this.user = user;
-  }
-
   logout() {
     this.isLoggedIn = false;
     this.user = null;

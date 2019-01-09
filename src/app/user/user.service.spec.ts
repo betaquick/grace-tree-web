@@ -3,8 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { PhoneTypes } from '@betaquick/grace-tree-constants';
 
 import { UserService } from './user.service';
-import { AuthService } from '../auth/auth.service';
-import { User } from '../shared/models/user-model';
+import { RegisterUser } from '../shared/models/user-model';
 import { AppConfig } from '../app.config';
 
 describe('UserService', () => {
@@ -14,7 +13,7 @@ describe('UserService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [UserService, AuthService]
+      providers: [UserService]
     });
     httpMock = TestBed.get(HttpTestingController);
     userService = TestBed.get(UserService);
@@ -29,7 +28,7 @@ describe('UserService', () => {
   });
 
   describe('update user profile', () => {
-    let user: User;
+    let user: RegisterUser;
     const response = {
       user: {
         userId: 1
@@ -37,7 +36,7 @@ describe('UserService', () => {
     };
 
     beforeEach(() => {
-      user = new User();
+      user = new RegisterUser();
       user.firstName = 'Test';
       user.lastName = 'User';
       user.password = '1q2w3e4r5t';
@@ -57,7 +56,7 @@ describe('UserService', () => {
       userService.updateProfile(user)
         .subscribe(
           data => {
-            expect(data).toEqual(response.user);
+            expect(data).toEqual(response);
           }
         );
 

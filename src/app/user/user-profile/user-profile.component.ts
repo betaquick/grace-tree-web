@@ -3,8 +3,7 @@ import * as _ from 'lodash';
 import { finalize } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
-import { User, Email, Phone } from '../../shared/models/user-model';
-import { AuthService } from '../../auth/auth.service';
+import { Email, Phone, RegisterUser } from '../../shared/models/user-model';
 import { UserService } from '../user.service';
 import { PhoneTypes } from '@betaquick/grace-tree-constants';
 
@@ -19,12 +18,11 @@ import { PhoneTypes } from '@betaquick/grace-tree-constants';
 export class UserProfileComponent implements OnInit {
 
   isProfileEdit: boolean;
-  user: User;
+  user: RegisterUser;
   loading: boolean;
   errorMessage: string;
 
   constructor(
-    private authService: AuthService,
     private userService: UserService,
     private toastr: ToastrService
   ) { }
@@ -32,7 +30,7 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.isProfileEdit = false;
     this.loading = false;
-    this.user = this.authService.user;
+    this.user = this.userService.user as RegisterUser;
 
     if (this.user.emails.length === 1) {
       const email = new Email();
@@ -76,6 +74,8 @@ export class UserProfileComponent implements OnInit {
         () => {
           this.toastr.success('Profile updated successfully');
           this.isProfileEdit = false;
+          this.user.password = '';
+          this.user.confirmPassword = '';
         },
         err => this.toastr.error(err)
       );
