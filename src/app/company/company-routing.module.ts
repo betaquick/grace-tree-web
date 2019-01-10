@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CompanyDashboardComponent } from './company-dashboard/company-dashboard.component';
 import { ContainerComponent } from '../layout/container/container.component';
 import { AuthGuard } from '../auth/auth.guard';
+import { CompanyProfileComponent } from './company-profile/company-profile.component';
 
 const routes: Routes = [{
   path: 'company',
@@ -12,7 +13,8 @@ const routes: Routes = [{
   children: [{
     path: '',
     children: [
-      { path: '', component: CompanyDashboardComponent }
+      { path: 'dashboard', component: CompanyDashboardComponent },
+      { path: 'profile', component: CompanyProfileComponent }
     ]
   }]
 }];

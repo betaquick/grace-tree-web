@@ -21,7 +21,6 @@ import { CompanyModule } from './company/company.module';
 import { httpInterceptorProviders } from './http-interceptor';
 import { layoutProviders, ToastrConfig } from './layout';
 import { MenuItems } from './shared/menu-items/menu-items';
-import { UserService } from './user/user.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +34,6 @@ import { UserService } from './user/user.service';
   providers: [
     httpInterceptorProviders,
     layoutProviders,
-    UserService,
     MenuItems
   ],
   imports: [

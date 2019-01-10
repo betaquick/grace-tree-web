@@ -43,7 +43,7 @@ export class AuthService {
 
   addBusinessInfo(businessInfo: BusinessInfo) {
     return this.http
-      .post(`${AppConfig.API_URL}/user/business`, businessInfo)
+      .post(`${AppConfig.API_URL}/user/company`, businessInfo)
       .pipe(
         map(response => response['body']),
         catchError(utils.handleError)
