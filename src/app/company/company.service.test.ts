@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { PhoneTypes } from '@betaquick/grace-tree-constants';
+import {} from 'jasmine'; // TODO: Jasmine Quick fix
 
 import { CompanyService } from './company.service';
 import { RegisterUser } from '../shared/models/user-model';
