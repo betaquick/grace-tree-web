@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import { User } from '../shared/models/user-model';
 import { AppConfig } from '../app.config';
 import { utils } from '../shared/utils';
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 import { BusinessInfo } from '../shared/models/company-model';
 import { SessionStorage } from 'ngx-store';
 import { of } from 'rxjs/observable/of';

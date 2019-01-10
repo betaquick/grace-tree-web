@@ -35,7 +35,7 @@ export class CompanyProfileComponent implements OnInit {
     this.loading = false;
 
     this.user = this.companyService.user as RegisterUser;
-  
+
     this.company = new BusinessInfo();
     this.getCompanyInfo();
   }
@@ -45,7 +45,7 @@ export class CompanyProfileComponent implements OnInit {
       .getCompanyInfo()
       .subscribe(company => this.company = company,
       err => this.toastr.error(err)
-    )
+    );
   }
 
   toggleUpdateProfile() {
@@ -55,15 +55,15 @@ export class CompanyProfileComponent implements OnInit {
       if (this.user.emails.length === 1) {
         const email = new Email();
         email.primary = false;
-  
+
         this.user.emails.push(email);
       }
-  
+
       if (this.user.phones.length === 1) {
         const phone = new Phone();
         phone.primary = false;
         phone.phoneType = PhoneTypes.HOME;
-  
+
         this.user.phones.push(phone);
       }
     } else {
@@ -73,7 +73,6 @@ export class CompanyProfileComponent implements OnInit {
       this.user.emails = emails;
       this.user.phones = phones;
     }
-    
   }
 
   updateCompanyInfo() {
