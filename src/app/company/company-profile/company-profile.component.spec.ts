@@ -9,6 +9,7 @@ import { CompanyProfileComponent } from './company-profile.component';
 import { CompanyService } from '../company.service';
 import { DummyComponent, asyncData, asyncError } from '../../testing/helpers';
 import { RegisterUser } from '../../shared/models/user-model';
+import { BusinessInfo } from '../../shared/models/company-model';
 
 describe('CompanyProfileComponent', () => {
   let component: CompanyProfileComponent;
@@ -82,6 +83,28 @@ describe('CompanyProfileComponent', () => {
     expect(toastrStub.error).toBeDefined();
     expect(routerStub).toBeDefined();
     expect(toastrStub).toBeDefined();
+  });
+
+  describe('Get company Info', () => {
+    it('should successfully get company info', fakeAsync(() => {
+      expect(component.loading).toEqual(false);
+      component.getCompanyInfo();
+      tick(100);
+      expect(companyServiceStub.getCompanyInfo.calls.count()).toEqual(2);
+      expect(component.company).toEqual(company);
+      expect(toastrStub.error.calls.count()).toEqual(0);
+    }));
+
+    it('Error: fails fetching company info - show toast error', fakeAsync(() => {
+      component.company = null;
+      companyServiceStub.getCompanyInfo.and.returnValue(asyncError(new Error()));
+      expect(component.loading).toEqual(false);
+      component.getCompanyInfo();
+      tick(100);
+      expect(companyServiceStub.getCompanyInfo.calls.count()).toEqual(2);
+      expect(component.company).toEqual(null);
+      expect(toastrStub.error.calls.count()).toEqual(1);
+    }));
   });
 
   describe('Update company profile', () => {
