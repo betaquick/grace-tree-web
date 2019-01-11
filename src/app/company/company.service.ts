@@ -48,7 +48,7 @@ export class CompanyService {
           this.user = _.get(body, 'user');
           this.company = _.get(body, 'company');
 
-          return body;
+          return { user: this.user, company: this.company };
         }),
         catchError(utils.handleError)
       );
