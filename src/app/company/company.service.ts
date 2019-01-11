@@ -43,7 +43,7 @@ export class CompanyService {
       .pipe(
         map(response => {
           const body = _.get(response, 'body');
-          const user = _.get(body, 'user');
+          user = _.get(body, 'user');
           this.company = _.get(body, 'company');
 
           return { user, company: this.company };
