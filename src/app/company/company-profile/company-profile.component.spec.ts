@@ -44,17 +44,11 @@ describe('CompanyProfileComponent', () => {
   ];
 
   beforeEach(async(() => {
-    companyServiceStub = jasmine.createSpyObj('CompanyService', ['updateCompanyInfo', 'getCompanyInfo']);
-    companyServiceStub = {
-      ...companyServiceStub,
-      user,
-    };
-
     TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes(routes), FormsModule, CustomFormsModule, ToastrModule.forRoot({})],
       declarations: [CompanyProfileComponent, DummyComponent],
       providers: [
-        { provide: CompanyService, useValue: companyServiceStub },
+        { provide: CompanyService, useValue: jasmine.createSpyObj('CompanyService', ['updateCompanyInfo', 'getCompanyInfo']) },
         { provide: ToastrService, useValue: jasmine.createSpyObj('toastrStub', ['success', 'error']) }
       ]
     })
@@ -62,6 +56,7 @@ describe('CompanyProfileComponent', () => {
 
     fixture = TestBed.createComponent(CompanyProfileComponent);
     component = fixture.componentInstance;
+    component.user = user;
 
     routerStub = TestBed.get(Router);
     companyServiceStub = TestBed.get(CompanyService);
@@ -111,7 +106,6 @@ describe('CompanyProfileComponent', () => {
     it('should successfully update company profile - show toast success', fakeAsync(() => {
       companyServiceStub.updateCompanyInfo.and.returnValue(asyncData({ company, user }));
       expect(component.loading).toEqual(false);
-      component.user = user;
       component.updateCompanyInfo();
       expect(component.loading).toEqual(true);
       tick(100);
@@ -122,7 +116,6 @@ describe('CompanyProfileComponent', () => {
     it('Error: fails updating company profile - show toast error', fakeAsync(() => {
       companyServiceStub.updateCompanyInfo.and.returnValue(asyncError(new Error()));
       expect(component.loading).toEqual(false);
-      component.user = user;
       component.updateCompanyInfo();
       expect(component.loading).toEqual(true);
       tick(100);

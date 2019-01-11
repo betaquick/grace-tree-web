@@ -7,6 +7,7 @@ import { states, PhoneTypes } from '@betaquick/grace-tree-constants';
 import { User, Email, Phone, RegisterUser } from '../../shared/models/user-model';
 import { CompanyService } from '../company.service';
 import { BusinessInfo, State } from '../../shared/models/company-model';
+import { SessionStorage } from 'ngx-store';
 
 @Component({
   selector: 'app-company-profile',
@@ -19,7 +20,7 @@ import { BusinessInfo, State } from '../../shared/models/company-model';
 export class CompanyProfileComponent implements OnInit {
 
   isProfileEdit: boolean;
-  user: RegisterUser;
+  @SessionStorage() user: RegisterUser = new RegisterUser();
   company: BusinessInfo;
   loading: boolean;
   errorMessage: string;
@@ -33,8 +34,6 @@ export class CompanyProfileComponent implements OnInit {
   ngOnInit() {
     this.isProfileEdit = false;
     this.loading = false;
-
-    this.user = this.companyService.user as RegisterUser;
 
     this.company = new BusinessInfo();
     this.getCompanyInfo();
@@ -100,7 +99,8 @@ export class CompanyProfileComponent implements OnInit {
     this.companyService.updateCompanyInfo(company, user)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-        () => {
+        data => {
+          this.user = data.user;
           this.toastr.success('Company profile updated successfully');
           this.isProfileEdit = false;
         },

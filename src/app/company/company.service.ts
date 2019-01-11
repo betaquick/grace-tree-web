@@ -13,8 +13,6 @@ import { of } from 'rxjs/observable/of';
 
 @Injectable()
 export class CompanyService {
-
-  @SessionStorage() user: User = new User();
   @SessionStorage() company: BusinessInfo;
 
   constructor(
@@ -45,10 +43,10 @@ export class CompanyService {
       .pipe(
         map(response => {
           const body = _.get(response, 'body');
-          this.user = _.get(body, 'user');
+          const user = _.get(body, 'user');
           this.company = _.get(body, 'company');
 
-          return { user: this.user, company: this.company };
+          return { user, company: this.company };
         }),
         catchError(utils.handleError)
       );
