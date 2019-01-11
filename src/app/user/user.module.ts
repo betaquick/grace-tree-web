@@ -6,6 +6,7 @@ import { CustomFormsModule } from 'ng5-validation';
 import { UserRoutingModule } from './user-routing.module';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { UserService } from './user.service';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     FormsModule,
     CustomFormsModule
   ],
+  providers: [UserService],
   declarations: [UserDashboardComponent, UserProfileComponent]
 })
 export class UserModule { }

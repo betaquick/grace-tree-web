@@ -98,7 +98,7 @@ describe('AuthService', () => {
           }
         );
 
-      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/business`);
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/company`);
       expect(req.request.method).toBe('POST');
       req.flush({body: response});
       httpMock.verify();
@@ -111,7 +111,7 @@ describe('AuthService', () => {
           err => expect(err).toEqual('Something went wrong. Please contact support!')
         );
 
-      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/business`);
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/company`);
       req.flush('System Error', { status: 500, statusText: 'System Error' });
       httpMock.verify();
     });
