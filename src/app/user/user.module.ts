@@ -15,9 +15,7 @@ import { UserService } from './user.service';
     UserRoutingModule,
     FormsModule,
     CustomFormsModule,
-    UiSwitchModule.forRoot({
-      color: '#3F99FF'
-    })
+    UiSwitchModule
   ],
   providers: [UserService],
   declarations: [UserDashboardComponent, UserProfileComponent]
