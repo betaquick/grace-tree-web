@@ -64,7 +64,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   isBoolean(status) {
-    return utils.getBoolean(status) ? "Yes" : "No";
+    return utils.getBoolean(status) ? 'Yes' : 'No';
   }
 
   updateprofile() {
