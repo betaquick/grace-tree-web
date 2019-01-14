@@ -12,14 +12,15 @@
                 <div class="card-header">
                   <div class="card-header-left">
                     <h5>Status</h5>
-                    <p class="p-t-10 m-b-0 text-muted">Not ready for delivery</p>
+                    <p class="p-t-10 m-b-0 text-muted" *ngIf="status">Ready for delivery</p>
+                    <p class="p-t-10 m-b-0 text-muted" *ngIf="!status">Not ready for delivery</p>
                   </div>
                 </div>
                 <div class="card-block">
-                  <i class="fa fa-pause-circle st-icon bg-danger"></i>
+                  <i class="fa st-icon st-icon" [ngClass]="{ 'fa-pause-circle bg-danger': !status, 'fa-play-circle bg-primary': status }"></i>
                   <div class="text-left d-flex cus-switch justify-content-between">
-                    <h3 class="d-inline-block">Pause</h3>
-                    <input type="checkbox" class="js-single"/>
+                    <h3 class="d-inline-block">{{status ? 'Ready' : 'Pause'}}</h3>
+                    <ui-switch [ngModel]="status" (ngModelChange)="updateStatus($event)"></ui-switch>
                   </div>
                 </div>
               </div>
