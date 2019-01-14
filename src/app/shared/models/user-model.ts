@@ -32,6 +32,7 @@ export class User {
   emails?: Array<Email>;
   addresses?: Array<Address>;
   userType?: String;
+  status?: String;
 }
 
 export class AuthDetails {

@@ -34,6 +34,22 @@ export class UserService {
       );
   }
 
+  updateStatus(status: String) {
+    return this.http
+      .put(`${AppConfig.API_URL}/user/status/${status}`, null)
+      .pipe(
+        map(response => {
+          const body = _.get(response, 'body');
+          const user = this.user;
+          user.status = _.get(body, 'user.status');
+          this.user = user;
+
+          return body;
+        }),
+        catchError(utils.handleError)
+      );
+  }
+
   getUserProducts(): Observable<UserProduct[]> {
     if (this.userProducts) {
       return of(this.userProducts);
