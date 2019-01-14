@@ -28,6 +28,14 @@ describe('UserProfileComponent', () => {
       primary: true,
     }]
   } as RegisterUser;
+  const userProducts = [{
+    userId: 1,
+    active: 1,
+    createdAt: '2018-12-22T08:54:17.000Z',
+    productCode: 'chips',
+    productDesc: 'Wood Chips',
+    productId: 1,
+  }];
 
   const routes = [
     { path: 'user-registration', component: DummyComponent },
@@ -35,7 +43,7 @@ describe('UserProfileComponent', () => {
   ];
 
   beforeEach(async(() => {
-    userServiceStub = jasmine.createSpyObj('AuthService', ['updateProfile']);
+    userServiceStub = jasmine.createSpyObj('AuthService', ['updateProfile', 'getUserProducts']);
     userServiceStub = {
       ...userServiceStub,
       user: response
@@ -58,6 +66,7 @@ describe('UserProfileComponent', () => {
     userServiceStub = TestBed.get(UserService);
     toastrStub = TestBed.get(ToastrService);
 
+    userServiceStub.getUserProducts.and.returnValue(asyncData(userProducts));
     fixture.detectChanges();
   }));
 

@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { SessionStorage } from 'ngx-store';
+import { of } from 'rxjs/observable/of';
+import { Observable } from 'rxjs/Observable';
 
 import { User } from '../shared/models/user-model';
 import { AppConfig } from '../app.config';
 import { utils } from '../shared/utils';
-import { Observable } from 'rxjs/Observable';
 import { BusinessInfo } from '../shared/models/company-model';
-import { SessionStorage } from 'ngx-store';
-import { of } from 'rxjs/observable/of';
+
 
 @Injectable()
 export class CompanyService {

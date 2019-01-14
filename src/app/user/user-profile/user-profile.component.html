@@ -177,6 +177,90 @@
                 <!-- end of card-block -->
               </div>
             </div>
+            <div class="col-xl-12 col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-header-text">Delivery Preference</h5>
+                  <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                    (click)="isPreferenceEdit=!isPreferenceEdit">
+                    <i class="icofont icofont-edit"></i>
+                  </button>
+                </div>
+                <div class="card-block">
+                  <div class="view-info" *ngIf="!isPreferenceEdit else preferenceEdit">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="general-info">
+                          <div class="row">
+                            <!-- end of table col-lg-6 -->
+                            <div class="col-lg-12 col-xl-6">
+                              <div class="table-responsive">
+                                <table class="table">
+                                  <tbody>
+                                    <tr *ngFor="let userProduct of userProducts">
+                                      <th scope="row">{{userProduct.productDesc}}</th>
+                                      <td>
+                                        {{isBoolean(userProduct.status)}}
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            <!-- end of table col-lg-6 -->
+                          </div>
+                          <!-- end of row -->
+                        </div>
+                        <!-- end of general info -->
+                      </div>
+                      <!-- end of col-lg-12 -->
+                    </div>
+                    <!-- end of row -->
+                  </div>
+                  <!-- end of view-info -->
+                  <ng-template #preferenceEdit>
+                    <div class="edit-info">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <form #preferenceForm="ngForm" (ngSubmit)="updateDeliveryPreference()">
+                            <div class="general-info j-forms">
+                              <div class="row">
+                                <!-- end of table col-lg-6 -->
+                                <div class="col-lg-6" *ngFor="let userProduct of userProducts; let i = index">
+                                  <div class="unit">
+                                    <label class="input select">
+                                      <span>Want {{userProduct.productDesc}}?</span>
+                                      <select name="product{{i}}" [(ngModel)]="userProduct.status">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                      </select>
+                                      <i></i>
+                                    </label>
+                                  </div>
+                                </div>
+                                <!-- end of table col-lg-6 -->
+                              </div>
+                              <!-- end of row -->
+                              <div class="text-center">
+                                <button type="submit" class="btn btn-primary waves-effect waves-light m-r-20"
+                                  [disabled]="loading">Save</button>
+                                <a href="javascript:" class="btn btn-default waves-effect" (click)="isPreferenceEdit=false">Cancel</a>
+                              </div>
+                            </div>
+                          </form>
+                          <!-- end of edit info -->
+                        </div>
+                        <!-- end of col-lg-12 -->
+                      </div>
+                      <!-- end of row -->
+                    </div>
+                    <!-- end of edit-info -->
+                  </ng-template>
+                </div>
+                <!-- end of card-block -->
+              </div>
+            </div>
+            <!-- Recent Orders end -->
           </div>
         </div>
       </div>
