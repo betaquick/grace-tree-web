@@ -3,9 +3,10 @@ import * as _ from 'lodash';
 import { finalize } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
-import { Email, Phone, RegisterUser } from '../../shared/models/user-model';
+import { Email, Phone, RegisterUser, UserProduct } from '../../shared/models/user-model';
 import { UserService } from '../user.service';
 import { PhoneTypes } from '@betaquick/grace-tree-constants';
+import { utils } from '../../shared/utils';
 
 @Component({
   selector: 'app-user-profile',
@@ -18,7 +19,9 @@ import { PhoneTypes } from '@betaquick/grace-tree-constants';
 export class UserProfileComponent implements OnInit {
 
   isProfileEdit: boolean;
+  isPreferenceEdit: boolean;
   user: RegisterUser;
+  userProducts: UserProduct[];
   loading: boolean;
   errorMessage: string;
 
@@ -29,6 +32,7 @@ export class UserProfileComponent implements OnInit {
 
   ngOnInit() {
     this.isProfileEdit = false;
+    this.isPreferenceEdit = false;
     this.loading = false;
     this.user = this.userService.user as RegisterUser;
 
@@ -46,6 +50,21 @@ export class UserProfileComponent implements OnInit {
 
       this.user.phones.push(phone);
     }
+
+    this.userProducts = [new UserProduct()];
+    this.getUserProducts();
+  }
+
+  getUserProducts() {
+    this.userService
+      .getUserProducts()
+      .subscribe(userProducts => this.userProducts = userProducts,
+      err => this.toastr.error(err)
+    );
+  }
+
+  isBoolean(status) {
+    return utils.getBoolean(status) ? "Yes" : "No";
   }
 
   updateprofile() {
@@ -76,6 +95,33 @@ export class UserProfileComponent implements OnInit {
           this.isProfileEdit = false;
           this.user.password = '';
           this.user.confirmPassword = '';
+        },
+        err => this.toastr.error(err)
+      );
+  }
+
+  updateDeliveryPreference() {
+    if (this.loading === true) {
+      return;
+    }
+
+    const userProducts = _.map(this.userProducts, userProduct => {
+      const  { productId, status } = userProduct;
+
+      return {
+        productId,
+        status: utils.getBoolean(status)
+      };
+    });
+
+    this.loading = true;
+
+    this.userService.updateUserProducts(userProducts)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        () => {
+          this.toastr.success('Delivery preference updated successfully');
+          this.isPreferenceEdit = false;
         },
         err => this.toastr.error(err)
       );
