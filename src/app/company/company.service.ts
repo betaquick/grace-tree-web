@@ -52,4 +52,24 @@ export class CompanyService {
         catchError(utils.handleError)
       );
   }
+
+  getCompanyCrews(): Observable<User[]> {
+    return this.http.get(`${AppConfig.API_URL}/user/company/crews`)
+      .pipe(
+        map(response => {
+          const body = _.get(response, 'body');
+          const crews = _.get(body, 'crews');
+
+          return crews;
+        }),
+        catchError(utils.handleError)
+      );
+  }
+
+  deleteCompanyCrew(crewId: number) {
+    return this.http.delete(`${AppConfig.API_URL}/user/company/crews/${crewId}`)
+      .pipe(
+        catchError(utils.handleError)
+      );
+  }
 }
