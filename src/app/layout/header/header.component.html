@@ -20,7 +20,7 @@
         </div>
       </div>
       <a href="dashboard.html">
-        <h3 class="logo">Green Tree</h3>
+        <h3 class="logo">Grace Tree</h3>
       </a>
       <a class="mobile-options">
         <i class="ti-more"></i>
@@ -36,7 +36,7 @@
             </a>
           </div>
         </li>
-        <li class="header-search">
+        <!-- <li class="header-search">
           <div id="main-search" class="main-search morphsearch-search">
             <div class="input-group">
               <span class="input-group-addon search-close" (click)="searchOff()">
@@ -48,12 +48,7 @@
               </span>
             </div>
           </div>
-        </li>
-        <li>
-          <a href="javascript:" (click)="toggleFullScreen()">
-            <i class="ti-fullscreen"></i>
-          </a>
-        </li>
+        </li> -->
       </ul>
       <ul [@mobileHeaderNavRight]="navRight" [ngClass]="navRight" class="nav-right">
         <li (clickOutside)="notificationOutsideClick('live')" class="header-notification" [ngClass]="liveNotificationClass"
@@ -69,30 +64,9 @@
             </li>
             <li>
               <div class="media">
-                <img class="d-flex align-self-center img-radius" src="./files/assets/images/avatar-2.jpg" alt="Generic placeholder image">
                 <div class="media-body">
-                  <h5 class="notification-user">John Doe</h5>
-                  <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                  <span class="notification-time">30 minutes ago</span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="media">
-                <img class="d-flex align-self-center img-radius" src="./files/assets/images/avatar-4.jpg" alt="Generic placeholder image">
-                <div class="media-body">
-                  <h5 class="notification-user">Joseph William</h5>
-                  <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
-                  <span class="notification-time">30 minutes ago</span>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="media">
-                <img class="d-flex align-self-center img-radius" src="./files/assets/images/avatar-3.jpg" alt="Generic placeholder image">
-                <div class="media-body">
-                  <h5 class="notification-user">Sara Soudein</h5>
-                  <p class="notification-msg">Lorem ipsum dolor sit amet, consectetuer elit.</p>
+                  <h5 class="notification-user">New Delivery Alert</h5>
+                  <p class="notification-msg">From Grace Tree Services</p>
                   <span class="notification-time">30 minutes ago</span>
                 </div>
               </div>
@@ -102,20 +76,14 @@
         <li (clickOutside)="notificationOutsideClick('profile')" class="user-profile header-notification" [ngClass]="profileNotificationClass"
           (click)="toggleProfileNotification()">
           <a href="javascript:">
-            <span>Haans & Teens LTD</span>
+            <span>{{user.firstName | titlecase }} {{user.lastName | slice:0:1 | uppercase}}.</span>
             <i class="ti-angle-down"></i>
           </a>
           <ul [@notificationBottom]="profileNotification" class="show-notification profile-notification">
             <li>
-              <a href="company-profile.html">
+              <a [routerLink]="['./', 'profile']">
                 <i class="ti-user"></i>
                 Profile
-              </a>
-            </li>
-            <li>
-              <a href="auth-lock-screen.html">
-                <i class="ti-lock"></i>
-                Lock Screen
               </a>
             </li>
             <li>

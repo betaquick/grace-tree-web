@@ -1,4 +1,5 @@
 import { Product } from './product-model';
+import { UserTypes } from '@betaquick/grace-tree-constants';
 
 export class Phone {
   userPhoneId?: number;
@@ -31,7 +32,7 @@ export class User {
   phones?: Array<Phone>;
   emails?: Array<Email>;
   addresses?: Array<Address>;
-  userType?: String;
+  userType?: UserTypes;
   status?: String;
 }
 

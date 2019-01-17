@@ -3,7 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   { path: 'user', redirectTo: '/user', pathMatch: 'full' },
-  { path: 'company', redirectTo: '/company', pathMatch: 'full' }
+  { path: 'company', redirectTo: '/company', pathMatch: 'full' },
+  { path: '', redirectTo: '/signup', pathMatch: 'full' } 
 ];
 
 @NgModule({

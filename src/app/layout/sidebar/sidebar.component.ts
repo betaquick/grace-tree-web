@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MenuItems } from '../../shared/menu-items/menu-items';
+
+import { User } from '../../shared/models/user-model';
 
 @Component({
   selector: 'app-sidebar',
@@ -8,8 +10,13 @@ import { MenuItems } from '../../shared/menu-items/menu-items';
 })
 export class SidebarComponent implements OnInit {
 
-  constructor(public menuItems: MenuItems) {}
+  @Input('user') user: User;
+  menuItems: MenuItems;
+  
+  constructor() {
+  }
 
   ngOnInit() {
+    this.menuItems = new MenuItems(this.user.userType);
   }
 }
