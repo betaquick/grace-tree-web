@@ -1,0 +1,113 @@
+<div class="pcoded-content">
+  <div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+      <div class="page-wrapper">
+
+        <div class="page-body">
+          <div class="row">
+
+            <div class="col-xl-12 col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5>New Crew</h5>
+                  <div class="card-header-right">
+                  </div>
+                </div>
+                <form class="md-float-material j-forms" #newCrewForm="ngForm" (ngSubmit)="addCompanyCrew()">
+                  <div class="card-block p-3">
+                    <div class="edit-info">
+                      <div class="col-sm-12">
+                        <div class="alert alert-danger background-danger" *ngIf="firstName.dirty && firstName.errors?.required">First
+                          name is required</div>
+                        <div class="alert alert-danger background-danger" *ngIf="lastName.dirty && lastName.errors?.required">Last
+                          name is required</div>
+                        <div class="alert alert-danger background-danger" *ngIf="password.dirty && password.errors?.required">Password
+                          is required</div>
+                        <div class="alert alert-danger background-danger" *ngIf="password.dirty && password.errors?.minlength">Passwors
+                          is too short</div>
+                        <div class="alert alert-danger background-danger" *ngIf="confirmPassword.dirty && confirmPassword.errors?.equalTo">Password
+                          is not the same</div>
+                        <div class="alert alert-danger background-danger" *ngIf="email.dirty && email.errors?.required">Email
+                          is required</div>
+                        <div class="alert alert-danger background-danger" *ngIf="email.dirty && email.errors?.email">Email
+                          is invalid</div>
+                      </div>
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="general-info j-forms">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <div class="j-row">
+                                  <div class="span6 unit">
+                                    <div class="input">
+                                      <input [ngClass]="{'form-control-danger': firstName.dirty && firstName.invalid}"
+                                        [ngModelOptions]="{updateOn: 'blur'}" type="text" class="form-control"
+                                        #firstName="ngModel" placeholder="First Name" id="firstName" name="firstName"
+                                        [(ngModel)]="crew.firstName" required>
+                                    </div>
+                                  </div>
+                                  <div class="span6 unit">
+                                    <div class="input">
+                                      <input [ngClass]="{'form-control-danger': lastName.dirty && lastName.invalid}"
+                                        [ngModelOptions]="{updateOn: 'blur'}" type="text" class="form-control"
+                                        #lastName="ngModel" placeholder="Last Name" id="lastName" name="lastName"
+                                        [(ngModel)]="crew.lastName" required>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="unit">
+                                  <div class="input">
+                                    <input [ngClass]="{'form-control-danger': email.dirty && email.invalid}"
+                                      [ngModelOptions]="{updateOn: 'blur'}" type="email" id="email" name="email" #email="ngModel"
+                                      placeholder="Primary Email" [(ngModel)]="crew.email" required email>
+                                  </div>
+                                </div>
+                                <!-- end name email -->
+                                <!-- start password -->
+                                <div class="j-row">
+                                  <div class="span6 unit">
+                                    <div class="input">
+                                      <input [ngClass]="{'form-control-danger': password.dirty && password.invalid}"
+                                        [ngModelOptions]="{updateOn: 'blur'}" type="password" id="password" name="password"
+                                        #password="ngModel" placeholder="Password" [(ngModel)]="crew.password" required
+                                        minlength="5">
+                                    </div>
+                                  </div>
+                                  <div class="span6 unit">
+                                    <div class="input">
+                                      <input [ngClass]="{'form-control-danger': confirmPassword.dirty && confirmPassword.invalid}"
+                                        [ngModelOptions]="{updateOn: 'blur'}" type="password" id="confirmPassword" name="confirmPassword"
+                                        #confirmPassword="ngModel" placeholder="Confirm Password" [(ngModel)]="crew.confirmPassword"
+                                        [equalTo]="password">
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- end of table col-lg-6 -->
+                            </div>
+                            <!-- end of row -->
+                            <div class="text-center">
+                              <button type="submit" class="btn btn-primary waves-effect waves-light m-r-10"
+                              [disabled]="!newCrewForm.form.valid || loading">Create</button>
+                              <a [routerLink]="['/company/crews']" id="edit-cancel" class="btn btn-default waves-effect">Cancel</a>
+                            </div>
+                          </div>
+                          <!-- end of edit info -->
+                        </div>
+                        <!-- end of col-lg-12 -->
+                      </div>
+                      <!-- end of row -->
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <!-- Recent Orders end -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

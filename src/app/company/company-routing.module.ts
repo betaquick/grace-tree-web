@@ -5,6 +5,8 @@ import { CompanyDashboardComponent } from './company-dashboard/company-dashboard
 import { ContainerComponent } from '../layout/container/container.component';
 import { AuthGuard } from '../auth/auth.guard';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
+import { CompanyCrewComponent } from './company-crew/company-crew.component';
+import { NewCompanyCrewComponent } from './company-crew/new/new-company-crew.component';
 
 const routes: Routes = [{
   path: 'company',
@@ -14,7 +16,9 @@ const routes: Routes = [{
     path: '',
     children: [
       { path: 'dashboard', component: CompanyDashboardComponent },
-      { path: 'profile', component: CompanyProfileComponent }
+      { path: 'profile', component: CompanyProfileComponent },
+      { path: 'crews', component: CompanyCrewComponent },
+      { path: 'crews/new', component: NewCompanyCrewComponent },
     ]
   }]
 }];

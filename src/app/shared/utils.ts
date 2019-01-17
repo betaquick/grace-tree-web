@@ -11,7 +11,7 @@ export const utils = {
     // The backend returned an unsuccessful response code.
     console.error(`Backend returned code ${error.status}, ` + `body was: ${error.error}`);
     const body = _.get(error, 'error.body');
-    const errorMsg = (body instanceof String) ? body : 'Something went wrong. Please contact support!';
+    const errorMsg = (typeof body === 'string') ? body : 'Something went wrong. Please contact support!';
     // return an observable with a user-facing error message
     return _throw(errorMsg);
   },

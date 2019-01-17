@@ -6,7 +6,7 @@ import { SessionStorage } from 'ngx-store';
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
 
-import { User } from '../shared/models/user-model';
+import { User, RegisterUser } from '../shared/models/user-model';
 import { AppConfig } from '../app.config';
 import { utils } from '../shared/utils';
 import { BusinessInfo } from '../shared/models/company-model';
@@ -49,6 +49,34 @@ export class CompanyService {
 
           return { user, company: this.company };
         }),
+        catchError(utils.handleError)
+      );
+  }
+
+  getCompanyCrews(): Observable<User[]> {
+    return this.http.get(`${AppConfig.API_URL}/user/company/crews`)
+      .pipe(
+        map(response => {
+          const body = _.get(response, 'body');
+          const crews = _.get(body, 'crews');
+
+          return crews;
+        }),
+        catchError(utils.handleError)
+      );
+  }
+
+  deleteCompanyCrew(crewId: number) {
+    return this.http.delete(`${AppConfig.API_URL}/user/company/crews/${crewId}`)
+      .pipe(
+        catchError(utils.handleError)
+      );
+  }
+
+  addCompanyCrew(crew: RegisterUser) {
+    return this.http
+      .post(`${AppConfig.API_URL}/user/company/crews`, crew)
+      .pipe(
         catchError(utils.handleError)
       );
   }
