@@ -1,12 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { PhoneTypes } from '@betaquick/grace-tree-constants';
-import {} from 'jasmine'; // TODO: Jasmine Quick fix
+import { SessionStorage } from 'ngx-store';
 
 import { CompanyService } from './company.service';
 import { RegisterUser } from '../shared/models/user-model';
 import { AppConfig } from '../app.config';
 import { BusinessInfo } from '../shared/models/company-model';
+
 
 describe('CompanyService', () => {
   let httpMock;
@@ -19,6 +20,7 @@ describe('CompanyService', () => {
     });
     httpMock = TestBed.get(HttpTestingController);
     companyService = TestBed.get(CompanyService);
+    companyService.company = null;
   });
 
   afterEach(() => {
@@ -44,7 +46,8 @@ describe('CompanyService', () => {
       companyService.getCompanyInfo()
         .subscribe(
           data => {
-            expect(data).toEqual(response);
+            console.log('Here', data);
+            expect(data).toEqual(response.company);
           }
         );
 
@@ -126,6 +129,119 @@ describe('CompanyService', () => {
         );
 
       const req = httpMock.expectOne(`${AppConfig.API_URL}/user/company`);
+      req.flush('System Error', { status: 500, statusText: 'System Error' });
+      httpMock.verify();
+    });
+  });
+
+  describe('Get company crews', () => {
+    const response = {
+      crews: [{
+        firstName: 'Test',
+        lastName: 'Account',
+        email: 'test@email.com',
+      }]
+    };
+
+    it('Get company crews - returns crews', () => {
+      companyService.getCompanyCrews()
+        .subscribe(
+          data => {
+            expect(data).toEqual(response.crews);
+          }
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/company/crews`);
+      expect(req.request.method).toBe('GET');
+      req.flush({body: response});
+      httpMock.verify();
+    });
+
+    it('Error: Get company crews - server returns error', () => {
+      companyService.getCompanyCrews()
+        .subscribe(
+          data => fail('Request failed'),
+          err => expect(err).toEqual('Something went wrong. Please contact support!')
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/company/crews`);
+      req.flush('System Error', { status: 500, statusText: 'System Error' });
+      httpMock.verify();
+    });
+  });
+
+  describe('add company crew', () => {
+    let crew: RegisterUser;
+    const response = {
+      crew: {
+        userId: 1
+      }
+    };
+
+    beforeEach(() => {
+      crew = new RegisterUser();
+      crew.firstName = 'Test';
+      crew.lastName = 'User';
+      crew.password = '1q2w3e4r5t';
+      crew.confirmPassword = '1q2w3e4r5t';
+    });
+
+    it('add company crew - returns crew', () => {
+      companyService.addCompanyCrew(crew)
+        .subscribe(
+          data => {
+            expect(data.body).toEqual(response);
+          }
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/company/crews`);
+      expect(req.request.method).toBe('POST');
+      req.flush({body: response});
+      httpMock.verify();
+    });
+
+    it('Error: add company crew - server returns error', () => {
+      companyService.addCompanyCrew(crew)
+        .subscribe(
+          data => fail('Request failed'),
+          err => expect(err).toEqual('Something went wrong. Please contact support!')
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/company/crews`);
+      req.flush('System Error', { status: 500, statusText: 'System Error' });
+      httpMock.verify();
+    });
+  });
+
+  describe('delete company crew', () => {
+    const response = {
+      crew: {
+        userId: 1
+      }
+    };
+
+    it('delete company crew - returns crew', () => {
+      companyService.deleteCompanyCrew(1)
+        .subscribe(
+          data => {
+            expect(data.body).toEqual(response);
+          }
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/company/crews/1`);
+      expect(req.request.method).toBe('DELETE');
+      req.flush({body: response});
+      httpMock.verify();
+    });
+
+    it('Error: delete company crew - server returns error', () => {
+      companyService.deleteCompanyCrew(1)
+        .subscribe(
+          data => fail('Request failed'),
+          err => expect(err).toEqual('Something went wrong. Please contact support!')
+        );
+
+      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/company/crews/1`);
       req.flush('System Error', { status: 500, statusText: 'System Error' });
       httpMock.verify();
     });

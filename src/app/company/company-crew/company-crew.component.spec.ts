@@ -61,4 +61,51 @@ describe('CompanyCrewComponent', () => {
     expect(routerStub).toBeDefined();
     expect(toastrStub).toBeDefined();
   });
+
+  describe('list crew', () => {
+    it('should successfully list all crews ', fakeAsync(() => {
+      expect(component.crews).toEqual(crews);
+      expect(toastrStub.error.calls.count()).toEqual(0);
+    }));
+
+    it('Error: fails listing all crews - show toast error', fakeAsync(() => {
+      component.crews = [];
+      companyServiceStub.getCompanyCrews.and.returnValue(asyncError(new Error()));
+
+      component.getCompanyCrews();
+      expect(component.loading).toEqual(true);
+
+      tick(100);
+      expect(component.loading).toEqual(false);
+      expect(component.crews).toEqual([]);
+      expect(toastrStub.error.calls.count()).toEqual(1);
+    }));
+  });
+
+  describe('delete crew', () => {
+    const response = { crew: { userId: 1 }};
+
+    it('should successfully delete a crew ', fakeAsync(() => {
+      companyServiceStub.deleteCompanyCrew.and.returnValue(asyncData(response));
+      component.deleteCompanyCrew(1);
+      expect(component.loading).toEqual(true);
+
+      tick(100);
+      expect(component.loading).toEqual(false);
+      expect(toastrStub.success.calls.count()).toEqual(1);
+      expect(toastrStub.error.calls.count()).toEqual(0);
+    }));
+
+    it('Error: fails deleting a crew - show toast error', fakeAsync(() => {
+      companyServiceStub.deleteCompanyCrew.and.returnValue(asyncError(new Error()));
+
+      component.deleteCompanyCrew(1);
+      expect(component.loading).toEqual(true);
+
+      tick(100);
+      expect(component.loading).toEqual(false);
+      expect(toastrStub.success.calls.count()).toEqual(0);
+      expect(toastrStub.error.calls.count()).toEqual(1);
+    }));
+  });
 });
