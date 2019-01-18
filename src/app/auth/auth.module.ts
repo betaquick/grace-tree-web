@@ -17,6 +17,7 @@ import { CompanyVerificationComponent } from './company-registration/verificatio
 import { UserVerificationComponent } from './user-registration/verification/user-verification.component';
 import { AuthService } from './auth.service';
 import { SignupComponent } from './signup/signup.component';
+import { LogoutComponent } from './logout/logout.component';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { SignupComponent } from './signup/signup.component';
     AddBusinessComponent,
     CompanyVerificationComponent,
     UserVerificationComponent,
-    SignupComponent
+    SignupComponent,
+    LogoutComponent
   ]
 })
 export class AuthModule {}

@@ -17,7 +17,7 @@ const routes: Routes = [{
     children: [
       { path: '', component: UserDashboardComponent },
       { path: 'profile', component: UserProfileComponent },
-      { path: 'notification', component: NotificationComponent },
+      { path: 'notifications', component: NotificationComponent },
       { path: '**', component: UserDashboardComponent }
     ]
   }]

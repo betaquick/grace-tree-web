@@ -45,8 +45,8 @@ import { User } from '../../shared/models/user-model';
 })
 export class HeaderComponent implements OnInit {
 
-  @Input('user') user: User;
-  
+  @Input() user: User;
+
   public liveNotification: string;
   public liveNotificationClass: string;
 
@@ -108,4 +108,5 @@ export class HeaderComponent implements OnInit {
       this.searchWidthString = this.searchWidth + 'px';
     }, 35);
   }
+
 }

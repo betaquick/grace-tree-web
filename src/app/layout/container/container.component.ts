@@ -11,7 +11,7 @@ import { User } from '../../shared/models/user-model';
 export class ContainerComponent implements OnInit {
 
   @SessionStorage() user: User = new User();
-  
+
   constructor() {}
 
   ngOnInit() {

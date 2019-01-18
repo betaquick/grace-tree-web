@@ -40,12 +40,20 @@ const USER_MENU = {
     name: 'Notifications',
     type: 'link',
     icon: 'ti-view-grid'
-  }],
+  }]
 };
 
-const COMPANY_MENU = {
+const ADMIN_MENU = {
   label: 'Navigation',
   main: [{
+    state: 'search',
+    main_state: 'company',
+    short_label: 'D',
+    name: 'Search',
+    type: 'sub',
+    icon: 'ti-search'
+  },
+  {
     state: 'dashboard',
     main_state: 'company',
     short_label: 'D',
@@ -76,19 +84,62 @@ const COMPANY_MENU = {
     name: 'Crews',
     type: 'link',
     icon: 'ti-view-grid'
-  }],
+  }]
+};
+
+const CREW_MENU = {
+  label: 'Navigation',
+  main: [{
+    state: 'search',
+    main_state: 'company',
+    short_label: 'D',
+    name: 'Search',
+    type: 'sub',
+    icon: 'ti-search'
+  },
+  {
+    state: 'dashboard',
+    main_state: 'company',
+    short_label: 'D',
+    name: 'Dashboard',
+    type: 'sub',
+    icon: 'ti-home'
+  },
+  {
+    state: 'deliveries',
+    main_state: 'company',
+    short_label: 'D',
+    name: 'Deliveries',
+    type: 'link',
+    icon: 'ti-layout'
+  },
+  {
+    state: 'profile',
+    main_state: 'company',
+    short_label: 'P',
+    name: 'Profile',
+    type: 'link',
+    icon: 'ti-layout-cta-right'
+  }]
 };
 
 @Injectable()
 export class MenuItems {
-  
-  userType: UserTypes;
-  
-  constructor(userType: UserTypes) {
-    this.userType = userType;
-  }
 
-  getAll(): Menu {
-    return (this.userType === UserTypes.General) ? USER_MENU : COMPANY_MENU;
+  userType: UserTypes;
+
+  constructor() {}
+
+  getAll(userType: UserTypes): Menu {
+    if (userType === UserTypes.General) {
+      return USER_MENU;
+
+    } else if (userType === UserTypes.TreeAdmin) {
+      return ADMIN_MENU;
+
+    } else {
+      return CREW_MENU;
+
+    }
   }
 }

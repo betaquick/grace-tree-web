@@ -10,13 +10,13 @@ import { User } from '../../shared/models/user-model';
 })
 export class SidebarComponent implements OnInit {
 
-  @Input('user') user: User;
+  @Input() user: User;
   menuItems: MenuItems;
-  
+
   constructor() {
   }
 
   ngOnInit() {
-    this.menuItems = new MenuItems(this.user.userType);
+    this.menuItems = new MenuItems();
   }
 }
