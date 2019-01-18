@@ -50,6 +50,7 @@ export class RegisterUser {
   lastName: string;
   emails?: Email[];
   email?: string;
+  phoneNumber?: string;
   phones?: Phone[];
   password?: string;
   confirmPassword?: string;
