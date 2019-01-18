@@ -47,11 +47,12 @@ export class Credentials extends User {
 export class RegisterUser {
   firstName: string;
   lastName: string;
-  emails: Email[];
-  phones: Phone[];
-  password: string;
-  confirmPassword: string;
-  userType: string;
+  emails?: Email[];
+  email?: string;
+  phones?: Phone[];
+  password?: string;
+  confirmPassword?: string;
+  userType?: string;
 }
 
 export class UserProduct extends Product {
