@@ -56,15 +56,22 @@
                                     </div>
                                   </div>
                                 </div>
-                                <div class="unit">
+                                <div class="j-row">
+                                  <div class="span6 unit">
                                   <div class="input">
                                     <input [ngClass]="{'form-control-danger': email.dirty && email.invalid}"
                                       [ngModelOptions]="{updateOn: 'blur'}" type="email" id="email" name="email" #email="ngModel"
                                       placeholder="Primary Email" [(ngModel)]="crew.email" required email>
                                   </div>
                                 </div>
-                                <!-- end name email -->
-                                <!-- start password -->
+                                  <div class="span6 unit">
+                                  <div class="input">
+                                    <input [ngClass]="{'form-control-danger': number.dirty && number.invalid}"
+                                      [ngModelOptions]="{updateOn: 'blur'}" type="text" id="number" name="number" #number="ngModel"
+                                      placeholder="Primary Phone" [(ngModel)]="crew.phoneNumber" required phone>
+                                  </div>
+                                </div>
+                                </div>
                                 <div class="j-row">
                                   <div class="span6 unit">
                                     <div class="input">

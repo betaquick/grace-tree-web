@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {animate, AUTO_STYLE, state, style, transition, trigger} from '@angular/animations';
-import * as screenfull from 'screenfull';
+
+import { User } from '../../shared/models/user-model';
 
 @Component({
   selector: 'app-header',
@@ -44,6 +45,8 @@ import * as screenfull from 'screenfull';
 })
 export class HeaderComponent implements OnInit {
 
+  @Input() user: User;
+
   public liveNotification: string;
   public liveNotificationClass: string;
 
@@ -82,12 +85,6 @@ export class HeaderComponent implements OnInit {
     }
   }
 
-  toggleFullScreen() {
-    if (screenfull.enabled) {
-      screenfull.toggle();
-    }
-  }
-
   searchOn() {
     document.querySelector('#main-search').classList.add('open');
     const searchInterval = setInterval(() => {
@@ -111,4 +108,5 @@ export class HeaderComponent implements OnInit {
       this.searchWidthString = this.searchWidth + 'px';
     }, 35);
   }
+
 }

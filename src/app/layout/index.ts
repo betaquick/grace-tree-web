@@ -14,3 +14,7 @@ export const ToastrConfig = {
   timeOut: 8000,
   tapToDismiss: true
 };
+
+export const googleMaps = {
+  apiKey: 'AIzaSyCE0nvTeHBsiQIrbpMVTe489_O5mwyqofk'
+};

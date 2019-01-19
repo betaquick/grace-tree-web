@@ -3,6 +3,8 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from './auth.guard';
 import { LoginComponent } from './login/login.component';
+import { LogoutComponent } from './logout/logout.component';
+import { SignupComponent } from './signup/signup.component';
 import { UserBaseRegistrationComponent } from './user-registration/user-base-registration';
 import { UserRegistrationComponent } from './user-registration/registration/user-registration.component';
 import { AddDeliveryComponent } from './user-registration/add-delivery/add-delivery.component';
@@ -15,6 +17,8 @@ import { CompanyVerificationComponent } from './company-registration/verificatio
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
+  { path: 'logout', component: LogoutComponent },
   {
     path: 'user-registration',
     component: UserBaseRegistrationComponent,

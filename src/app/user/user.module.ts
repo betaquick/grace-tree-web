@@ -8,6 +8,7 @@ import { UserRoutingModule } from './user-routing.module';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserService } from './user.service';
+import { NotificationComponent } from './notification/notification.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,6 @@ import { UserService } from './user.service';
     UiSwitchModule
   ],
   providers: [UserService],
-  declarations: [UserDashboardComponent, UserProfileComponent]
+  declarations: [UserDashboardComponent, UserProfileComponent, NotificationComponent]
 })
 export class UserModule { }
