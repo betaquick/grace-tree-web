@@ -61,7 +61,7 @@ export class AuthService {
     return this.http.post(`${AppConfig.API_URL}/auth/reset-password`, resetPassword)
       .pipe(
         catchError(utils.handleError)
-      ) as Observable<any>;
+      );
   }
 
   addBusinessInfo(businessInfo: BusinessInfo) {
