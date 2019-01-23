@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
@@ -18,6 +19,9 @@ import { AuthDetails } from '../../shared/models/user-model';
 export class ForgotPasswordComponent implements OnInit {
   loading: boolean;
   authUser: AuthDetails;
+
+  @ViewChild("forgotPasswordForm")
+  forgotPasswordForm: NgForm;
 
   constructor(
     private authService: AuthService,
@@ -39,7 +43,11 @@ export class ForgotPasswordComponent implements OnInit {
       .requestResetPassword(this.authUser.email)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-        response => this.toastr.success(response.message),
+        response => {
+          this.toastr.success(response.message);
+          this.authUser.email = '';
+          this.forgotPasswordForm.resetForm();
+        },
         err => this.toastr.error(err)
       );
   }
