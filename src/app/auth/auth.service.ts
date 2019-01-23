@@ -6,7 +6,7 @@ import * as _ from 'lodash';
 import { SessionStorage } from 'ngx-store';
 
 import { AppConfig } from '../app.config';
-import { AuthDetails, Credentials, User, RegisterUser, DeliveryInfo, Email, Phone } from '../shared/models/user-model';
+import { AuthDetails, Credentials, User, RegisterUser, DeliveryInfo, ResetPasswordDetails } from '../shared/models/user-model';
 import { utils } from '../shared/utils';
 import { BusinessInfo } from '../shared/models/company-model';
 import { Product } from '../shared/models/product-model';
@@ -39,6 +39,29 @@ export class AuthService {
         map(this.handleSuccessAuth.bind(this)),
         catchError(utils.handleError)
       );
+  }
+
+  requestResetPassword(email: string): Observable<any> {
+    return this.http
+      .post(`${AppConfig.API_URL}/auth/forgot-password`, { email })
+      .pipe(
+        catchError(utils.handleError)
+      );
+  }
+
+  confirmResetPasswordToken(token: string): Observable<User> {
+    return this.http.get(`${AppConfig.API_URL}/auth/reset/${token}`)
+      .pipe(
+        map(response => response['body']),
+        catchError(utils.handleError)
+      );
+  }
+
+  resetPassword(resetPassword: ResetPasswordDetails) {
+    return this.http.post(`${AppConfig.API_URL}/auth/reset-password`, resetPassword)
+      .pipe(
+        catchError(utils.handleError)
+      ) as Observable<any>;
   }
 
   addBusinessInfo(businessInfo: BusinessInfo) {
@@ -91,7 +114,6 @@ export class AuthService {
   }
 
   private handleSuccessAuth(response) {
-
     const credentials = _.get(response, 'body');
     this.token = _.get(credentials, 'token');
     this.user = _.get(credentials, 'user');

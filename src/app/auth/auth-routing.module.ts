@@ -14,10 +14,14 @@ import { CompanyBaseRegistrationComponent } from './company-registration/company
 import { CompanyRegistrationComponent } from './company-registration/registration/company-registration.component';
 import { AddBusinessComponent } from './company-registration/add-business/add-business.component';
 import { CompanyVerificationComponent } from './company-registration/verification/company-verification.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset/:token', component: ResetPasswordComponent },
   { path: 'logout', component: LogoutComponent },
   {
     path: 'user-registration',
