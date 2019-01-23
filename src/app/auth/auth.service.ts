@@ -52,7 +52,7 @@ export class AuthService {
   confirmResetPasswordToken(token: string): Observable<User> {
     return this.http.get(`${AppConfig.API_URL}/auth/reset/${token}`)
       .pipe(
-        map(response => response['body']),
+        map(response => _.get(response, 'body')),
         catchError(utils.handleError)
       );
   }
@@ -68,7 +68,7 @@ export class AuthService {
     return this.http
       .post(`${AppConfig.API_URL}/user/company`, businessInfo)
       .pipe(
-        map(response => response['body']),
+        map(response => _.get(response, 'body')),
         catchError(utils.handleError)
       );
   }
@@ -76,7 +76,7 @@ export class AuthService {
   getProducts(): Observable<Product[]> {
     return this.http.get(`${AppConfig.API_URL}/products`)
       .pipe(
-        map(response => response['body']['products']),
+        map(response => _.get(response, 'body.products')),
         catchError(utils.handleError)
       );
   }
@@ -84,7 +84,7 @@ export class AuthService {
   addDeliveryInfo(deliveryInfo: DeliveryInfo) {
     return this.http.post(`${AppConfig.API_URL}/user/new-delivery-info`, deliveryInfo)
       .pipe(
-        map(response => response['body']),
+        map(response => _.get(response, 'body')),
         catchError(utils.handleError)
       );
   }
@@ -92,7 +92,7 @@ export class AuthService {
   acceptAgreement() {
     return this.http.post(`${AppConfig.API_URL}/user/agreement`, null)
       .pipe(
-        map(response => response['body']),
+        map(response => _.get(response, 'body')),
         catchError(utils.handleError)
       );
   }
@@ -100,7 +100,7 @@ export class AuthService {
   /* verify(body: Email | Phone, verifyType: string) {
     return this.http.post(`${AppConfig.API_URL}/auth/verify`, { body, verifyType })
       .pipe(
-        map(response => response['body']),
+        map(response => _.get(response, 'body')),
         catchError(utils.handleError)
       );
   } */
@@ -108,7 +108,7 @@ export class AuthService {
   validateToken(verifyType: string, token: string) {
     return this.http.put(`${AppConfig.API_URL}/auth/validate/${verifyType}/${token}`, null)
       .pipe(
-        map(response => response['body']),
+        map(response => _.get(response, 'body')),
         catchError(utils.handleError)
       );
   }
