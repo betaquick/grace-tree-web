@@ -20,7 +20,7 @@ export class ForgotPasswordComponent implements OnInit {
   loading: boolean;
   authUser: AuthDetails;
 
-  @ViewChild("forgotPasswordForm")
+  @ViewChild('forgotPasswordForm')
   forgotPasswordForm: NgForm;
 
   constructor(
