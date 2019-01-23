@@ -18,6 +18,8 @@ import { UserVerificationComponent } from './user-registration/verification/user
 import { AuthService } from './auth.service';
 import { SignupComponent } from './signup/signup.component';
 import { LogoutComponent } from './logout/logout.component';
+import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 
 @NgModule({
   imports: [
@@ -32,6 +34,8 @@ import { LogoutComponent } from './logout/logout.component';
   ],
   declarations: [
     LoginComponent,
+    ForgotPasswordComponent,
+    ResetPasswordComponent,
     UserBaseRegistrationComponent,
     UserRegistrationComponent,
     AddDeliveryComponent,

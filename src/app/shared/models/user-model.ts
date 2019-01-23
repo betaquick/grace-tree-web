@@ -41,6 +41,12 @@ export class AuthDetails {
   password: string;
 }
 
+export class ResetPasswordDetails {
+  token: string;
+  password: string;
+  confirmPassword: string;
+}
+
 export class Credentials extends User {
   token: string;
 }

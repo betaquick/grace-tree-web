@@ -45,7 +45,6 @@ describe('CompanyService', () => {
       companyService.getCompanyInfo()
         .subscribe(
           data => {
-            console.log('Here', data);
             expect(data).toEqual(response.company);
           }
         );
