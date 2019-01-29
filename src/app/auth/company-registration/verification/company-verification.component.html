@@ -51,14 +51,14 @@
                 </p>
   
                 <div>
-                  <form class="j-forms" novalidate #emailForm="ngForm" (ngSubmit)="verifyEmail()">
+                  <form class="j-forms" novalidate #emailForm="ngForm" (ngSubmit)="emailForm.form.valid && verifyEmail()">
                     <label class="label" for="email">Send verification link</label>
                     <div class="span8">
                       <input [ngClass]="{'form-control-danger': email.dirty && email.invalid}" #emailText="ngModel" id="email"
                         name="email" type="email" [(ngModel)]="email.emailAddress" required>
                     </div>
                     <div class="btn-group">
-                      <button class="btn btn-primary submit" type="submit" [disabled]="!emailForm.form.valid || loading">Send</button>
+                      <button class="btn btn-primary submit" type="submit" [disabled]="loading">Send</button>
                     </div>
                   </form>
                 </div>
@@ -86,14 +86,14 @@
                 </p>
   
                 <div>
-                  <form class="j-forms" novalidate #phoneForm="ngForm" (ngSubmit)="verifyPhone()">
+                  <form class="j-forms" novalidate #phoneForm="ngForm" (ngSubmit)="phoneForm.form.valid && verifyPhone()">
                     <label class="label" for="phone">Send verification link</label>
                     <div class="span8">
                       <input [ngClass]="{'form-control-danger': phone.dirty && phone.invalid}" #phoneText="ngModel" id="phone"
                         name="phone" type="text" [(ngModel)]="phone.phoneNumber" required>
                     </div>
                     <div class="btn-group">
-                      <button class="btn btn-primary submit" type="submit" [disabled]="!phoneForm.form.valid || loading">Send</button>
+                      <button class="btn btn-primary submit" type="submit" [disabled]="loading">Send</button>
                     </div>
                   </form>
                 </div>

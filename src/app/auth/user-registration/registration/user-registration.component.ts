@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap, } from '@angular/router';
+import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { UserTypes, PhoneTypes } from '@betaquick/grace-tree-constants';
 import * as _ from 'lodash';
