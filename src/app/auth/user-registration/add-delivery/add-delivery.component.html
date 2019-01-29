@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="login-card card-block auth-body mr-auto ml-auto">
-          <form class="md-float-material j-forms" #deliveryForm="ngForm" (ngSubmit)="addDeliveryInfo()">
+          <form class="md-float-material j-forms" #deliveryForm="ngForm" (ngSubmit)="deliveryForm.form.valid && addDeliveryInfo()">
             <div class="text-center">
               <h3 class="logo">Green Tree</h3>
             </div>
@@ -76,7 +76,7 @@
               <div class="j-row">
                 <div class="col-12">
                   <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
-                    [disabled]="!deliveryForm.form.valid || loading">Register</button>
+                    [disabled]="loading">Register</button>
                 </div>
               </div>
             </div>

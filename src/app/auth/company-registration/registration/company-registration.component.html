@@ -5,7 +5,7 @@
       <div class="col-sm-12">
         <!-- Authentication card start -->
         <div class="login-card card-block auth-body mr-auto ml-auto">
-          <form class="md-float-material j-forms" #registerForm="ngForm" (ngSubmit)="register()">
+          <form class="md-float-material j-forms" #registerForm="ngForm" (ngSubmit)="registerForm.form.valid && register()">
             <div class="text-center">
               <h3 class="logo">Grace Tree</h3>
             </div>
@@ -94,7 +94,7 @@
               <div class="j-row">
                 <div class="col-12">
                   <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
-                    [disabled]="!registerForm.form.valid || loading">Continue</button>
+                    [disabled]="loading">Continue</button>
                 </div>
               </div>
               <hr />
