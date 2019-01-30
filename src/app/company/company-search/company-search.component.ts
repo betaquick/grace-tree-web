@@ -1,4 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { finalize } from 'rxjs/operators';
+import { UserStatus } from '@betaquick/grace-tree-constants';
+
+import { CompanyService } from '../company.service';
+import { User } from '../../shared/models/user-model';
 
 @Component({
   selector: 'app-company-search',
@@ -8,10 +14,11 @@ import { Component, OnInit } from '@angular/core';
 export class CompanySearchComponent implements OnInit {
 
   mapView = true;
+  userStatus = UserStatus;
 
-  // Default params
-  lat = 21.1591857;
-  lng = 72.7522563;
+  // initial center position for the map
+  lat: number;
+  lng: number;
   zoom = 8;
 
   styles: any = [{
@@ -35,12 +42,53 @@ export class CompanySearchComponent implements OnInit {
     }]
   }];
 
-  constructor() { }
+  users = [];
+  loading: boolean;
+  searchParams = {
+    address: '',
+    radius: 30
+  };
+
+  constructor(
+    private companyService: CompanyService,
+    private toastr: ToastrService,
+  ) { }
 
   ngOnInit() {
+    this.loading = false;
+
+    this.lat = 37.4219931;
+    this.lng = -122.0851244;
   }
 
   toggleListMapView() {
     this.mapView = !this.mapView;
+  }
+
+  search() {
+    this.loading = true;
+
+    this.companyService.searchUsers(this.searchParams.address, this.searchParams.radius)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        data => {
+          this.users = data.users;
+          this.lat = data.coordinates.lat;
+          this.lng = data.coordinates.lng;
+        },
+        err => this.toastr.error(err)
+      );
+  }
+
+  convertToNumber(str: string) {
+    return parseFloat(str);
+  }
+
+  getIconURL(status: string) {
+    if (status === this.userStatus.Ready) {
+      return '../../../assets/images/marker-green.png';
+    }
+
+    return '../../../assets/images/marker-yellow.png';
   }
 }
