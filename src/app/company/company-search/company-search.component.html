@@ -20,8 +20,9 @@
                       <div class="">
                         <form #searchForm="ngForm" (ngSubmit)="searchForm.form.valid && search()">
                           <div class="input-group input-group-button">
-                            <input type="text" [ngClass]="{'form-control-danger': errorMessage}" class="form-control"
-                              placeholder="Enter Address" name="address" [(ngModel)]="searchParams.address" required>
+                            <input type="text" [ngClass]="{'form-control-danger': address.dirty && address.invalid}"
+                              [ngModelOptions]="{updateOn: 'blur'}" class="form-control" placeholder="Enter Address"
+                              name="address" #address="ngModel" [(ngModel)]="searchParams.address" required>
                             <select class="input-group-append" name="radius" [(ngModel)]="searchParams.radius">
                               <option value="50">50 miles</option>
                               <option value="40">40 miles</option>
