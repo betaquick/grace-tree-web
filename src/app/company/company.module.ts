@@ -12,13 +12,14 @@ import { CompanyCrewComponent } from './company-crew/company-crew.component';
 import { NewCompanyCrewComponent } from './company-crew/new/new-company-crew.component';
 import { CompanySearchComponent } from './company-search/company-search.component';
 import { CompanyDeliveriesComponent } from './company-deliveries/company-deliveries.component';
-import { googleMaps } from '../layout';
 import { ModalBasicComponent } from '../shared/modal-basic/modal-basic.component';
 import { SetupDeliveryComponent } from './setup-delivery/setup-delivery.component';
 
 @NgModule({
   imports: [
-    AgmCoreModule.forRoot(googleMaps),
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyA-cbjuj3-Cr63P-Y-6GfSRPcLh5FZISfE'
+    }),
     CommonModule,
     CompanyRoutingModule,
     FormsModule,

@@ -1,10 +1,25 @@
 agm-map {
-  height: 350px;
+  height: 450px;
+
+  .title {
+    margin: 10px 0;
+  }
+
+  .body {
+    margin-bottom: 10px;
+    font-size: 14px;
+    font-weight: 400;
+  }
 }
+
 .pcoded-content {
   margin-left: 235px;
 }
 
 .alert {
   margin-bottom: 10px;
+}
+
+.input-group-append {
+  margin-left: 10px;
 }

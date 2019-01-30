@@ -1,210 +1,142 @@
 <div class="pcoded-content">
-	<div class="pcoded-inner-content">
-		<!-- Main-body start -->
-		<div class="main-body">
-			<div class="page-wrapper">
-				<!-- Page-header start -->
+  <div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+      <div class="page-wrapper">
+        <!-- Page-header start -->
 
-				<!-- Page body start -->
-				<div class="page-body">
-					<div class="row">
-						<div class="col-sm-12">
-							<!-- Google map search card start -->
-							<div class="card">
-								<div class="card-header">
-									<h5>Search For Recipients</h5>
-								</div>
-								<div class="card-block">
-									<div class="row">
-										<div class="col-xl-12">
-											<div class="">
-												<form method="post" id="address-search">
-													<div class="input-group input-group-button">
-														<input type="text" class="form-control" placeholder="Enter address">
-														<div class="input-group-append">
-                               <button type="submit" class="btn btn-primary">Search</button>
+        <!-- Page body start -->
+        <div class="page-body">
+          <div class="row">
+            <div class="col-sm-12">
+              <!-- Google map search card start -->
+              <div class="card">
+                <div class="card-header">
+                  <h5>Search For Recipients</h5>
+                </div>
+                <div class="card-block">
+                  <div class="row">
+                    <div class="col-xl-12">
+                      <div class="">
+                        <form #searchForm="ngForm" (ngSubmit)="searchForm.form.valid && search()">
+                          <div class="input-group input-group-button">
+                            <input type="text" [ngClass]="{'form-control-danger': errorMessage}" class="form-control"
+                              placeholder="Enter Address" name="address" [(ngModel)]="searchParams.address" required>
+                            <select class="input-group-append" name="radius" [(ngModel)]="searchParams.radius">
+                              <option value="50">50 miles</option>
+                              <option value="40">40 miles</option>
+                              <option value="30">30 miles</option>
+                              <option value="20">20 miles</option>
+                              <option value="10">10 miles</option>
+                            </select>
+                            <div class="input-group-append">
+                              <button type="submit" class="btn btn-primary" [disabled]="loading">Search</button>
                             </div>
-													</div>
-												</form>
-											</div>
-											<div class="clearfix"></div>
-											<br>
-											<div class="gmap1 full-page-google-map" *ngIf="mapView">
-												<agm-map [latitude]="lat" [longitude]="lng" [zoom]="zoom" [styles]="styles"></agm-map>
-											</div>
+                          </div>
+                        </form>
+                      </div>
+                      <div class="clearfix"></div>
+                      <br>
+                      <div class="gmap1 full-page-google-map" *ngIf="mapView">
+                        <agm-map [latitude]="convertToNumber(lat)" [longitude]="convertToNumber(lng)" [zoom]="zoom">
+                          <agm-marker
+                            *ngFor="let user of users;"
+                            [latitude]="convertToNumber(user.latitude)"
+                            [longitude]="convertToNumber(user.longitude)"
+                            [iconUrl]="'../../../assets/images/marker-yellow.png'"
+                            [markerDraggable]="true">
+                            <agm-info-window>
+                              <h5 class="title">{{user.firstName}} {{user.lastName}}</h5>
+                              <h6 class="body">{{user.email}}</h6>
+                              <h6 class="body">{{user.phoneNumber}}</h6>
+                              <h6 class="body">
+                                <span class="label label-warning" *ngIf="user.status === userStatus.Pause">Pause</span>
+                                <span class="label label-success" *ngIf="user.status === userStatus.Ready">Ready</span>
+                              </h6>
+                            </agm-info-window>
+                          </agm-marker>
 
-											<div class="table-responsive" *ngIf="!mapView">
+                          <agm-marker
+                            [latitude]="lat"
+                            [longitude]="lng"
+                            [iconUrl]="'../../../assets/images/marker-red.png'"
+                            [markerDraggable]="false">
+                          </agm-marker>
+                        </agm-map>
+                      </div>
 
-												<table class="table">
-													<tr>
-														<th>Status</th>
-														<th>Zipcode</th>
-														<th>Recipient</th>
-														<th>Email Address</th>
-														<th>Phone Number</th>
-														<th>Delivery Note</th>
-														<td></td>
-													</tr>
-													<tr>
-														<td><span class="label label-success">Ready</span></td>
-														<td>002413</td>
-														<td>Jane Elliott</td>
-														<td>johndoe@example.com</td>
-														<td>01 079 959 595</td>
-														<td>
-															<button (click)="modalDefault.show()" class="btn btn-sm btn-outline-primary">View Note</button>
-														</td>
-														<td>
-															<a [routerLink]="['./setup-delivery']" class="btn btn-primary btn-sm">Setup Delivery</a>
-														</td>
-													</tr>
-													<tr>
-														<td><span class="label label-success">Ready</span></td>
-														<td>002344</td>
-														<td>John Deo</td>
-														<td>johndoe@example.com</td>
-														<td>01 079 959 595</td>
-														<td>
-															<button (click)="modalDefault.show()" class="btn btn-sm btn-outline-primary">View Note</button>
-														</td>
-														<td>
-															<a [routerLink]="['./setup-delivery']" class="btn btn-primary btn-sm">Setup Delivery</a>
-														</td>
-													</tr>
-													<tr>
-														<td><span class="label label-success">Ready</span></td>
-														<td>002653</td>
-														<td>Eugine Turner</td>
-														<td>johndoe@example.com</td>
-														<td>01 079 959 595</td>
-														<td>
-															<button (click)="modalDefault.show()" class="btn btn-sm btn-outline-primary">View Note</button>
-														</td>
-														<td>
-															<a [routerLink]="['./setup-delivery']" class="btn btn-primary btn-sm">Setup Delivery</a>
-														</td>
-													</tr>
-													<tr>
-														<td><span class="label label-success">Ready</span></td>
-														<td>002156</td>
-														<td>Jacqueline Howell</td>
-														<td>johndoe@example.com</td>
-														<td>01 079 959 595</td>
-														<td>
-															<button (click)="modalDefault.show()" class="btn btn-sm btn-outline-primary">View Note</button>
-														</td>
-														<td>
-															<a [routerLink]="['./setup-delivery']" class="btn btn-primary btn-sm">Setup Delivery</a>
-														</td>
-													</tr>
-													<tr>
-														<td><span class="label label-success">Ready</span></td>
-														<td>002344</td>
-														<td>John Deo</td>
-														<td>johndoe@example.com</td>
-														<td>01 079 959 595</td>
-														<td>
-															<button (click)="modalDefault.show()" class="btn btn-sm btn-outline-primary">View Note</button>
-														</td>
-														<td>
-															<a [routerLink]="['./setup-delivery']" class="btn btn-primary btn-sm">Setup Delivery</a>
-														</td>
-													</tr>
-													<tr>
-														<td><span class="label label-success">Ready</span></td>
-														<td>002344</td>
-														<td>John Deo</td>
-														<td>johndoe@example.com</td>
-														<td>01 079 959 595</td>
-														<td>
-															<button (click)="modalDefault.show()" class="btn btn-sm btn-outline-primary">View Note</button>
-														</td>
-														<td>
-															<a [routerLink]="['./setup-delivery']" class="btn btn-primary btn-sm">Setup Delivery</a>
-														</td>
-													</tr>
-													<tr>
-														<td><span class="label label-success">Ready</span></td>
-														<td>002653</td>
-														<td>Eugine Turner</td>
-														<td>johndoe@example.com</td>
-														<td>01 079 959 595</td>
-														<td>
-															<button (click)="modalDefault.show()" class="btn btn-sm btn-outline-primary">View Note</button>
-														</td>
-														<td>
-															<a [routerLink]="['./setup-delivery']" class="btn btn-primary btn-sm">Setup Delivery</a>
-														</td>
-													</tr>
-													<tr>
-														<td><span class="label label-warning">Pause</span></td>
-														<td>002156</td>
-														<td>Jacqueline Howell</td>
-														<td>johndoe@example.com</td>
-														<td>01 079 959 595</td>
-														<td>
-															<button (click)="modalDefault.show()" class="btn btn-sm btn-outline-primary">View Note</button>
-														</td>
-														<td>
-															<a [routerLink]="['./setup-delivery']" class="btn btn-primary btn-sm">Setup Delivery</a>
-														</td>
-													</tr>
-													<tr>
-														<td><span class="label label-success">Ready</span></td>
-														<td>002344</td>
-														<td>John Deo</td>
-														<td>johndoe@example.com</td>
-														<td>01 079 959 595</td>
-														<td>
-															<button (click)="modalDefault.show()" class="btn btn-sm btn-outline-primary">View Note</button>
-														</td>
-														<td>
-															<a [routerLink]="['./setup-delivery']" class="btn btn-primary btn-sm">Setup Delivery</a>
-														</td>
-													</tr>
-												</table>
+                      <div class="table-responsive" *ngIf="!mapView">
 
-											</div>
+                        <table class="table">
+                          <tr>
+                            <th>Status</th>
+                            <th>Zipcode</th>
+                            <th>Recipient</th>
+                            <th>Email Address</th>
+                            <th>Phone Number</th>
+                            <th>Delivery Note</th>
+                            <td></td>
+                          </tr>
+                          <tr *ngFor="let user of users;">
+                            <td>
+                              <span class="label label-warning" *ngIf="user.status === userStatus.Pause">Pause</span>
+                              <span class="label label-success" *ngIf="user.status === userStatus.Ready">Ready</span>
+                            </td>
+                            <td>{{user.zip}}</td>
+                            <td>{{user.firstName}} {{user.lastName}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.phoneNumber}}</td>
+                            <td>
+                              <button (click)="modalDefault.show()" class="btn btn-sm btn-outline-primary">View Note</button>
+                            </td>
+                            <td>
+                              <a [routerLink]="['./setup-delivery']" class="btn btn-primary btn-sm">Setup Delivery</a>
+                            </td>
+                          </tr>
+                        </table>
 
-											<!-- start -->
-											<div class="clearfix"></div>
-											<br>
-											<div class="map-toolbar">
-												<div class="row">
-													<div class="col-xl-12 text-center location-mob-btn">
-														<div class="btn-group">
-															<button type="button" class="btn btn-danger" id="map-unzoom">-</button>
-															<button type="button" class="btn btn-danger" id="map-resetzoom">Reset</button>
-															<button type="button" class="btn btn-danger" id="map-zoom">+</button>
-														</div>
-														&nbsp;
-														<button class="btn btn-primary" (click)="toggleListMapView()">List View</button>
-													</div>
-												</div>
-											</div>
-										</div>
-										<!-- end -->
-									</div>
-								</div>
-							</div>
-							<!-- Google map search card end -->
-						</div>
-					</div>
-				</div>
-				<!-- Page body end -->
-			</div>
-		</div>
-	</div>
+                      </div>
+
+                      <!-- start -->
+                      <div class="clearfix"></div>
+                      <br>
+                      <div class="map-toolbar">
+                        <div class="row">
+                          <div class="col-xl-12 text-center location-mob-btn">
+                            <div class="btn-group" *ngIf="mapView">
+                              <button type="button" class="btn btn-danger" id="map-unzoom">-</button>
+                              <button type="button" class="btn btn-danger" id="map-resetzoom">Reset</button>
+                              <button type="button" class="btn btn-danger" id="map-zoom">+</button>
+                            </div>
+                            &nbsp;
+                            <button class="btn btn-primary" (click)="toggleListMapView()" *ngIf="mapView">List View</button>
+                            <button class="btn btn-primary" (click)="toggleListMapView()" *ngIf="!mapView">Map View</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- end -->
+                  </div>
+                </div>
+              </div>
+              <!-- Google map search card end -->
+            </div>
+          </div>
+        </div>
+        <!-- Page body end -->
+      </div>
+    </div>
+  </div>
 </div>
 
 <app-modal-basic #modalDefault>
-	<div class="app-modal-header">
-		<h4 class="modal-title">Jane Elliott Note</h4>
-		<button type="button" class="close basic-close" (click)="modalDefault.hide()">
-                                    <span aria-hidden="true">&times;</span>
-                                  </button>
-	</div>
-	<div class="app-modal-body">
-		<p>Lorem ipsum dolor sit amet, consectetur adipiscing lorem impus dolorsit.onsectetur adipiscing</p>
-	</div>
+  <div class="app-modal-header">
+    <h4 class="modal-title">Jane Elliott Note</h4>
+    <button type="button" class="close basic-close" (click)="modalDefault.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing lorem impus dolorsit.onsectetur adipiscing</p>
+  </div>
 </app-modal-basic>

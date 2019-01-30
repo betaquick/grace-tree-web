@@ -80,4 +80,16 @@ export class CompanyService {
         catchError(utils.handleError)
       );
   }
+
+  searchUsers(address: string, radius: number): Observable<any> {
+    return this.http.get(`${AppConfig.API_URL}/search?address=${address}&radius=${radius}`)
+      .pipe(
+        map(response => {
+          const body = _.get(response, 'body');
+
+          return body;
+        }),
+        catchError(utils.handleError)
+      );
+  }
 }
