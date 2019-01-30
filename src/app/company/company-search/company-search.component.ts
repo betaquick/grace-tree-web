@@ -80,4 +80,12 @@ export class CompanySearchComponent implements OnInit {
   convertToNumber(str: string) {
     return parseFloat(str);
   }
+
+  getIconURL(status: string) {
+    if (status === this.userStatus.Pause) {
+      return '../../../assets/images/marker-yellow.png';
+    }
+
+    return '../../../assets/images/marker-green.png';
+  }
 }

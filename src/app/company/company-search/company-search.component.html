@@ -43,8 +43,8 @@
                             *ngFor="let user of users;"
                             [latitude]="convertToNumber(user.latitude)"
                             [longitude]="convertToNumber(user.longitude)"
-                            [iconUrl]="'../../../assets/images/marker-yellow.png'"
-                            [markerDraggable]="true">
+                            [iconUrl]="getIconURL(user.status)"
+                            [markerDraggable]="false">
                             <agm-info-window>
                               <h5 class="title">{{user.firstName}} {{user.lastName}}</h5>
                               <h6 class="body">{{user.email}}</h6>
