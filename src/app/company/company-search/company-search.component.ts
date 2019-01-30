@@ -17,8 +17,8 @@ export class CompanySearchComponent implements OnInit {
   userStatus = UserStatus;
 
   // initial center position for the map
-  lat: number = 37.4219931;
-  lng: number = -122.0851244;
+  lat: number;
+  lng: number;
   zoom = 8;
 
   styles: any = [{
@@ -45,7 +45,7 @@ export class CompanySearchComponent implements OnInit {
   users = [];
   loading: boolean;
   searchParams = {
-    address: "",
+    address: '',
     radius: 30
   };
 
@@ -56,6 +56,9 @@ export class CompanySearchComponent implements OnInit {
 
   ngOnInit() {
     this.loading = false;
+
+    this.lat = 37.4219931;
+    this.lng = -122.0851244;
   }
 
   toggleListMapView() {
