@@ -82,10 +82,10 @@ export class CompanySearchComponent implements OnInit {
   }
 
   getIconURL(status: string) {
-    if (status === this.userStatus.Pause) {
-      return '../../../assets/images/marker-yellow.png';
+    if (status === this.userStatus.Ready) {
+      return '../../../assets/images/marker-green.png';
     }
 
-    return '../../../assets/images/marker-green.png';
+    return '../../../assets/images/marker-yellow.png';
   }
 }
