@@ -43,6 +43,8 @@ export class CompanySearchComponent implements OnInit {
   }];
 
   users = [];
+  user = {};
+
   loading: boolean;
   searchParams = {
     address: '',
@@ -90,5 +92,11 @@ export class CompanySearchComponent implements OnInit {
     }
 
     return '../../../assets/images/marker-yellow.png';
+  }
+
+  openNote(modal: any, user) {
+    this.user = user;
+
+    modal.show();
   }
 }
