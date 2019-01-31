@@ -47,12 +47,18 @@
                             [iconUrl]="getIconURL(user.status)"
                             [markerDraggable]="false">
                             <agm-info-window>
-                              <h5 class="title">{{user.firstName}} {{user.lastName}}</h5>
+                              <h5 class="title">
+                                {{user.firstName}} {{user.lastName}}
+                                <span class="label label-warning" *ngIf="user.status === userStatus.Pause">Pause</span>
+                                <span class="label label-success" *ngIf="user.status === userStatus.Ready">Ready</span>
+                              </h5>
                               <h6 class="body">{{user.email}}</h6>
                               <h6 class="body">{{user.phoneNumber}}</h6>
                               <h6 class="body">
-                                <span class="label label-warning" *ngIf="user.status === userStatus.Pause">Pause</span>
-                                <span class="label label-success" *ngIf="user.status === userStatus.Ready">Ready</span>
+                                <button (click)="openNote(modalDefault, user)" class="btn btn-sm btn-outline-primary" *ngIf="user.deliveryInstruction">
+                                  View Note
+                                </button>
+                                <a [routerLink]="['./setup-delivery']" class="btn btn-primary btn-sm">Setup Delivery</a>
                               </h6>
                             </agm-info-window>
                           </agm-marker>
@@ -88,7 +94,10 @@
                             <td>{{user.email}}</td>
                             <td>{{user.phoneNumber}}</td>
                             <td>
-                              <button (click)="modalDefault.show()" class="btn btn-sm btn-outline-primary">View Note</button>
+                              <button (click)="openNote(modalDefault, user)" class="btn btn-sm btn-outline-primary" *ngIf="user.deliveryInstruction">
+                                View Note
+                              </button>
+                              <span *ngIf="!user.deliveryInstruction">No Note</span>
                             </td>
                             <td>
                               <a [routerLink]="['./setup-delivery']" class="btn btn-primary btn-sm">Setup Delivery</a>
@@ -132,12 +141,12 @@
 
 <app-modal-basic #modalDefault>
   <div class="app-modal-header">
-    <h4 class="modal-title">Jane Elliott Note</h4>
+    <h4 class="modal-title">{{user.firstName}} {{user.lastName}}'s Note</h4>
     <button type="button" class="close basic-close" (click)="modalDefault.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="app-modal-body">
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing lorem impus dolorsit.onsectetur adipiscing</p>
+    <p>{{user.deliveryInstruction}}</p>
   </div>
 </app-modal-basic>
