@@ -44,7 +44,7 @@ export class CompanySearchComponent implements OnInit {
 
   users = [];
   user = {};
-  
+
   loading: boolean;
   searchParams = {
     address: '',
