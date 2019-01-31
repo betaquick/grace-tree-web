@@ -43,7 +43,7 @@ export class CompanySearchComponent implements OnInit {
   }];
 
   users = [];
-  user = {};
+  user: any = {};
 
   loading: boolean;
   searchParams = {
