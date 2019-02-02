@@ -43,8 +43,10 @@ export class UserAddressComponent implements OnInit {
 
     this.userService.getUserAddress()
       .subscribe(addy => {
-        this.address = addy;
-        this.newAddress = Object.assign({}, addy);
+        if (addy !== undefined) {
+          this.address = addy;
+        }
+        this.newAddress = Object.assign({}, this.address);
       }, err => this.toastr.error(err));
 
   }
