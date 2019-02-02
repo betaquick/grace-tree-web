@@ -9,6 +9,16 @@ import { UserProfileComponent } from './user-profile.component';
 import { UserService } from '../user.service';
 import { DummyComponent, asyncData, asyncError } from '../../testing/helpers';
 import { RegisterUser } from '../../shared/models/user-model';
+import { Component } from '@angular/core';
+
+
+@Component({
+  // tslint:disable-next-line
+  selector: 'app-user-profile-address',
+  template: ''
+})
+class UserProfileAddressStubComponent {
+}
 
 describe('UserProfileComponent', () => {
   let component: UserProfileComponent;
@@ -51,7 +61,11 @@ describe('UserProfileComponent', () => {
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes(routes), FormsModule, CustomFormsModule, ToastrModule.forRoot({})],
-      declarations: [UserProfileComponent, DummyComponent],
+      declarations: [
+        UserProfileComponent,
+        DummyComponent,
+        UserProfileAddressStubComponent
+      ],
       providers: [
         { provide: UserService, useValue: userServiceStub },
         { provide: ToastrService, useValue: jasmine.createSpyObj('toastrStub', ['success', 'error']) }
