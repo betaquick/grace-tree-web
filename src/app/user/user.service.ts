@@ -93,7 +93,7 @@ export class UserService {
 
   updateUserAddress(address: any) {
     return this.http
-      .post(`${AppConfig.API_URL}/user/address`, address)
+      .put(`${AppConfig.API_URL}/user/address`, address)
       .pipe(
         map(response => {
           return _.get(response, 'body');
