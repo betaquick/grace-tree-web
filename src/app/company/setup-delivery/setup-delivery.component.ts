@@ -36,18 +36,18 @@ export class SetupDeliveryComponent implements OnInit {
     this.delivery.assignedToUserId = -1;
 
     this.route.paramMap.subscribe((params: ParamMap) => {
-      const userAddressId = parseInt(params.get('userAddressId'), 10);
+      const userId = parseInt(params.get('userId'), 10);
 
-      if (userAddressId) {
-        this.getDeliveryInfo(userAddressId);
+      if (userId) {
+        this.getDeliveryInfo(userId);
       } else {
         this.router.navigate(['/company/search']);
       }
     });
   }
 
-  getDeliveryInfo(userAddressId: number) {
-    this.companyService.getDeliveryInfo(userAddressId)
+  getDeliveryInfo(userId: number) {
+    this.companyService.getDeliveryInfo(userId)
       .subscribe(
         deliveryInfo => {
           this.recipient = deliveryInfo.recipient;

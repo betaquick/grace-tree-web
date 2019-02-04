@@ -93,8 +93,8 @@ export class CompanyService {
       );
   }
 
-  getDeliveryInfo(userAddressId: number): Observable<any> {
-    return this.http.get(`${AppConfig.API_URL}/user/company/delivery-info/${userAddressId}`)
+  getDeliveryInfo(userId: number): Observable<any> {
+    return this.http.get(`${AppConfig.API_URL}/user/company/delivery-info/${userId}`)
       .pipe(
         map(response => {
           const body = _.get(response, 'body');
