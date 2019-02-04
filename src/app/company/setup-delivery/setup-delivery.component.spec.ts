@@ -22,7 +22,12 @@ describe('SetupDeliveryComponent', () => {
   const response = {
     company: {
       companyId: 4,
-      companyName: 'Test Company'
+      companyName: 'Test Company',
+      website: 'test.com',
+      companyAddress: 'Test Address',
+      city: 'Test',
+      state: 'CA',
+      zip: '90020',
     },
     crews: [{
       userId: 9,
