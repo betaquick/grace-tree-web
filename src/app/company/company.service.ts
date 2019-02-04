@@ -6,7 +6,7 @@ import { SessionStorage } from 'ngx-store';
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
 
-import { User, RegisterUser } from '../shared/models/user-model';
+import { User, RegisterUser, ScheduleDelivery } from '../shared/models/user-model';
 import { AppConfig } from '../app.config';
 import { utils } from '../shared/utils';
 import { BusinessInfo } from '../shared/models/company-model';
@@ -89,6 +89,25 @@ export class CompanyService {
 
           return body;
         }),
+        catchError(utils.handleError)
+      );
+  }
+
+  getDeliveryInfo(userAddressId: number): Observable<any> {
+    return this.http.get(`${AppConfig.API_URL}/user/company/delivery-info/${userAddressId}`)
+      .pipe(
+        map(response => {
+          const body = _.get(response, 'body');
+          return body;
+        }),
+        catchError(utils.handleError)
+      );
+  }
+
+  scheduleDelivery(delivery: ScheduleDelivery) {
+    return this.http
+      .post(`${AppConfig.API_URL}/user/company/delivery`, delivery)
+      .pipe(
         catchError(utils.handleError)
       );
   }

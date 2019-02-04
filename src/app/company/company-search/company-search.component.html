@@ -58,7 +58,7 @@
                                 <button (click)="openNote(modalDefault, user)" class="btn btn-sm btn-outline-primary" *ngIf="user.deliveryInstruction">
                                   View Note
                                 </button>
-                                <a [routerLink]="['./setup-delivery']" class="btn btn-primary btn-sm">Setup Delivery</a>
+                                <a [routerLink]="['/company/setup-delivery', user.userAddressId]" class="btn btn-primary btn-sm">Setup Delivery</a>
                               </h6>
                             </agm-info-window>
                           </agm-marker>
@@ -100,7 +100,7 @@
                               <span *ngIf="!user.deliveryInstruction">No Note</span>
                             </td>
                             <td>
-                              <a [routerLink]="['./setup-delivery']" class="btn btn-primary btn-sm">Setup Delivery</a>
+                              <a [routerLink]="['/company/setup-delivery', user.userAddressId]" class="btn btn-primary btn-sm">Setup Delivery</a>
                             </td>
                           </tr>
                         </table>

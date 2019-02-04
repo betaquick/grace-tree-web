@@ -73,3 +73,11 @@ export class DeliveryInfo {
   userProducts: Array<UserProduct>;
   address: Address;
 }
+
+export class ScheduleDelivery {
+  assignedToUserId?: number;
+  users?: Array<number>;
+  details?: string;
+  additionalRecipientText?: string;
+  additionalCompanyText?: string;
+}

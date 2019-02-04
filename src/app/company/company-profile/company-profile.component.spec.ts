@@ -9,7 +9,6 @@ import { CompanyProfileComponent } from './company-profile.component';
 import { CompanyService } from '../company.service';
 import { DummyComponent, asyncData, asyncError } from '../../testing/helpers';
 import { RegisterUser } from '../../shared/models/user-model';
-import { BusinessInfo } from '../../shared/models/company-model';
 
 describe('CompanyProfileComponent', () => {
   let component: CompanyProfileComponent;
