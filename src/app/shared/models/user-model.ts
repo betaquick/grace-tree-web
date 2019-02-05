@@ -21,6 +21,9 @@ export class Address {
   city?: string;
   state?: string;
   zip?: string;
+  deliveryInstruction?: string;
+  latitude?: string;
+  longitude?: string;
 }
 
 export class User {

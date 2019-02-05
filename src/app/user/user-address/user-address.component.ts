@@ -3,7 +3,7 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from '../user.service';
 
 import * as _ from 'lodash';
-import { RegisterUser } from '../../shared/models/user-model';
+import { Address } from '../../shared/models/user-model';
 import { finalize } from 'rxjs/operators';
 
 @Component({
@@ -16,26 +16,16 @@ import { finalize } from 'rxjs/operators';
 })
 export class UserAddressComponent implements OnInit {
 
-  newAddress: any;
+  newAddress: Address;
   editMode: boolean;
   errorMessage: string;
-  address: any;
+  address: Address;
   loading: boolean;
 
   constructor(
     private userService: UserService,
     private toastr: ToastrService
-  ) {
-    this.address = {
-      city: '',
-      street: '',
-      state: '',
-      zip: '',
-      deliveryInstruction: ''
-    };
-
-    this.newAddress = {};
-  }
+  ) { }
 
   ngOnInit() {
     this.editMode = false;
@@ -43,7 +33,7 @@ export class UserAddressComponent implements OnInit {
 
     this.userService.getUserAddress()
       .subscribe(addy => {
-        if (addy !== undefined) {
+        if (!addy) {
           this.address = addy;
         }
         this.newAddress = Object.assign({}, this.address);
