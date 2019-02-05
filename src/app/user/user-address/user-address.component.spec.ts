@@ -32,7 +32,7 @@ describe('UserAddressComponent', () => {
   ];
 
   beforeEach(async(() => {
-    userServiceStub = jasmine.createSpyObj('AuthService', ['updateProfile', 'getUserProducts']);
+    userServiceStub = jasmine.createSpyObj('AuthService', ['getUserAddress']);
     userServiceStub = {
       ...userServiceStub,
       user: addy
