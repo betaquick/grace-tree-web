@@ -24,7 +24,7 @@ const routes: Routes = [{
       { path: 'profile', component: CompanyProfileComponent },
       { path: 'crews', component: CompanyCrewComponent },
       { path: 'crews/new', component: NewCompanyCrewComponent },
-      { path: 'setup-delivery', component: SetupDeliveryComponent },
+      { path: 'setup-delivery/:userId', component: SetupDeliveryComponent },
       { path: '**', component: CompanySearchComponent }
     ]
   }]

@@ -4,7 +4,6 @@ import { finalize } from 'rxjs/operators';
 import { UserStatus } from '@betaquick/grace-tree-constants';
 
 import { CompanyService } from '../company.service';
-import { User } from '../../shared/models/user-model';
 
 @Component({
   selector: 'app-company-search',
