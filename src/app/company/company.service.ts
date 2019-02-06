@@ -111,4 +111,17 @@ export class CompanyService {
         catchError(utils.handleError)
       );
   }
+
+  getDeliveries(): Observable<any> {
+    return this.http.get(`${AppConfig.API_URL}/user/company/deliveries`)
+      .pipe(
+        map(response => {
+          const body = _.get(response, 'body');
+          const deliveries = _.get(body, 'deliveries');
+
+          return deliveries;
+        }),
+        catchError(utils.handleError)
+      );
+  }
 }

@@ -35,7 +35,7 @@ describe('CompanyCrewComponent', () => {
         { provide: ToastrService, useValue: jasmine.createSpyObj('toastrStub', ['success', 'error']) }
       ]
     })
-      .compileComponents();
+    .compileComponents();
 
     fixture = TestBed.createComponent(CompanyCrewComponent);
     component = fixture.componentInstance;
@@ -62,7 +62,7 @@ describe('CompanyCrewComponent', () => {
     expect(toastrStub).toBeDefined();
   });
 
-  describe('list crew', () => {
+  describe('list crews', () => {
     it('should successfully list all crews ', fakeAsync(() => {
       expect(component.crews).toEqual(crews);
       expect(toastrStub.error.calls.count()).toEqual(0);
