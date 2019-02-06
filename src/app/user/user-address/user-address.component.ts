@@ -33,7 +33,7 @@ export class UserAddressComponent implements OnInit {
 
     this.userService.getUserAddress()
       .subscribe(addy => {
-        if (!addy) {
+        if (addy) {
           this.address = addy;
         }
         this.newAddress = Object.assign({}, this.address);

@@ -10,6 +10,7 @@ import { UserService } from '../user.service';
 import { DummyComponent, asyncData, asyncError } from '../../testing/helpers';
 import { Address } from '../../shared/models/user-model';
 import { Component } from '@angular/core';
+import { of } from 'rxjs/observable/of';
 
 describe('UserAddressComponent', () => {
   let component: UserAddressComponent;
@@ -38,6 +39,8 @@ describe('UserAddressComponent', () => {
       user: addy
     };
 
+    userServiceStub.getUserAddress.and.returnValue(of(addy));
+
     TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes(routes), FormsModule, CustomFormsModule, ToastrModule.forRoot({})],
       declarations: [
@@ -58,7 +61,6 @@ describe('UserAddressComponent', () => {
     userServiceStub = TestBed.get(UserService);
     toastrStub = TestBed.get(ToastrService);
 
-    userServiceStub.getUserAddress.and.returnValue(asyncData(addy));
     fixture.detectChanges();
   }));
 
