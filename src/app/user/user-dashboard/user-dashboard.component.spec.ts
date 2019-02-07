@@ -9,6 +9,7 @@ import { UserStatus } from '@betaquick/grace-tree-constants';
 import { UserDashboardComponent } from './user-dashboard.component';
 import { UserService } from '../user.service';
 import { DummyComponent } from '../../testing/helpers';
+import { ModalBasicComponent } from '../../shared/modal-basic/modal-basic.component';
 
 describe('UserDashboardComponent', () => {
   let component: UserDashboardComponent;
@@ -41,8 +42,18 @@ describe('UserDashboardComponent', () => {
     };
 
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes(routes), FormsModule, CustomFormsModule, UiSwitchModule, ToastrModule.forRoot({})],
-      declarations: [ UserDashboardComponent, DummyComponent ],
+      imports: [
+        RouterTestingModule.withRoutes(routes),
+        FormsModule,
+        CustomFormsModule,
+        UiSwitchModule,
+        ToastrModule.forRoot({})
+      ],
+      declarations: [
+        UserDashboardComponent,
+        DummyComponent,
+        ModalBasicComponent
+      ],
       providers: [
         { provide: UserService, useValue: userServiceStub },
         { provide: ToastrService, useValue: jasmine.createSpyObj('toastrStub', ['success', 'error']) }

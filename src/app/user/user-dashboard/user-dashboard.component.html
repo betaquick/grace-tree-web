@@ -20,7 +20,8 @@
                   <i class="fa st-icon st-icon" [ngClass]="{ 'fa-pause-circle bg-danger': !status, 'fa-play-circle bg-primary': status }"></i>
                   <div class="text-left d-flex cus-switch justify-content-between">
                     <h3 class="d-inline-block">{{status ? 'Ready' : 'Pause'}}</h3>
-                    <ui-switch color="#3f99ff" [ngModel]="status" (ngModelChange)="updateStatus($event)"></ui-switch>
+                    <ui-switch color="#3f99ff" [ngModel]="status" (ngModelChange)="updateUserState($event, modalDefault)"
+                      [checked]="status"></ui-switch>
                   </div>
                 </div>
               </div>
@@ -124,3 +125,21 @@
     </div>
   </div>
 </div>
+
+<app-modal-basic #modalDefault>
+  <div class="app-modal-header">
+    <h4 class="modal-title">Ready for delivery?</h4>
+    <button type="button" class="close basic-close" (click)="modalDefault.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    This is a random text
+  </div>
+  <div class="app-modal-footer">
+    <div class="text-center">
+      <button type="button" class="btn btn-primary waves-effect waves-light m-r-20" (click)="updateStatus('Ready')">Ready</button>
+      <a href="javascript:" class="btn btn-danger waves-effect" (click)="closeModal()">Pause</a>
+    </div>
+  </div>
+</app-modal-basic>

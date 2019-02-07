@@ -12,7 +12,6 @@ import { TitleComponent } from './layout/title/title.component';
 import { HeaderComponent } from './layout/header/header.component';
 import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { ContainerComponent } from './layout/container/container.component';
-import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
@@ -20,12 +19,11 @@ import { UserModule } from './user/user.module';
 import { CompanyModule } from './company/company.module';
 import { httpInterceptorProviders } from './http-interceptor';
 import { layoutProviders, ToastrConfig } from './layout';
-import { MenuItems } from './shared/menu-items/menu-items';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SpinnerComponent,
     TitleComponent,
     HeaderComponent,
     SidebarComponent,
@@ -33,8 +31,7 @@ import { MenuItems } from './shared/menu-items/menu-items';
   ],
   providers: [
     httpInterceptorProviders,
-    layoutProviders,
-    MenuItems
+    layoutProviders
   ],
   imports: [
     CommonModule,
@@ -46,6 +43,7 @@ import { MenuItems } from './shared/menu-items/menu-items';
     ClickOutsideModule,
     ToastrModule.forRoot(ToastrConfig),
     WebStorageModule,
+    SharedModule,
     AuthModule,
     UserModule,
     CompanyModule
