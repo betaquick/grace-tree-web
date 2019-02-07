@@ -9,6 +9,7 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard.componen
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserService } from './user.service';
 import { NotificationComponent } from './notification/notification.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -16,9 +17,14 @@ import { NotificationComponent } from './notification/notification.component';
     UserRoutingModule,
     FormsModule,
     CustomFormsModule,
-    UiSwitchModule
+    UiSwitchModule,
+    SharedModule
   ],
   providers: [UserService],
-  declarations: [UserDashboardComponent, UserProfileComponent, NotificationComponent]
+  declarations: [
+    UserDashboardComponent,
+    UserProfileComponent,
+    NotificationComponent
+  ]
 })
 export class UserModule { }

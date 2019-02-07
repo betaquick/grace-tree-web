@@ -12,8 +12,8 @@ import { CompanyCrewComponent } from './company-crew/company-crew.component';
 import { NewCompanyCrewComponent } from './company-crew/new/new-company-crew.component';
 import { CompanySearchComponent } from './company-search/company-search.component';
 import { CompanyDeliveriesComponent } from './company-deliveries/company-deliveries.component';
-import { ModalBasicComponent } from '../shared/modal-basic/modal-basic.component';
 import { SetupDeliveryComponent } from './setup-delivery/setup-delivery.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
@@ -23,14 +23,14 @@ import { SetupDeliveryComponent } from './setup-delivery/setup-delivery.componen
     CommonModule,
     CompanyRoutingModule,
     FormsModule,
-    CustomFormsModule
+    CustomFormsModule,
+    SharedModule
   ],
   providers: [CompanyService],
   declarations: [
     CompanyDashboardComponent,
     CompanyProfileComponent,
     CompanyCrewComponent,
-    ModalBasicComponent,
     NewCompanyCrewComponent,
     CompanySearchComponent,
     CompanyDeliveriesComponent,
