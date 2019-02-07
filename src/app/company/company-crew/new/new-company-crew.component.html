@@ -24,7 +24,7 @@
                           name is required</div>
                         <div class="alert alert-danger background-danger" *ngIf="password.dirty && password.errors?.required">Password
                           is required</div>
-                        <div class="alert alert-danger background-danger" *ngIf="password.dirty && password.errors?.minlength">Passwors
+                        <div class="alert alert-danger background-danger" *ngIf="password.dirty && password.errors?.minlength">Password
                           is too short</div>
                         <div class="alert alert-danger background-danger" *ngIf="confirmPassword.dirty && confirmPassword.errors?.equalTo">Password
                           is not the same</div>
@@ -56,21 +56,12 @@
                                     </div>
                                   </div>
                                 </div>
-                                <div class="j-row">
-                                  <div class="span6 unit">
+                                <div class="unit">
                                   <div class="input">
                                     <input [ngClass]="{'form-control-danger': email.dirty && email.invalid}"
                                       [ngModelOptions]="{updateOn: 'blur'}" type="email" id="email" name="email" #email="ngModel"
                                       placeholder="Primary Email" [(ngModel)]="crew.email" required email>
                                   </div>
-                                </div>
-                                  <div class="span6 unit">
-                                  <div class="input">
-                                    <input [ngClass]="{'form-control-danger': number.dirty && number.invalid}"
-                                      [ngModelOptions]="{updateOn: 'blur'}" type="text" id="number" name="number" #number="ngModel"
-                                      placeholder="Primary Phone" [(ngModel)]="crew.phoneNumber" required phone>
-                                  </div>
-                                </div>
                                 </div>
                                 <div class="j-row">
                                   <div class="span6 unit">
@@ -95,8 +86,7 @@
                             </div>
                             <!-- end of row -->
                             <div class="text-center">
-                              <button type="submit" class="btn btn-primary waves-effect waves-light m-r-10"
-                              [disabled]="loading">Create</button>
+                              <button type="submit" class="btn btn-primary waves-effect waves-light m-r-10" [disabled]="loading">Create</button>
                               <a [routerLink]="['/company/crews']" id="edit-cancel" class="btn btn-default waves-effect">Cancel</a>
                             </div>
                           </div>

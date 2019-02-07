@@ -24,7 +24,7 @@
                 <div class="alert alert-danger background-danger" *ngIf="number.dirty && number.errors?.required">Phone number is required</div>
                 <div class="alert alert-danger background-danger" *ngIf="number.dirty && number.errors?.phone">Phone number is not valid</div>
                 <div class="alert alert-danger background-danger" *ngIf="password.dirty && password.errors?.required">Password is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="password.dirty && password.errors?.minlength">Passwors is too short</div>
+                <div class="alert alert-danger background-danger" *ngIf="password.dirty && password.errors?.minlength">Password is too short</div>
                 <div class="alert alert-danger background-danger" *ngIf="confirmPassword.dirty && confirmPassword.errors?.equalTo">Password is not the same</div>
                 <div class="alert alert-danger background-danger" *ngIf="email.dirty && email.errors?.required">Email is required</div>
                 <div class="alert alert-danger background-danger" *ngIf="email.dirty && email.errors?.email">Email is invalid</div>
