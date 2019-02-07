@@ -5,47 +5,27 @@ import { FormsModule } from '@angular/forms';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { CustomFormsModule } from 'ng5-validation';
 
-import { UserProfileComponent } from './user-profile.component';
+import { UserAddressComponent } from './user-address.component';
 import { UserService } from '../user.service';
 import { DummyComponent, asyncData, asyncError } from '../../testing/helpers';
-import { RegisterUser } from '../../shared/models/user-model';
+import { Address } from '../../shared/models/user-model';
 import { Component } from '@angular/core';
+import { of } from 'rxjs/observable/of';
 
-
-@Component({
-  // tslint:disable-next-line
-  selector: 'app-user-profile-address',
-  template: ''
-})
-class UserProfileAddressStubComponent {
-}
-
-describe('UserProfileComponent', () => {
-  let component: UserProfileComponent;
-  let fixture: ComponentFixture<UserProfileComponent>;
+describe('UserAddressComponent', () => {
+  let component: UserAddressComponent;
+  let fixture: ComponentFixture<UserAddressComponent>;
   let userServiceStub;
   let toastrStub;
   let routerStub;
-  const response = {
-    firstName: 'Test',
-    lastName: 'Account',
-    emails: [{
-      emailAddress: 'test@email.com',
-      primary: true
-    }],
-    phones: [{
-      phoneNumber: '1234567890',
-      primary: true,
-    }]
-  } as RegisterUser;
-  const userProducts = [{
-    userId: 1,
-    active: 1,
-    createdAt: '2018-12-22T08:54:17.000Z',
-    productCode: 'chips',
-    productDesc: 'Wood Chips',
-    productId: 1,
-  }];
+
+  const addy = {
+    state: 'BN',
+    city: 'Okota',
+    street: 'Prince Way',
+    zip: '100102',
+    deliveryInstruction: 'Please leave it by the door'
+  } as Address;
 
   const routes = [
     { path: 'user-registration', component: DummyComponent },
@@ -53,18 +33,19 @@ describe('UserProfileComponent', () => {
   ];
 
   beforeEach(async(() => {
-    userServiceStub = jasmine.createSpyObj('AuthService', ['updateProfile', 'getUserProducts']);
+    userServiceStub = jasmine.createSpyObj('AuthService', ['getUserAddress', 'updateUserAddress']);
     userServiceStub = {
       ...userServiceStub,
-      user: response
+      user: addy
     };
+
+    userServiceStub.getUserAddress.and.returnValue(of(addy));
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes(routes), FormsModule, CustomFormsModule, ToastrModule.forRoot({})],
       declarations: [
-        UserProfileComponent,
-        DummyComponent,
-        UserProfileAddressStubComponent
+        UserAddressComponent,
+        DummyComponent
       ],
       providers: [
         { provide: UserService, useValue: userServiceStub },
@@ -73,14 +54,13 @@ describe('UserProfileComponent', () => {
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(UserProfileComponent);
+    fixture = TestBed.createComponent(UserAddressComponent);
     component = fixture.componentInstance;
 
     routerStub = TestBed.get(Router);
     userServiceStub = TestBed.get(UserService);
     toastrStub = TestBed.get(ToastrService);
 
-    userServiceStub.getUserProducts.and.returnValue(asyncData(userProducts));
     fixture.detectChanges();
   }));
 
@@ -90,30 +70,30 @@ describe('UserProfileComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(userServiceStub.updateProfile).toBeDefined();
+    expect(userServiceStub.updateUserAddress).toBeDefined();
     expect(toastrStub.success).toBeDefined();
     expect(toastrStub.error).toBeDefined();
     expect(routerStub).toBeDefined();
     expect(toastrStub).toBeDefined();
   });
 
-  describe('Update user profile', () => {
-    it('should successfully update user profile - show toast success', fakeAsync(() => {
-      userServiceStub.updateProfile.and.returnValue(asyncData(response));
+  describe('Update user address', () => {
+    it('should successfully update user address - show toast success', fakeAsync(() => {
+      userServiceStub.updateUserAddress.and.returnValue(asyncData(addy));
       expect(component.loading).toEqual(false);
-      component.user = response;
-      component.updateprofile();
+      component.address = addy;
+      component.updateAddress();
       expect(component.loading).toEqual(true);
       tick(100);
       expect(toastrStub.success.calls.count()).toEqual(1);
       expect(toastrStub.error.calls.count()).toEqual(0);
     }));
 
-    it('Error: fails updating user profile - show toast error', fakeAsync(() => {
-      userServiceStub.updateProfile.and.returnValue(asyncError(new Error()));
+    it('Error: fails updating user address - show toast error', fakeAsync(() => {
+      userServiceStub.updateUserAddress.and.returnValue(asyncError(new Error()));
       expect(component.loading).toEqual(false);
-      component.user = response;
-      component.updateprofile();
+      component.address = addy;
+      component.updateAddress();
       expect(component.loading).toEqual(true);
       tick(100);
       expect(toastrStub.success.calls.count()).toEqual(0);

@@ -17,10 +17,10 @@
                   </div>
                 </div>
                 <div class="card-block">
-                  <i class="fa st-icon st-icon" [ngClass]="{ 'fa-pause-circle bg-danger': !status, 'fa-play-circle bg-primary': status }"></i>
+                  <i class="fa st-icon st-icon" [ngClass]="{ 'fa-pause-circle bg-danger': !status, 'fa-play-circle bg-success': status }"></i>
                   <div class="text-left d-flex cus-switch justify-content-between">
                     <h3 class="d-inline-block">{{status ? 'Ready' : 'Pause'}}</h3>
-                    <ui-switch color="#3f99ff" [ngModel]="status" (ngModelChange)="updateUserState($event, modalDefault)"
+                    <ui-switch color="#2ed8b6" [ngModel]="status" (ngModelChange)="updateUserState($event, modalDefault)"
                       [checked]="status"></ui-switch>
                   </div>
                 </div>

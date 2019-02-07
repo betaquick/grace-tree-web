@@ -6,7 +6,7 @@ import { SessionStorage } from 'ngx-store';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
 
-import { User, UserProduct } from '../shared/models/user-model';
+import { User, UserProduct, Address } from '../shared/models/user-model';
 import { AppConfig } from '../app.config';
 import { utils } from '../shared/utils';
 
@@ -76,6 +76,27 @@ export class UserService {
           this.userProducts = _.get(body, 'userProducts');
 
           return this.userProducts;
+        }),
+        catchError(utils.handleError)
+      );
+  }
+
+  getUserAddress(): Observable<Address> {
+    return this.http.get(`${AppConfig.API_URL}/user/address`)
+      .pipe(
+        map(response => {
+          return _.get(response, 'body');
+        }),
+        catchError(utils.handleError)
+      );
+  }
+
+  updateUserAddress(address: any) {
+    return this.http
+      .put(`${AppConfig.API_URL}/user/address`, address)
+      .pipe(
+        map(response => {
+          return _.get(response, 'body');
         }),
         catchError(utils.handleError)
       );
