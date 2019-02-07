@@ -40,7 +40,8 @@
             <!-- end of table col-lg-6 -->
           </div>
           <br />
-          <p>{{ address.deliveryInstruction }}</p>
+          <strong>Delivery Instructions</strong>
+          <p>{{ address.deliveryInstruction || 'N/A'}}</p>
         </div>
         <ng-template #addressEdit>
           <div class="edit-desc">
@@ -74,9 +75,7 @@
                         <label class="input select">
                           <select [ngClass]="{'form-control-danger': state.dirty && state.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
                             name="state" #state="ngModel" name="state" [(ngModel)]="newAddress.state">
-                            <option value="GA">GA</option>
-                            <option value="BD">BD</option>
-                            <option value="SN">SN</option>
+                            <option *ngFor="let state of stateArray;" value="{{state.abbr}}">{{state.name}}</option>
                           </select>
                           <i></i>
                         </label>
@@ -88,13 +87,15 @@
                         </div>
                       </div>
                     </div>
-                    <div class="col-md-12">
-                      <textarea [ngClass]="{'form-control-danger': deliveryInstruction.dirty && deliveryInstruction.invalid}"
-                        [ngModelOptions]="{updateOn: 'blur'}" type="text" placeholder="Delivery Instruction"
-                        #deliveryInstruction="ngModel" name="deliveryInstruction" [(ngModel)]="newAddress.deliveryInstruction"
-                        id="deliveryInstruction" rows="5">
-                      {{ address.deliveryInstruction }}
-                    </textarea>
+                    <div class="col-lg-6">
+                      <div class="unit">
+                        <textarea [ngClass]="{'form-control-danger': deliveryInstruction.dirty && deliveryInstruction.invalid}"
+                          [ngModelOptions]="{updateOn: 'blur'}" type="text" placeholder="Delivery Instruction"
+                          #deliveryInstruction="ngModel" name="deliveryInstruction" [(ngModel)]="newAddress.deliveryInstruction"
+                          id="deliveryInstruction" rows="5">
+                        {{ address.deliveryInstruction }}
+                        </textarea>
+                      </div>  
                     </div>
                     <div class="text-center">
                         <button type="submit" class="btn btn-primary waves-effect waves-light m-r-20" [disabled]="loading">Save</button>

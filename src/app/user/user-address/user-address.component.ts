@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { UserService } from '../user.service';
-
+import { states } from '@betaquick/grace-tree-constants';
 import * as _ from 'lodash';
-import { Address } from '../../shared/models/user-model';
 import { finalize } from 'rxjs/operators';
+
+import { UserService } from '../user.service';
+import { Address } from '../../shared/models/user-model';
+import { State } from '../../shared/models/company-model';
 
 @Component({
   selector: 'app-user-profile-address',
@@ -21,6 +23,7 @@ export class UserAddressComponent implements OnInit {
   errorMessage: string;
   address: Address;
   loading: boolean;
+  stateArray: State[] = states;
 
   constructor(
     private userService: UserService,
