@@ -58,8 +58,18 @@ export class CompanySearchComponent implements OnInit {
   ngOnInit() {
     this.loading = false;
 
-    this.lat = 37.4219931;
-    this.lng = -122.0851244;
+    this.getGeocode();
+  }
+
+  getGeocode() {
+    this.companyService
+      .getCompanyInfo()
+      .subscribe(company => {
+        this.lat = parseFloat(company.latitude);
+        this.lng = parseFloat(company.longitude);
+      },
+      err => this.toastr.error(err)
+    );
   }
 
   toggleListMapView() {

@@ -11,4 +11,6 @@ export class BusinessInfo {
   city: string;
   state: string;
   zip: string;
+  latitude?: string;
+  longitude?: string;
 }
