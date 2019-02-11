@@ -20,8 +20,7 @@
                   <i class="fa st-icon st-icon" [ngClass]="{ 'fa-pause-circle bg-danger': !status, 'fa-play-circle bg-success': status }"></i>
                   <div class="text-left d-flex cus-switch justify-content-between">
                     <h3 class="d-inline-block">{{status ? 'Ready' : 'Pause'}}</h3>
-                    <ui-switch color="#2ed8b6" [ngModel]="status" (ngModelChange)="updateUserState($event, modalDefault)"
-                      [checked]="status"></ui-switch>
+                    <ui-switch color="#2ed8b6" [(ngModel)]="status" (ngModelChange)="updateUserState($event, modalDefault)"></ui-switch>
                   </div>
                 </div>
               </div>
@@ -37,7 +36,7 @@
                 <div class="card-block">
                   <i class="fa fa-calendar st-icon bg-warning txt-lite-color"></i>
                   <div class="text-left">
-                    <h3 class="d-inline-block">0</h3>
+                    <h3 class="d-inline-block">{{pendingCount}}</h3>
                   </div>
                 </div>
               </div>
@@ -64,59 +63,7 @@
                     </ul>
                   </div>
                 </div>
-                <div class="card-block p-3">
-                  <div class="table-responsive">
-                    <table class="table">
-                      <tr>
-                        <th>Product Type</th>
-                        <th>Company</th>
-                        <th>Date</th>
-                        <th>Status</th>
-                        <th>Details</th>
-                      </tr>
-                      <tr>
-                        <td>Wood Chips</td>
-                        <td>Jane Elliott</td>
-                        <td>06-01-2017</td>
-                        <td>
-                          <span class="label label-warning">Sent</span></td>
-                        <td>
-                          <a href="shipping-delivery.html" class="btn btn-mini">View</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Wood Chips</td>
-                        <td>John Deo</td>
-                        <td>05-01-2017</td>
-                        <td>
-                          <span class="label label-warning">Sent</span></td>
-                        <td>
-                          <a href="#" class="btn btn-mini">View</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Wood Chips</td>
-                        <td>Eugine Turner</td>
-                        <td>04-01-2017</td>
-                        <td>
-                          <span class="label label-warning">Sent</span></td>
-                        <td>
-                          <a href="#" class="btn btn-mini">View</a>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>Wood Chips</td>
-                        <td>Jacqueline Howell</td>
-                        <td>03-01-2017</td>
-                        <td>
-                          <span class="label label-success">Confirmed</span></td>
-                        <td>
-                          <a href="pending-delivery.html" class="btn btn-mini">View</a>
-                        </td>
-                      </tr>
-                    </table>
-                  </div>
-                </div>
+                <app-delivery [deliveries]="deliveries" (setDelivery)="openModal(deliveryModal, $event)"></app-delivery>
               </div>
             </div>
           </div>
@@ -126,10 +73,10 @@
   </div>
 </div>
 
-<app-modal-basic #modalDefault>
+<app-modal-basic disableOutsideClick="true" #modalDefault>
   <div class="app-modal-header">
     <h4 class="modal-title">Ready for delivery?</h4>
-    <button type="button" class="close basic-close" (click)="modalDefault.hide()">
+    <button type="button" class="close basic-close" (click)="closeModal()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
@@ -140,6 +87,26 @@
     <div class="text-center">
       <button type="button" class="btn btn-primary waves-effect waves-light m-r-20" (click)="updateStatus('Ready')">Ready</button>
       <a href="javascript:" class="btn btn-danger waves-effect" (click)="closeModal()">Pause</a>
+    </div>
+  </div>
+</app-modal-basic>
+
+<app-modal-basic hideFooter="true" #deliveryModal>
+  <div class="app-modal-header">
+    <h4 class="modal-title">{{delivery.companyName}}</h4>
+    <button type="button" class="close basic-close" (click)="deliveryModal.hide()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="app-modal-body">
+    <div class="form-group row" *ngIf="delivery.additionalRecipientText">
+      <label class="col-sm-12 col-form-label"><strong>Additional Message to Recipient</strong></label>
+      <div class="col-sm-12">{{delivery.additionalRecipientText}}</div>
+    </div>
+
+    <div class="form-group row" *ngIf="delivery.additionalCompanyText">
+      <label class="col-sm-12 col-form-label"><strong>Additional Message to Crew/Company</strong></label>
+      <div class="col-sm-12">{{delivery.additionalCompanyText}}</div>
     </div>
   </div>
 </app-modal-basic>

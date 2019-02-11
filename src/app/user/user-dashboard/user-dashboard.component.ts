@@ -19,6 +19,9 @@ export class UserDashboardComponent implements OnInit {
   @SessionStorage() user: User = new User();
   status: boolean;
   modal: any;
+  pendingCount = 0;
+  deliveries = [];
+  delivery: any = {};
 
   constructor(
     private userService: UserService,
@@ -27,6 +30,25 @@ export class UserDashboardComponent implements OnInit {
 
   ngOnInit() {
     this.status = this.user.status === UserStatus.Ready ? true : false;
+
+    this.getPendingDeliveries();
+    this.getRecentDeliveries();
+  }
+
+  getPendingDeliveries() {
+    this.userService.getPendingDeliveries()
+      .subscribe(
+        deliveries => this.pendingCount = deliveries.length,
+        err => this.toastr.error(err)
+      );
+  }
+
+  getRecentDeliveries() {
+    this.userService.getRecentDeliveries()
+      .subscribe(
+        deliveries => this.deliveries = deliveries,
+        err => this.toastr.error(err)
+      );
   }
 
   updateUserState(value: boolean, modal) {
@@ -44,7 +66,7 @@ export class UserDashboardComponent implements OnInit {
     this.userService.updateStatus(status)
       .subscribe(
         () => {
-          this.status = !this.status;
+          this.status = status === UserStatus.Ready ? true : false;
           this.toastr.success('Status updated successfully');
 
           if (this.modal) {
@@ -65,5 +87,11 @@ export class UserDashboardComponent implements OnInit {
     this.status = false;
 
     this.modal.hide();
+  }
+
+  openModal(modal: any, delivery) {
+    this.delivery = delivery;
+
+    modal.show();
   }
 }

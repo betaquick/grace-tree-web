@@ -15,7 +15,10 @@ export class DeliveryComponent implements OnInit {
   @Input() deliveries: Array<any>;
   @Output() setDelivery = new EventEmitter<any>();
 
+  @SessionStorage() user: User = new User();
+
   public statusCodes = DeliveryStatusCodes;
+  public userTypes = UserTypes;
 
   constructor() {}
 

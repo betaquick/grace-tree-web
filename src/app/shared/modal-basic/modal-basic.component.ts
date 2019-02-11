@@ -10,6 +10,8 @@ export class ModalBasicComponent implements OnInit {
   @Input() dialogClass: string;
   @Input() hideHeader = false;
   @Input() hideFooter = false;
+  @Input() disableOutsideClick = false;
+
   public visible = false;
   public visibleAnimate = false;
 
@@ -30,7 +32,10 @@ export class ModalBasicComponent implements OnInit {
   }
 
   public onContainerClicked(event: MouseEvent): void {
-    if ((<HTMLElement>event.target).classList.contains('modal')) {
+    if (
+      (<HTMLElement>event.target).classList.contains('modal') &&
+      !this.disableOutsideClick
+    ) {
       this.hide();
     }
   }
