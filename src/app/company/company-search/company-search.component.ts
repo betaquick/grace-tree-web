@@ -58,6 +58,9 @@ export class CompanySearchComponent implements OnInit {
   ngOnInit() {
     this.loading = false;
 
+    this.lat = 37.4219931;
+    this.lng = -122.0851244;
+
     this.getGeocode();
   }
 
@@ -65,8 +68,11 @@ export class CompanySearchComponent implements OnInit {
     this.companyService
       .getCompanyInfo()
       .subscribe(company => {
-        this.lat = parseFloat(company.latitude);
-        this.lng = parseFloat(company.longitude);
+        const { latitude, longitude } = company;
+        if (latitude && longitude) {
+          this.lat = parseFloat(latitude);
+          this.lng = parseFloat(longitude);
+        }
       },
       err => this.toastr.error(err)
     );
