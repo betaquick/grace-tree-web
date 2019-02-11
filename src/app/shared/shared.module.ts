@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { ModalBasicComponent } from './modal-basic/modal-basic.component';
 import { MenuItems } from './menu-items/menu-items';
 import { SpinnerComponent } from './spinner/spinner.component';
+import { DeliveryComponent } from './delivery/delivery.component';
 
 @NgModule({
   imports: [
@@ -11,11 +12,13 @@ import { SpinnerComponent } from './spinner/spinner.component';
   ],
   exports: [
     ModalBasicComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    DeliveryComponent
   ],
   declarations: [
     ModalBasicComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    DeliveryComponent
   ],
   providers: [
     MenuItems

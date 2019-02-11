@@ -9,6 +9,7 @@ import { CompanyDeliveriesComponent } from './company-deliveries.component';
 import { DummyComponent, asyncData, asyncError } from '../../testing/helpers';
 import { CompanyService } from '../company.service';
 import { ModalBasicComponent } from '../../shared/modal-basic/modal-basic.component';
+import { DeliveryComponent } from '../../shared/delivery/delivery.component';
 
 describe('CompanyDeliveriesComponent', () => {
   let component: CompanyDeliveriesComponent;
@@ -29,8 +30,18 @@ describe('CompanyDeliveriesComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule.withRoutes(routes), FormsModule, CustomFormsModule, ToastrModule.forRoot({})],
-      declarations: [CompanyDeliveriesComponent, DummyComponent, ModalBasicComponent],
+      imports: [
+        RouterTestingModule.withRoutes(routes),
+        FormsModule,
+        CustomFormsModule,
+        ToastrModule.forRoot({})
+      ],
+      declarations: [
+        CompanyDeliveriesComponent,
+        DummyComponent,
+        ModalBasicComponent,
+        DeliveryComponent
+      ],
       providers: [
         { provide: CompanyService, useValue: jasmine.createSpyObj('CompanyService', ['getDeliveries']) },
         { provide: ToastrService, useValue: jasmine.createSpyObj('toastrStub', ['error']) }
