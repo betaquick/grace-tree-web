@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs/operators';
-import { DeliveryStatusCodes } from '@betaquick/grace-tree-constants';
 
 import { CompanyService } from '../company.service';
 
@@ -16,7 +15,6 @@ export class CompanyDeliveriesComponent implements OnInit {
 
   deliveries = [];
   delivery: any = {};
-  statusCodes = DeliveryStatusCodes;
 
   constructor(
     private companyService: CompanyService,
