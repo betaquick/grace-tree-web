@@ -101,4 +101,30 @@ export class UserService {
         catchError(utils.handleError)
       );
   }
+
+  getPendingDeliveries(): Observable<any> {
+    return this.http.get(`${AppConfig.API_URL}/user/deliveries/pending`)
+      .pipe(
+        map(response => {
+          const body = _.get(response, 'body');
+          const deliveries = _.get(body, 'deliveries');
+
+          return deliveries;
+        }),
+        catchError(utils.handleError)
+      );
+  }
+
+  getRecentDeliveries(): Observable<any> {
+    return this.http.get(`${AppConfig.API_URL}/user/deliveries/recent`)
+      .pipe(
+        map(response => {
+          const body = _.get(response, 'body');
+          const deliveries = _.get(body, 'deliveries');
+
+          return deliveries;
+        }),
+        catchError(utils.handleError)
+      );
+  }
 }
