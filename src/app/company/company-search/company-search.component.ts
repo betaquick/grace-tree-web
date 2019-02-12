@@ -60,6 +60,22 @@ export class CompanySearchComponent implements OnInit {
 
     this.lat = 37.4219931;
     this.lng = -122.0851244;
+
+    this.getGeocode();
+  }
+
+  getGeocode() {
+    this.companyService
+      .getCompanyInfo()
+      .subscribe(company => {
+        const { latitude, longitude } = company;
+        if (latitude && longitude) {
+          this.lat = parseFloat(latitude);
+          this.lng = parseFloat(longitude);
+        }
+      },
+      err => this.toastr.error(err)
+    );
   }
 
   toggleListMapView() {
