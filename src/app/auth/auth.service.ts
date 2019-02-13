@@ -18,6 +18,7 @@ export class AuthService {
 
   @SessionStorage() token = '';
   @SessionStorage() user: User = new User();
+  @SessionStorage() company: BusinessInfo = new BusinessInfo();
 
   redirectUrl: string; // store the URL so we can redirect after logging in
 
@@ -68,7 +69,12 @@ export class AuthService {
     return this.http
       .post(`${AppConfig.API_URL}/user/company`, businessInfo)
       .pipe(
-        map(response => _.get(response, 'body')),
+        map(response => {
+          const body = _.get(response, 'body');
+          this.company = _.get(body, 'company');
+
+          return body;
+        }),
         catchError(utils.handleError)
       );
   }
@@ -117,6 +123,7 @@ export class AuthService {
     const credentials = _.get(response, 'body');
     this.token = _.get(credentials, 'token');
     this.user = _.get(credentials, 'user');
+    this.company = _.get(credentials, 'company', null);
     this.isLoggedIn = true;
     return credentials;
   }
@@ -124,7 +131,7 @@ export class AuthService {
   logout() {
     this.isLoggedIn = false;
     this.user = null;
+    this.company = null;
     this.token = '';
   }
-
 }

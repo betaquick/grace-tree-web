@@ -37,7 +37,7 @@ export class AgreementComponent implements OnInit {
     this.authService.acceptAgreement()
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-        () => this.router.navigate(['/user']),
+        () => this.router.navigate(['/login']),
         err => this.toastr.error(err)
       );
   }

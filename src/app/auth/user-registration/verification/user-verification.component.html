@@ -25,7 +25,7 @@
                 <li [ngClass]="{'unverified': !email.isVerified, 'verified': email.isVerified}">Email Address</li>
                 <li [ngClass]="{'unverified': !phone.isVerified, 'verified': phone.isVerified}">Phone Number</li>
               </ul>
-              <p class="m-t-25 text-primary" *ngIf="!email.isVerified && !phone.isVerified">Your account has been fully verified, which means you can
+              <p class="m-t-25 text-primary" *ngIf="email.isVerified && phone.isVerified">Your account has been fully verified, which means you can
                 now proceed to the <a [routerLink]="['/login']">login page</a></p>
             </div>
           </div>
