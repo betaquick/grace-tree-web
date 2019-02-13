@@ -43,7 +43,7 @@ export class AuthGuard implements CanActivate {
       if (user.userType === UserTypes.Crew) {
         return true;
       }
-      
+
       if (user.userType === UserTypes.General) {
         path = '/user-registration';
 
@@ -57,7 +57,7 @@ export class AuthGuard implements CanActivate {
           return false;
         }
       }
-      
+
       if (user.userType === UserTypes.TreeAdmin) {
         path = '/company-registration';
 
@@ -74,7 +74,7 @@ export class AuthGuard implements CanActivate {
           return;
         }
       });
-  
+
       user.emails.forEach(email => {
         if (email.primary && !email.isVerified) {
           isVerified = false;
@@ -83,7 +83,7 @@ export class AuthGuard implements CanActivate {
         }
       });
 
-      if (!isVerified){
+      if (!isVerified) {
         return false;
       }
 
