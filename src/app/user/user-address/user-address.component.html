@@ -17,19 +17,19 @@
                   <tbody>
                     <tr>
                       <th scope="row">Street</th>
-                      <td>{{ address.street }}</td>
+                      <td>{{ address?.street }}</td>
                     </tr>
                     <tr>
                       <th scope="row">City</th>
-                      <td>{{ address.city }}</td>
+                      <td>{{ address?.city }}</td>
                     </tr>
                     <tr>
                       <th scope="row">State</th>
-                      <td>{{ address.state }}</td>
+                      <td>{{ address?.state }}</td>
                     </tr>
                     <tr>
                       <th scope="row">Zipcode</th>
-                      <td>{{ address.zip }}</td>
+                      <td>{{ address?.zip }}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -41,7 +41,7 @@
           </div>
           <br />
           <strong>Delivery Instructions</strong>
-          <p>{{ address.deliveryInstruction || 'N/A'}}</p>
+          <p>{{ address?.deliveryInstruction || 'N/A'}}</p>
         </div>
         <ng-template #addressEdit>
           <div class="edit-desc">

@@ -92,7 +92,7 @@ export class CompanyProfileComponent implements OnInit {
       confirmPassword
     };
 
-    const company = _.omit(this.company, ['createdAt']) as BusinessInfo;
+    const company = _.omit(this.company, ['latitude', 'longitude', 'createdAt']) as BusinessInfo;
 
     this.loading = true;
 

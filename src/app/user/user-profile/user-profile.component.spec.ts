@@ -54,10 +54,6 @@ describe('UserProfileComponent', () => {
 
   beforeEach(async(() => {
     userServiceStub = jasmine.createSpyObj('AuthService', ['updateProfile', 'getUserProducts']);
-    userServiceStub = {
-      ...userServiceStub,
-      user: response
-    };
 
     TestBed.configureTestingModule({
       imports: [RouterTestingModule.withRoutes(routes), FormsModule, CustomFormsModule, ToastrModule.forRoot({})],
@@ -81,6 +77,8 @@ describe('UserProfileComponent', () => {
     toastrStub = TestBed.get(ToastrService);
 
     userServiceStub.getUserProducts.and.returnValue(asyncData(userProducts));
+    component.user = response;
+
     fixture.detectChanges();
   }));
 
@@ -101,7 +99,6 @@ describe('UserProfileComponent', () => {
     it('should successfully update user profile - show toast success', fakeAsync(() => {
       userServiceStub.updateProfile.and.returnValue(asyncData(response));
       expect(component.loading).toEqual(false);
-      component.user = response;
       component.updateprofile();
       expect(component.loading).toEqual(true);
       tick(100);
@@ -112,7 +109,6 @@ describe('UserProfileComponent', () => {
     it('Error: fails updating user profile - show toast error', fakeAsync(() => {
       userServiceStub.updateProfile.and.returnValue(asyncError(new Error()));
       expect(component.loading).toEqual(false);
-      component.user = response;
       component.updateprofile();
       expect(component.loading).toEqual(true);
       tick(100);
