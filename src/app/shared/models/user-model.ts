@@ -37,6 +37,7 @@ export class User {
   addresses?: Array<Address>;
   userType?: UserTypes;
   status?: String;
+  agreement?: boolean;
 }
 
 export class AuthDetails {
