@@ -127,4 +127,36 @@ export class UserService {
         catchError(utils.handleError)
       );
   }
+
+  getDeliveries(): Observable<any> {
+    return this.http.get(`${AppConfig.API_URL}/user/deliveries`)
+      .pipe(
+        map(response => {
+          const body = _.get(response, 'body');
+          const deliveries = _.get(body, 'deliveries');
+
+          return deliveries;
+        }),
+        catchError(utils.handleError)
+      );
+  }
+
+  getDelivery(deliveryId: number): Observable<any> {
+    return this.http.get(`${AppConfig.API_URL}/user/deliveries/${deliveryId}`)
+      .pipe(
+        map(response => _.get(response, 'body')),
+        catchError(utils.handleError)
+      );
+  }
+
+  updateDeliveryStatus(deliveryId: number, statusCode: string): Observable<any> {
+    return this.http
+      .put(`${AppConfig.API_URL}/user/deliveries/${deliveryId}`, { statusCode })
+      .pipe(
+        map(response => {
+          return _.get(response, 'body');
+        }),
+        catchError(utils.handleError)
+      );
+  }
 }

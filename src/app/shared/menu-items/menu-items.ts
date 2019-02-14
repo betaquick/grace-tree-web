@@ -26,6 +26,14 @@ const USER_MENU = {
     icon: 'ti-home'
   },
   {
+    state: 'deliveries',
+    main_state: 'user',
+    short_label: 'D',
+    name: 'Deliveries',
+    type: 'link',
+    icon: 'ti-layout'
+  },
+  {
     state: 'profile',
     main_state: 'user',
     short_label: 'P',

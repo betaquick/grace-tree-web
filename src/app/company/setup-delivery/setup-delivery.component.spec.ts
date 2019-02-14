@@ -64,7 +64,7 @@ describe('SetupDeliveryComponent', () => {
         { provide: ToastrService, useValue: jasmine.createSpyObj('toastrStub', ['success', 'error']) }
       ]
     })
-      .compileComponents();
+    .compileComponents();
 
     fixture = TestBed.createComponent(SetupDeliveryComponent);
     component = fixture.componentInstance;

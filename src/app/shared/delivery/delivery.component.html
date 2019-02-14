@@ -15,7 +15,7 @@
         <td colspan="4" class="text-center">No deliveries yet</td>
       </tr>
       <tr *ngFor="let delivery of deliveries;">
-        <td *ngIf="user.userType === userTypes.General else companyRow">{{delivery.companyName}}</td>
+        <td *ngIf="user.userType === userTypes.General else companyRow">{{delivery.firstName}} {{delivery.lastName}} - {{delivery.companyName}}</td>
         <ng-template #companyRow>
           <td>{{delivery.firstName}} {{delivery.lastName}}</td>
         </ng-template>
