@@ -69,7 +69,6 @@ export class CompanySearchComponent implements OnInit {
       .getCompanyInfo()
       .subscribe(company => {
         const { latitude, longitude } = company;
-        console.log(company, latitude, longitude);
         if (latitude && longitude) {
           this.lat = parseFloat(latitude);
           this.lng = parseFloat(longitude);
