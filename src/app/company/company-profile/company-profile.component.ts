@@ -80,8 +80,31 @@ export class CompanyProfileComponent implements OnInit {
       this.errorMessage = 'Password and confirm password don\'t match';
       return;
     }
-    const emails = _.filter(this.user.emails, email => !_.isEmpty(email.emailAddress));
-    const phones = _.filter(this.user.phones, phone => !_.isEmpty(phone.phoneNumber));
+
+    this.loading = true;
+
+    const emails: Array<Email> = [];
+    const phones: Array<Phone> = [];
+
+    this.user.emails.forEach(email => {
+      if (_.isEmpty(email.emailAddress)) {
+        return;
+      }
+
+      emails.push(
+        _.pick(email, ['emailAddress', 'primary'])
+      );
+    });
+
+    this.user.phones.forEach(phone => {
+      if (_.isEmpty(phone.phoneNumber)) {
+        return;
+      }
+
+      phones.push(
+        _.pick(phone, ['phoneNumber', 'primary', 'phoneType'])
+      );
+    });
 
     const user = {
       firstName,
@@ -92,9 +115,19 @@ export class CompanyProfileComponent implements OnInit {
       confirmPassword
     };
 
-    const company = _.omit(this.company, ['createdAt']) as BusinessInfo;
-
-    this.loading = true;
+    const company = _.pick(
+      this.company,
+      [
+        'companyId',
+        'companyName',
+        'companyAddressId',
+        'companyAddress',
+        'city',
+        'state',
+        'zip',
+        'website'
+      ]
+    );
 
     this.companyService.updateCompanyInfo(company, user)
       .pipe(finalize(() => this.loading = false))

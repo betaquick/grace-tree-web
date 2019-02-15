@@ -7,6 +7,7 @@ import { Email, Phone, RegisterUser, UserProduct } from '../../shared/models/use
 import { UserService } from '../user.service';
 import { PhoneTypes } from '@betaquick/grace-tree-constants';
 import { utils } from '../../shared/utils';
+import { SessionStorage } from 'ngx-store';
 
 @Component({
   selector: 'app-user-profile',
@@ -20,10 +21,11 @@ export class UserProfileComponent implements OnInit {
 
   isProfileEdit: boolean;
   isPreferenceEdit: boolean;
-  user: RegisterUser;
   userProducts: UserProduct[];
   loading: boolean;
   errorMessage: string;
+
+  @SessionStorage() user: RegisterUser = new RegisterUser();
 
   constructor(
     private userService: UserService,
@@ -34,22 +36,6 @@ export class UserProfileComponent implements OnInit {
     this.isProfileEdit = false;
     this.isPreferenceEdit = false;
     this.loading = false;
-    this.user = this.userService.user as RegisterUser;
-
-    if (this.user.emails.length === 1) {
-      const email = new Email();
-      email.primary = false;
-
-      this.user.emails.push(email);
-    }
-
-    if (this.user.phones.length === 1) {
-      const phone = new Phone();
-      phone.primary = false;
-      phone.phoneType = PhoneTypes.HOME;
-
-      this.user.phones.push(phone);
-    }
 
     this.userProducts = [new UserProduct()];
     this.getUserProducts();
@@ -63,6 +49,33 @@ export class UserProfileComponent implements OnInit {
     );
   }
 
+  toggleUpdateProfile() {
+    this.isProfileEdit = !this.isProfileEdit;
+
+    if (this.isProfileEdit) {
+      if (this.user.emails.length === 1) {
+        const email = new Email();
+        email.primary = false;
+
+        this.user.emails.push(email);
+      }
+
+      if (this.user.phones.length === 1) {
+        const phone = new Phone();
+        phone.primary = false;
+        phone.phoneType = PhoneTypes.HOME;
+
+        this.user.phones.push(phone);
+      }
+    } else {
+      const emails = _.filter(this.user.emails, email => !_.isEmpty(email.emailAddress));
+      const phones = _.filter(this.user.phones, phone => !_.isEmpty(phone.phoneNumber));
+
+      this.user.emails = emails;
+      this.user.phones = phones;
+    }
+  }
+
   isBoolean(status) {
     return utils.getBoolean(status) ? 'Yes' : 'No';
   }
@@ -73,8 +86,31 @@ export class UserProfileComponent implements OnInit {
       this.errorMessage = 'Password and confirm password don\'t match';
       return;
     }
-    const emails = _.filter(this.user.emails, email => !_.isEmpty(email.emailAddress));
-    const phones = _.filter(this.user.phones, phone => !_.isEmpty(phone.phoneNumber));
+
+    this.loading = true;
+
+    const emails: Array<Email> = [];
+    const phones: Array<Phone> = [];
+
+    this.user.emails.forEach(email => {
+      if (_.isEmpty(email.emailAddress)) {
+        return;
+      }
+
+      emails.push(
+        _.pick(email, ['emailAddress', 'primary'])
+      );
+    });
+
+    this.user.phones.forEach(phone => {
+      if (_.isEmpty(phone.phoneNumber)) {
+        return;
+      }
+
+      phones.push(
+        _.pick(phone, ['phoneNumber', 'primary', 'phoneType'])
+      );
+    });
 
     const user = {
       firstName,
@@ -85,16 +121,13 @@ export class UserProfileComponent implements OnInit {
       confirmPassword
     };
 
-    this.loading = true;
-
     this.userService.updateProfile(user)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-        () => {
+        data => {
           this.toastr.success('Profile updated successfully');
           this.isProfileEdit = false;
-          this.user.password = '';
-          this.user.confirmPassword = '';
+          this.user = data.user;
         },
         err => this.toastr.error(err)
       );
