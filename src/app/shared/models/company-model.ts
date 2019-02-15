@@ -7,6 +7,7 @@ export class BusinessInfo {
   companyId?: number;
   companyName: string;
   website: string;
+  companyAddressId?: number;
   companyAddress: string;
   city: string;
   state: string;
