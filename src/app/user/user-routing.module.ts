@@ -6,6 +6,8 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard.componen
 import { AuthGuard } from '../auth/auth.guard';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { NotificationComponent } from './notification/notification.component';
+import { UserDeliveriesComponent } from './user-deliveries/user-deliveries.component';
+import { UpdateDeliveryComponent } from './user-deliveries/update-delivery/update-delivery.component';
 
 const routes: Routes = [{
   path: 'user',
@@ -16,6 +18,8 @@ const routes: Routes = [{
     canActivateChild: [AuthGuard],
     children: [
       { path: '', component: UserDashboardComponent },
+      { path: 'deliveries', component: UserDeliveriesComponent },
+      { path: 'deliveries/:deliveryId', component: UpdateDeliveryComponent },
       { path: 'profile', component: UserProfileComponent },
       { path: 'notifications', component: NotificationComponent },
       { path: '**', component: UserDashboardComponent }

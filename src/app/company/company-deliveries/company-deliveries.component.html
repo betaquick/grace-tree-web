@@ -1,80 +1,25 @@
-<div class="pcoded-main-container">
-  <div class="pcoded-wrapper">
-    <nav class="pcoded-navbar">
-      <div class="sidebar_toggle">
-        <a href="#">
-          <i class="icon-close icons"></i>
-        </a>
-      </div>
-      <div class="pcoded-inner-navbar main-menu">
+<div class="pcoded-content">
+  <div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+      <div class="page-wrapper">
 
-        <div class="pcoded-navigation-label">Navigation</div>
-        <ul class="pcoded-item pcoded-left-item">
-          <li class="">
-            <a href="company-dashboard.html">
-              <span class="pcoded-micon">
-                <i class="ti-home"></i>
-                <b>D</b>
-              </span>
-              <span class="pcoded-mtext">Dashboard</span>
-            </a>
-          </li>
-          <li class="active">
-            <a href="company-deliveries.html">
-              <span class="pcoded-micon">
-                <i class="ti-layout"></i>
-                <b>P</b>
-              </span>
-              <span class="pcoded-mtext">Deliveries</span>
-            </a>
-          </li>
-          <li class="">
-            <a href="company-profile.html">
-              <span class="pcoded-micon">
-                <i class="ti-layout-cta-right"></i>
-                <b>N</b>
-              </span>
-              <span class="pcoded-mtext">Profile</span>
-              <span class="pcoded-mcaret"></span>
-            </a>
-          </li>
-          <li class="">
-            <a href="company-crew.html">
-              <span class="pcoded-micon">
-                <i class="ti-view-grid"></i>
-                <b>W</b>
-              </span>
-              <span class="pcoded-mtext">Crew</span>
-              <span class="pcoded-mcaret"></span>
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
-    <div class="pcoded-content">
-      <div class="pcoded-inner-content">
-        <!-- Main-body start -->
-        <div class="main-body">
-          <div class="page-wrapper">
+        <div class="page-body">
+          <div class="row">
 
-            <div class="page-body">
-              <div class="row">
-
-                <div class="col-xl-12 col-md-12">
-                  <div class="card">
-                    <div class="card-header">
-                      <h5>Deliveries</h5>
-                      <div class="card-header-right">
-                        <button type="button" name="button" class="btn btn-primary" [routerLink]="['/company/search']">New
-                          Delivery</button>
-                      </div>
-                    </div>
-                    <app-delivery [deliveries]="deliveries" (setDelivery)="openModal(modalDefault, $event)"></app-delivery>
+            <div class="col-xl-12 col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5>Deliveries</h5>
+                  <div class="card-header-right">
+                    <button type="button" name="button" class="btn btn-primary" [routerLink]="['/company/search']">New
+                      Delivery</button>
                   </div>
                 </div>
-
+                <app-delivery [deliveries]="deliveries" (setDelivery)="openModal(modalDefault, $event)"></app-delivery>
               </div>
             </div>
+
           </div>
         </div>
       </div>

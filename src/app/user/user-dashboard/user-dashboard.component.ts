@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { SessionStorage } from 'ngx-store';
 import * as _ from 'lodash';
+import { UserStatus } from '@betaquick/grace-tree-constants';
+import { Router } from '@angular/router';
 
 import { UserService } from '../user.service';
 import { User } from '../../shared/models/user-model';
-import { UserStatus } from '@betaquick/grace-tree-constants';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -24,6 +25,7 @@ export class UserDashboardComponent implements OnInit {
   delivery: any = {};
 
   constructor(
+    private router: Router,
     private userService: UserService,
     private toastr: ToastrService
   ) { }
@@ -89,9 +91,7 @@ export class UserDashboardComponent implements OnInit {
     this.modal.hide();
   }
 
-  openModal(modal: any, delivery) {
-    this.delivery = delivery;
-
-    modal.show();
+  updateDelivery(delivery) {
+    this.router.navigate(['/user/deliveries', delivery.deliveryId]);
   }
 }
