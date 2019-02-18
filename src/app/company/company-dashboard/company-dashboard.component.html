@@ -1,58 +1,57 @@
 <div class="pcoded-content">
-	<div class="pcoded-inner-content">
-		<!-- Main-body start -->
-		<div class="main-body">
-			<div class="page-wrapper">
+  <div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+      <div class="page-wrapper">
 
-				<div class="page-body">
-					<div class="row">
-
-						<div class="col-md-6 col-xl-4">
-							<div class="card widget-statstic-card borderless-card">
-								<div class="card-header">
-									<div class="card-header-left">
-										<h5>Pending Deliveries</h5>
-										<p class="p-t-10 m-b-0 text-muted">In transit</p>
-									</div>
-								</div>
-								<div class="card-block">
-									<i class="fa fa-truck st-icon bg-primary txt-lite-color"></i>
-									<div class="text-left">
-										<h3 class="d-inline-block">{{pendingCount}}</h3>
-									</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-6 col-xl-4">
-							<div class="card widget-statstic-card borderless-card">
-								<div class="card-header">
-									<div class="card-header-left">
-										<h5>Total Deliveries</h5>
-										<p class="p-t-10 m-b-0 text-muted">Total deliveries scheduled</p>
-									</div>
-								</div>
-								<div class="card-block">
-									<i class="fa fa-calendar st-icon bg-success txt-lite-color"></i>
-									<div class="text-left">
-										<h3 class="d-inline-block">{{totalCount}}</h3>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- Recent Orders start -->
-						<div class="col-md-12">
-							<div class="card">
-								<div class="card-header">
-									<h5>Recent Deliveries</h5>
-								</div>
-								<app-delivery [deliveries]="deliveries" (setDelivery)="openModal(modalDefault, $event)"></app-delivery>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="page-body">
+          <div class="row">
+            <div class="col-md-6 col-xl-4">
+              <div class="card widget-statstic-card borderless-card">
+                <div class="card-header">
+                  <div class="card-header-left">
+                    <h5>Pending Deliveries</h5>
+                    <p class="p-t-10 m-b-0 text-muted">In transit</p>
+                  </div>
+                </div>
+                <div class="card-block">
+                  <i class="fa fa-truck st-icon bg-primary txt-lite-color"></i>
+                  <div class="text-left">
+                    <h3 class="d-inline-block">{{pendingCount}}</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 col-xl-4">
+              <div class="card widget-statstic-card borderless-card">
+                <div class="card-header">
+                  <div class="card-header-left">
+                    <h5>Total Deliveries</h5>
+                    <p class="p-t-10 m-b-0 text-muted">Total deliveries scheduled</p>
+                  </div>
+                </div>
+                <div class="card-block">
+                  <i class="fa fa-calendar st-icon bg-success txt-lite-color"></i>
+                  <div class="text-left">
+                    <h3 class="d-inline-block">{{totalCount}}</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Recent Orders start -->
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5>Recent Deliveries</h5>
+                </div>
+                <app-delivery [deliveries]="deliveries" (setDelivery)="openModal(modalDefault, $event)"></app-delivery>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <app-modal-basic #modalDefault>

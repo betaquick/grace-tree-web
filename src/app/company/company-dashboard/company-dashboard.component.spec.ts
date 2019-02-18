@@ -72,7 +72,7 @@ describe('CompanyDashboardComponent', () => {
     expect(toastrStub).toBeDefined();
   });
 
-  describe('list pending and recent deliveries', () => {
+  describe('list total, pending and recent deliveries', () => {
     it('should successfully list total, recent and pending deliveries ', fakeAsync(() => {
       expect(component.totalCount).toEqual(response.length);
       expect(component.pendingCount).toEqual(response.length);
