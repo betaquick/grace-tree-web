@@ -1,14 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs/operators';
-import { UserStatus } from '@betaquick/grace-tree-constants';
+import { SessionStorage } from 'ngx-store';
+import { UserStatus, DeliveryStatusCodes, UserDeliveryStatus } from '@betaquick/grace-tree-constants';
 
 import { CompanyService } from '../company.service';
+import { ScheduleDelivery, User } from '../../shared/models/user-model';
 
 @Component({
   selector: 'app-company-search',
   templateUrl: './company-search.component.html',
-  styleUrls: ['./company-search.component.scss']
+  styleUrls: [
+    './company-search.component.scss',
+    '../../../assets/icon/icofont/css/icofont.scss'
+  ]
 })
 export class CompanySearchComponent implements OnInit {
 
@@ -20,35 +25,17 @@ export class CompanySearchComponent implements OnInit {
   lng: number;
   zoom = 8;
 
-  styles: any = [{
-    featureType: 'all',
-    stylers: [{
-      saturation: -80
-    }]
-  }, {
-    featureType: 'road.arterial',
-    elementType: 'geometry',
-    stylers: [{
-      hue: '#00ffee'
-    }, {
-      saturation: 50
-    }]
-  }, {
-    featureType: 'poi.business',
-    elementType: 'labels',
-    stylers: [{
-      visibility: 'off'
-    }]
-  }];
-
-  users = [];
-  user: any = {};
+  recipients = [];
+  recipient: any = {};
 
   loading: boolean;
   searchParams = {
     address: '',
-    radius: 30
+    radius: 30,
+    includePause: false
   };
+
+  @SessionStorage() user: User = new User();
 
   constructor(
     private companyService: CompanyService,
@@ -85,11 +72,13 @@ export class CompanySearchComponent implements OnInit {
   search() {
     this.loading = true;
 
-    this.companyService.searchUsers(this.searchParams.address, this.searchParams.radius)
+    const { address, radius, includePause } = this.searchParams;
+
+    this.companyService.searchUsers(address, radius, includePause)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
         data => {
-          this.users = data.users;
+          this.recipients = data.users;
           this.lat = data.coordinates.lat;
           this.lng = data.coordinates.lng;
         },
@@ -109,9 +98,73 @@ export class CompanySearchComponent implements OnInit {
     return '../../../assets/images/marker-yellow.png';
   }
 
-  openNote(modal: any, user) {
-    this.user = user;
+  openNote(modal: any, recipient) {
+    this.recipient = recipient;
 
     modal.show();
+  }
+
+  checkAll(e) {
+    let recipients;
+    if (e.target.checked) {
+      recipients = this.recipients.map(recipient => {
+        if (recipient.status === UserStatus.Pause) {
+          return { ...recipient, selected: true };
+        }
+
+        return recipient;
+      });
+    } else {
+      recipients = this.recipients.map(recipient => {
+        if (recipient.status === UserStatus.Pause) {
+          return { ...recipient, selected: false };
+        }
+
+        return recipient;
+      });
+    }
+
+    this.recipients = recipients;
+  }
+
+  isUserSelected(): boolean {
+    const users = [];
+    this.recipients.forEach(recipient => {
+      if (recipient.selected) {
+        users.push(recipient.userId);
+      }
+    });
+
+    if (this.loading || users.length === 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  sendRequest() {
+    const users = [];
+    this.recipients.forEach(recipient => {
+      if (recipient.selected) {
+        users.push(recipient.userId);
+      }
+    });
+
+    if (users.length > 0) {
+      this.loading = true;
+      const delivery: ScheduleDelivery = {
+        statusCode: DeliveryStatusCodes.Requested,
+        assignedToUserId: this.user.userId,
+        userDeliveryStatus: UserDeliveryStatus.Pending,
+        users
+      };
+  
+      this.companyService.scheduleDelivery(delivery)
+        .pipe(finalize(() => this.loading = false))
+        .subscribe(
+          () => this.toastr.success('Delivery request has been sent successfully'),
+          err => this.toastr.error(err)
+        );
+    }
   }
 }

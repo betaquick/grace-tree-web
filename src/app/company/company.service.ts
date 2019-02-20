@@ -81,8 +81,9 @@ export class CompanyService {
       );
   }
 
-  searchUsers(address: string, radius: number): Observable<any> {
-    return this.http.get(`${AppConfig.API_URL}/search?address=${address}&radius=${radius}`)
+  searchUsers(address: string, radius: number, includePause: boolean): Observable<any> {
+    return this.http
+      .get(`${AppConfig.API_URL}/search?address=${address}&radius=${radius}&includePause=${includePause}`)
       .pipe(
         map(response => {
           const body = _.get(response, 'body');

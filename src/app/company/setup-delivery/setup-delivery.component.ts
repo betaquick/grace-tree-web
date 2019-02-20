@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ParamMap, ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { UserStatus } from '@betaquick/grace-tree-constants';
+import { UserStatus, DeliveryStatusCodes, UserDeliveryStatus } from '@betaquick/grace-tree-constants';
 import { finalize } from 'rxjs/operators';
 
 import { CompanyService } from '../company.service';
@@ -72,6 +72,8 @@ export class SetupDeliveryComponent implements OnInit {
     this.loading = true;
 
     this.delivery.users = [this.recipient.userId];
+    this.delivery.statusCode = DeliveryStatusCodes.Scheduled;
+    this.delivery.userDeliveryStatus = UserDeliveryStatus.Accepted;
 
     this.companyService.scheduleDelivery(this.delivery)
       .pipe(finalize(() => this.loading = false))
