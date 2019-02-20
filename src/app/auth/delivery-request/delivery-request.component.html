@@ -1,0 +1,27 @@
+<section class="register p-fixed d-flex common-img-bg">
+  <!-- Container-fluid starts -->
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-12">
+        <div class="login-card card-block auth-body mr-auto ml-auto">
+          <div class="text-center">
+            <h3 class="logo">Green Tree</h3>
+          </div>
+          <div class="auth-box">
+            <div class="row">
+              <div class="col-md-12">
+                <h3 class="text-center txt-primary">Delivery Request</h3>
+              </div>
+            </div>
+            <hr />
+
+            <div class="terms" *ngIf="!loading">
+              <p>You successfully accepted the delivery request. You can now proceed to the <a
+                  [routerLink]="['/login']">login page</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
