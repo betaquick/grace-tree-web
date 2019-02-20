@@ -16,12 +16,14 @@ import { AddBusinessComponent } from './company-registration/add-business/add-bu
 import { CompanyVerificationComponent } from './company-registration/verification/company-verification.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { DeliveryRequestComponent } from './delivery-request/delivery-request.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'reset/:token', component: ResetPasswordComponent },
+  { path: 'request/user/:userId/delivery/:deliveryId', component: DeliveryRequestComponent },
   { path: 'logout', component: LogoutComponent },
   {
     path: 'user-registration',

@@ -119,6 +119,14 @@ export class AuthService {
       );
   }
 
+  acceptDeliveryRequest(userId: number, deliveryId: number) {
+    return this.http.put(`${AppConfig.API_URL}/user/deliveries/${userId}/${deliveryId}`, null)
+      .pipe(
+        map(response => _.get(response, 'body')),
+        catchError(utils.handleError)
+      );
+  }
+
   private handleSuccessAuth(response) {
     const credentials = _.get(response, 'body');
     this.token = _.get(credentials, 'token');
