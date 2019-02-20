@@ -128,7 +128,7 @@ describe('CompanySearchComponent', () => {
       component.search();
       expect(component.loading).toEqual(true);
       tick(100);
-      expect(component.users).toEqual(response.users);
+      expect(component.recipients).toEqual(response.users);
       expect(toastrStub.error.calls.count()).toEqual(0);
     }));
 

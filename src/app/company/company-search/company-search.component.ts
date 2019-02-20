@@ -158,7 +158,7 @@ export class CompanySearchComponent implements OnInit {
         userDeliveryStatus: UserDeliveryStatus.Pending,
         users
       };
-  
+
       this.companyService.scheduleDelivery(delivery)
         .pipe(finalize(() => this.loading = false))
         .subscribe(
