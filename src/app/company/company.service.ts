@@ -125,6 +125,32 @@ export class CompanyService {
       );
   }
 
+  getPendingDeliveries(): Observable<any> {
+    return this.http.get(`${AppConfig.API_URL}/user/company/deliveries/pending`)
+      .pipe(
+        map(response => {
+          const body = _.get(response, 'body');
+          const deliveries = _.get(body, 'deliveries');
+
+          return deliveries;
+        }),
+        catchError(utils.handleError)
+      );
+  }
+
+  getRecentDeliveries(): Observable<any> {
+    return this.http.get(`${AppConfig.API_URL}/user/company/deliveries/recent`)
+      .pipe(
+        map(response => {
+          const body = _.get(response, 'body');
+          const deliveries = _.get(body, 'deliveries');
+
+          return deliveries;
+        }),
+        catchError(utils.handleError)
+      );
+  }
+
   getDelivery(deliveryId: number): Observable<any> {
     return this.http.get(`${AppConfig.API_URL}/user/company/deliveries/${deliveryId}`)
       .pipe(
