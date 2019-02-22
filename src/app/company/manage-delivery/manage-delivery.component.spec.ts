@@ -80,7 +80,7 @@ describe('ManageDeliveryComponent', () => {
 
       tick(100);
       expect(component.loading).toEqual(false);
-      
+
       expect(component.deliveries).toEqual(deliveries);
       expect(toastrStub.error.calls.count()).toEqual(0);
     }));

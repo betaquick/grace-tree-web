@@ -78,7 +78,6 @@ export class SetupDeliveryComponent implements OnInit {
     this.delivery.isAssigned = true;
 
     let scheduleDelivery;
-    
 
     if (this.deliveryId) {
       scheduleDelivery = this.companyService.updateDelivery(this.deliveryId, this.delivery);
