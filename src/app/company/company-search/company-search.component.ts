@@ -156,7 +156,8 @@ export class CompanySearchComponent implements OnInit {
         statusCode: DeliveryStatusCodes.Requested,
         assignedToUserId: this.user.userId,
         userDeliveryStatus: UserDeliveryStatus.Pending,
-        users
+        users,
+        isAssigned: false
       };
 
       this.companyService.scheduleDelivery(delivery)

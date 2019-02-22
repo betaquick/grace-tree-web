@@ -1,0 +1,23 @@
+<div class="pcoded-content">
+  <div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+      <div class="page-wrapper">
+
+        <div class="page-body">
+          <div class="row">
+
+            <div class="col-xl-12 col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5>Manage Delivery</h5>
+                </div>
+                <app-delivery [deliveries]="deliveries" (setDelivery)="scheduleDelivery($event)"></app-delivery>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

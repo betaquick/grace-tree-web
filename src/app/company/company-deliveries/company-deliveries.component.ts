@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { CompanyService } from '../company.service';
 
@@ -17,6 +18,7 @@ export class CompanyDeliveriesComponent implements OnInit {
   delivery: any = {};
 
   constructor(
+    private router: Router,
     private companyService: CompanyService,
     private toastr: ToastrService
   ) {}
@@ -35,7 +37,15 @@ export class CompanyDeliveriesComponent implements OnInit {
       );
   }
 
-  openModal(modal: any, delivery) {
+  openModal(modal: any, data) {
+    const { action, delivery } = data;
+
+    if (action === 'link') {
+      this.router.navigate(['/company/deliveries', delivery.deliveryId]);
+
+      return;
+    }
+
     this.delivery = delivery;
 
     modal.show();

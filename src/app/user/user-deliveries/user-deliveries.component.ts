@@ -38,7 +38,7 @@ export class UserDeliveriesComponent implements OnInit {
       );
   }
 
-  updateDelivery(delivery) {
+  updateDelivery({ delivery }) {
     this.router.navigate(['/user/deliveries', delivery.deliveryId]);
   }
 }

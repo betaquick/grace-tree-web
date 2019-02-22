@@ -86,4 +86,5 @@ export class ScheduleDelivery {
   additionalCompanyText?: string;
   statusCode?: string;
   userDeliveryStatus?: string;
+  isAssigned?: boolean;
 }
