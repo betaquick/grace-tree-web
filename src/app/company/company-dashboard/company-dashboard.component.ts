@@ -54,7 +54,15 @@ export class CompanyDashboardComponent implements OnInit {
       );
   }
 
-  openModal(modal: any, delivery) {
+  openModal(modal: any, data) {
+    const { action, delivery } = data;
+
+    if (action === 'link') {
+      this.router.navigate(['/company/deliveries', delivery.deliveryId]);
+
+      return;
+    }
+
     this.delivery = delivery;
 
     modal.show();

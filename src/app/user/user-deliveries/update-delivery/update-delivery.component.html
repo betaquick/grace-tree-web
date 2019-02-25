@@ -80,6 +80,7 @@
                     <div class="form-group row" *ngIf="delivery.statusCode !== statusCodes.Scheduled">
                       <label class="col-sm-2 col-form-label">Delivery Status</label>
                       <div class="col-sm-5">
+                        <span class="label label-warning" *ngIf="delivery.statusCode === statusCodes.Requested">Requested</span>
                         <span class="label label-success" *ngIf="delivery.statusCode === statusCodes.Delivered">Delivered</span>
                         <span class="label label-danger" *ngIf="delivery.statusCode === statusCodes.Expired">Expired</span>
                       </div>
