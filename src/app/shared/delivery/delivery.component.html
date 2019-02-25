@@ -29,9 +29,6 @@
           <span class="label label-primary" *ngIf="delivery.statusCode === statusCodes.Scheduled">Scheduled</span>
           <span class="label label-success" *ngIf="delivery.statusCode === statusCodes.Delivered">Delivered</span>
           <span class="label label-danger" *ngIf="delivery.statusCode === statusCodes.Expired">Expired</span>
-
-          <span class="label label-warning" *ngIf="delivery.statusCode === userDeliveryStatus.Pending">Pending</span>
-          <span class="label label-success" *ngIf="delivery.statusCode === userDeliveryStatus.Accepted">Accepted</span>
         </td>
         <td>
           <button (click)="emitDelivery('click', delivery)" class="btn btn-sm btn-outline-primary">View</button>

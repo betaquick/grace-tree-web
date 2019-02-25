@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs/operators';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { UserStatus, UserDeliveryStatus } from '@betaquick/grace-tree-constants';
 
 import { CompanyService } from '../company.service';
 
@@ -13,6 +14,9 @@ import { CompanyService } from '../company.service';
 export class ManageDeliveryComponent implements OnInit {
 
   loading: boolean;
+
+  public userStatus = UserStatus;
+  public userDeliveryStatus = UserDeliveryStatus;
 
   deliveries = [];
   deliveryId: number;
@@ -46,9 +50,5 @@ export class ManageDeliveryComponent implements OnInit {
       .subscribe(deliveries => this.deliveries = deliveries,
         err => this.toastr.error(err)
       );
-  }
-
-  scheduleDelivery({ delivery }) {
-    this.router.navigate([`/company/setup-delivery/${delivery.userId}/delivery/${delivery.deliveryId}`]);
   }
 }

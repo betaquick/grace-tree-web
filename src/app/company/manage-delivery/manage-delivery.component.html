@@ -12,7 +12,48 @@
                 <div class="card-header">
                   <h5>Manage Delivery</h5>
                 </div>
-                <app-delivery [deliveries]="deliveries" (setDelivery)="scheduleDelivery($event)"></app-delivery>
+                <div class="card-block p-3">
+                  <div class="table-responsive">
+                    <table class="table">
+                      <tr>
+                        <th>Recipient</th>
+                        <th>Status</th>
+                        <th>Assigned</th>
+                        <th>Date</th>
+                        <th>Details</th>
+                      </tr>
+                      <tr *ngIf="deliveries.length === 0">
+                        <td colspan="4" class="text-center">No deliveries yet</td>
+                      </tr>
+                      <tr *ngFor="let delivery of deliveries;">
+                        <td>
+                          {{delivery.firstName}} {{delivery.lastName}}
+                          <span class="label label-warning" *ngIf="delivery.userStatus === userStatus.Pause">Pause</span>
+                          <span class="label label-success" *ngIf="delivery.userStatus === userStatus.Ready">Ready</span>
+                        </td>
+                        <td>
+                          <span class="label label-warning"
+                            *ngIf="delivery.statusCode === userDeliveryStatus.Pending">Pending</span>
+                          <span class="label label-success"
+                            *ngIf="delivery.statusCode === userDeliveryStatus.Accepted">Accepted</span>
+                        </td>
+                        <td>
+                          <span class="label label-success" *ngIf="delivery.isAssigned === 1">Yes</span>
+                          <span class="label label-warning" *ngIf="delivery.isAssigned === 0">No</span>
+                        </td>
+                        <td>{{delivery.updatedAt | date: 'dd-MM-yyyy'}}</td>
+                        <td>
+                          <ng-template [ngIf]="delivery.userStatus === userStatus.Ready">
+                            <a [routerLink]="['/company/setup-delivery', delivery.userId, 'delivery', delivery.deliveryId]"
+                              *ngIf="delivery.statusCode === userDeliveryStatus.Accepted">
+                              <button class="btn btn-sm btn-outline-primary">Schedule</button>
+                            </a>
+                          </ng-template>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
