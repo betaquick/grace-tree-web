@@ -15,21 +15,27 @@
         <td colspan="4" class="text-center">No deliveries yet</td>
       </tr>
       <tr *ngFor="let delivery of deliveries;">
-        <td *ngIf="user.userType === userTypes.General else companyRow">{{delivery.firstName}} {{delivery.lastName}} - {{delivery.companyName}}</td>
+        <td *ngIf="user.userType === userTypes.General else companyRow">{{delivery.firstName}} {{delivery.lastName}} -
+          {{delivery.companyName}}</td>
         <ng-template #companyRow>
-          <td>{{delivery.firstName}} {{delivery.lastName}}</td>
+          <td *ngIf="delivery.statusCode === statusCodes.Requested"><a href="javascript:" class="text-primary"
+              (click)="emitDelivery('link', delivery)">{{delivery.usersCount}} Recipient(s)</a></td>
+          <td *ngIf="delivery.statusCode !== statusCodes.Requested">{{delivery.firstName}} {{delivery.lastName}}</td>
         </ng-template>
 
         <td>{{delivery.createdAt | date: 'dd-MM-yyyy'}}</td>
         <td>
-          <span class="label label-warning" *ngIf="delivery.statusCode === statusCodes.Scheduled">Scheduled</span>
+          <span class="label label-warning" *ngIf="delivery.statusCode === statusCodes.Requested">Requested</span>
+          <span class="label label-primary" *ngIf="delivery.statusCode === statusCodes.Scheduled">Scheduled</span>
           <span class="label label-success" *ngIf="delivery.statusCode === statusCodes.Delivered">Delivered</span>
           <span class="label label-danger" *ngIf="delivery.statusCode === statusCodes.Expired">Expired</span>
         </td>
         <td>
-          <button (click)="emitDelivery(delivery)" class="btn btn-sm btn-outline-primary" *ngIf="delivery.additionalRecipientText || delivery.additionalCompanyText">
-            View
-          </button>
+          <button (click)="emitDelivery('click', delivery)" class="btn btn-sm btn-outline-primary">View</button>
+          <ng-template [ngIf]="user.userType !== userTypes.General">
+            <button (click)="emitDelivery('link', delivery)" class="btn btn-sm btn-outline-success"
+              *ngIf="delivery.statusCode === statusCodes.Requested || delivery.usersCount > 1">Manage</button>
+          </ng-template>
         </td>
       </tr>
     </table>

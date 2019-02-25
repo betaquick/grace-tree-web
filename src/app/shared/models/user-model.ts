@@ -84,4 +84,7 @@ export class ScheduleDelivery {
   details?: string;
   additionalRecipientText?: string;
   additionalCompanyText?: string;
+  statusCode?: string;
+  userDeliveryStatus?: string;
+  isAssigned?: boolean;
 }

@@ -34,17 +34,23 @@
                               <button type="submit" class="btn btn-primary" [disabled]="loading">Search</button>
                             </div>
                           </div>
+                          <div class="checkbox-fade fade-in-primary d-">
+                            <label>
+                              <input type="checkbox" [(ngModel)]="searchParams.includePause" name="includePause">
+                              <span class="cr">
+                                <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                              </span>
+                              <span class="text-inverse">Include users in pause state</span>
+                            </label>
+                          </div>
                         </form>
                       </div>
                       <div class="clearfix"></div>
                       <br>
                       <div class="gmap1 full-page-google-map" *ngIf="mapView">
                         <agm-map [latitude]="convertToNumber(lat)" [longitude]="convertToNumber(lng)" [zoom]="zoom">
-                          <agm-marker
-                            *ngFor="let user of users;"
-                            [latitude]="convertToNumber(user.latitude)"
-                            [longitude]="convertToNumber(user.longitude)"
-                            [iconUrl]="getIconURL(user.status)"
+                          <agm-marker *ngFor="let user of recipients;" [latitude]="convertToNumber(user.latitude)"
+                            [longitude]="convertToNumber(user.longitude)" [iconUrl]="getIconURL(user.status)"
                             [markerDraggable]="false">
                             <agm-info-window>
                               <h5 class="title">
@@ -55,52 +61,72 @@
                               <h6 class="body">{{user.email}}</h6>
                               <h6 class="body">{{user.phoneNumber}}</h6>
                               <h6 class="body">
-                                <button (click)="openNote(modalDefault, user)" class="btn btn-sm btn-outline-primary" *ngIf="user.deliveryInstruction">
+                                <button (click)="openNote(modalDefault, user)" class="btn btn-sm btn-outline-primary"
+                                  *ngIf="user.deliveryInstruction">
                                   View Note
                                 </button>
-                                <a [routerLink]="['/company/setup-delivery', user.userId]" class="btn btn-primary btn-sm">Setup Delivery</a>
+                                <a [routerLink]="['/company/setup-delivery', user.userId]"
+                                  class="btn btn-primary btn-sm">Setup Delivery</a>
                               </h6>
                             </agm-info-window>
                           </agm-marker>
 
-                          <agm-marker
-                            [latitude]="lat"
-                            [longitude]="lng"
-                            [iconUrl]="'../../../assets/images/marker-red.png'"
-                            [markerDraggable]="false">
+                          <agm-marker [latitude]="lat" [longitude]="lng"
+                            [iconUrl]="'../../../assets/images/marker-red.png'" [markerDraggable]="false">
                           </agm-marker>
                         </agm-map>
                       </div>
 
                       <div class="table-responsive" *ngIf="!mapView">
-
                         <table class="table">
                           <tr>
-                            <th>Status</th>
-                            <th>Zipcode</th>
+                            <th>
+                              <div class="checkbox-fade fade-in-primary">
+                                <label>
+                                  <input type="checkbox" name="selected" (change)="checkAll($event)">
+                                  <span class="cr">
+                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                  </span>
+                                </label>
+                              </div>
+                            </th>
                             <th>Recipient</th>
                             <th>Email Address</th>
                             <th>Phone Number</th>
+                            <th>Status</th>
+                            <th>Zipcode</th>
                             <th>Delivery Note</th>
-                            <td></td>
+                            <th></th>
                           </tr>
-                          <tr *ngFor="let user of users;">
+                          <tr *ngFor="let user of recipients; let i = index;">
+                            <td>
+                              <div class="checkbox-fade fade-in-primary" *ngIf="user.status === userStatus.Pause">
+                                <label>
+                                  <input type="checkbox" [(ngModel)]="recipients[i].selected" name="user{{i}}">
+                                  <span class="cr">
+                                    <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                  </span>
+                                </label>
+                              </div>
+                            </td>
+                            <td>{{user.firstName}} {{user.lastName}}</td>
+                            <td>{{user.email}}</td>
+                            <td>{{user.phoneNumber}}</td>
                             <td>
                               <span class="label label-warning" *ngIf="user.status === userStatus.Pause">Pause</span>
                               <span class="label label-success" *ngIf="user.status === userStatus.Ready">Ready</span>
                             </td>
                             <td>{{user.zip}}</td>
-                            <td>{{user.firstName}} {{user.lastName}}</td>
-                            <td>{{user.email}}</td>
-                            <td>{{user.phoneNumber}}</td>
                             <td>
-                              <button (click)="openNote(modalDefault, user)" class="btn btn-sm btn-outline-primary" *ngIf="user.deliveryInstruction">
+                              <button (click)="openNote(modalDefault, user)" class="btn btn-sm btn-outline-primary"
+                                *ngIf="user.deliveryInstruction">
                                 View Note
                               </button>
                               <span *ngIf="!user.deliveryInstruction">No Note</span>
                             </td>
                             <td>
-                              <a [routerLink]="['/company/setup-delivery', user.userId]" class="btn btn-primary btn-sm">Setup Delivery</a>
+                              <a [routerLink]="['/company/setup-delivery', user.userId]" class="btn btn-primary btn-sm"
+                                *ngIf="user.status === userStatus.Ready">Setup Delivery</a>
                             </td>
                           </tr>
                         </table>
@@ -119,8 +145,12 @@
                               <button type="button" class="btn btn-danger" id="map-zoom">+</button>
                             </div>
                             &nbsp;
-                            <button class="btn btn-primary" (click)="toggleListMapView()" *ngIf="mapView">List View</button>
-                            <button class="btn btn-primary" (click)="toggleListMapView()" *ngIf="!mapView">Map View</button>
+                            <button class="btn btn-primary" (click)="toggleListMapView()" *ngIf="mapView">List
+                              View</button>
+                            <button class="btn btn-success" (click)="sendRequest()" *ngIf="!mapView" [disabled]="isUserSelected()">Send
+                              Request</button>
+                            <button class="btn btn-primary" (click)="toggleListMapView()" *ngIf="!mapView">Map
+                              View</button>
                           </div>
                         </div>
                       </div>
@@ -141,12 +171,12 @@
 
 <app-modal-basic #modalDefault>
   <div class="app-modal-header">
-    <h4 class="modal-title">{{user.firstName}} {{user.lastName}}'s Note</h4>
+    <h4 class="modal-title">{{recipient.firstName}} {{recipient.lastName}}'s Note</h4>
     <button type="button" class="close basic-close" (click)="modalDefault.hide()">
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
   <div class="app-modal-body">
-    <p>{{user.deliveryInstruction}}</p>
+    <p>{{recipient.deliveryInstruction}}</p>
   </div>
 </app-modal-basic>

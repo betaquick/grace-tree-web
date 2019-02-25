@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, ViewEncapsulation, EventEmitter } from '@angular/core';
 import { SessionStorage } from 'ngx-store';
-import { UserTypes } from '@betaquick/grace-tree-constants';
-import { DeliveryStatusCodes } from '@betaquick/grace-tree-constants';
+import { UserTypes, DeliveryStatusCodes, UserDeliveryStatus } from '@betaquick/grace-tree-constants';
 
 import { User } from '../models/user-model';
 
@@ -19,12 +18,13 @@ export class DeliveryComponent implements OnInit {
 
   public statusCodes = DeliveryStatusCodes;
   public userTypes = UserTypes;
+  public userDeliveryStatus = UserDeliveryStatus;
 
   constructor() {}
 
   ngOnInit() {}
 
-  emitDelivery(delivery) {
-    this.setDelivery.emit(delivery);
+  emitDelivery(action, delivery) {
+    this.setDelivery.emit({ action, delivery });
   }
 }

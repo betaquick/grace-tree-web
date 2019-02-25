@@ -91,7 +91,7 @@ export class UserDashboardComponent implements OnInit {
     this.modal.hide();
   }
 
-  updateDelivery(delivery) {
+  updateDelivery({ delivery }) {
     this.router.navigate(['/user/deliveries', delivery.deliveryId]);
   }
 }

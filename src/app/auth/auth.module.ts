@@ -20,6 +20,7 @@ import { SignupComponent } from './signup/signup.component';
 import { LogoutComponent } from './logout/logout.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { DeliveryRequestComponent } from './delivery-request/delivery-request.component';
 
 @NgModule({
   imports: [
@@ -46,6 +47,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     CompanyVerificationComponent,
     UserVerificationComponent,
     SignupComponent,
+    DeliveryRequestComponent,
     LogoutComponent
   ]
 })

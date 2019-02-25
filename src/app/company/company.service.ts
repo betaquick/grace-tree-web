@@ -81,8 +81,9 @@ export class CompanyService {
       );
   }
 
-  searchUsers(address: string, radius: number): Observable<any> {
-    return this.http.get(`${AppConfig.API_URL}/search?address=${address}&radius=${radius}`)
+  searchUsers(address: string, radius: number, includePause: boolean): Observable<any> {
+    return this.http
+      .get(`${AppConfig.API_URL}/search?address=${address}&radius=${radius}&includePause=${includePause}`)
       .pipe(
         map(response => {
           const body = _.get(response, 'body');
@@ -106,7 +107,7 @@ export class CompanyService {
 
   scheduleDelivery(delivery: ScheduleDelivery) {
     return this.http
-      .post(`${AppConfig.API_URL}/user/company/delivery`, delivery)
+      .post(`${AppConfig.API_URL}/user/company/deliveries`, delivery)
       .pipe(
         catchError(utils.handleError)
       );
@@ -116,8 +117,7 @@ export class CompanyService {
     return this.http.get(`${AppConfig.API_URL}/user/company/deliveries`)
       .pipe(
         map(response => {
-          const body = _.get(response, 'body');
-          const deliveries = _.get(body, 'deliveries');
+          const deliveries = _.get(response, 'body.deliveries');
 
           return deliveries;
         }),
@@ -147,6 +147,22 @@ export class CompanyService {
 
           return deliveries;
         }),
+        catchError(utils.handleError)
+      );
+  }
+
+  getDelivery(deliveryId: number): Observable<any> {
+    return this.http.get(`${AppConfig.API_URL}/user/company/deliveries/${deliveryId}`)
+      .pipe(
+        map(response => _.get(response, 'body')),
+        catchError(utils.handleError)
+      );
+  }
+
+  updateDelivery(deliveryId: number, delivery: ScheduleDelivery) {
+    return this.http
+      .put(`${AppConfig.API_URL}/user/company/deliveries/${deliveryId}`, delivery)
+      .pipe(
         catchError(utils.handleError)
       );
   }

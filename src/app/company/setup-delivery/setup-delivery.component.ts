@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ParamMap, ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { UserStatus } from '@betaquick/grace-tree-constants';
+import { UserStatus, DeliveryStatusCodes, UserDeliveryStatus } from '@betaquick/grace-tree-constants';
 import { finalize } from 'rxjs/operators';
 
 import { CompanyService } from '../company.service';
@@ -22,6 +22,7 @@ export class SetupDeliveryComponent implements OnInit {
   crews: User[];
 
   delivery: ScheduleDelivery;
+  deliveryId: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -37,6 +38,7 @@ export class SetupDeliveryComponent implements OnInit {
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       const userId = parseInt(params.get('userId'), 10);
+      this.deliveryId = parseInt(params.get('deliveryId'), 10);
 
       if (userId) {
         this.getDeliveryInfo(userId);
@@ -72,11 +74,23 @@ export class SetupDeliveryComponent implements OnInit {
     this.loading = true;
 
     this.delivery.users = [this.recipient.userId];
+    this.delivery.statusCode = DeliveryStatusCodes.Scheduled;
+    this.delivery.isAssigned = true;
 
-    this.companyService.scheduleDelivery(this.delivery)
+    let scheduleDelivery;
+
+    if (this.deliveryId) {
+      scheduleDelivery = this.companyService.updateDelivery(this.deliveryId, this.delivery);
+    } else {
+      this.delivery.userDeliveryStatus = UserDeliveryStatus.Accepted;
+
+      scheduleDelivery = this.companyService.scheduleDelivery(this.delivery);
+    }
+
+    scheduleDelivery
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-        data => {
+        () => {
           this.toastr.success('Delivery has been scheduled successfully');
           this.router.navigate(['/company/deliveries']);
         },

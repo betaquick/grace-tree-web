@@ -5,15 +5,15 @@ import { FormsModule } from '@angular/forms';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { CustomFormsModule } from 'ng5-validation';
 
-import { CompanyDeliveriesComponent } from './company-deliveries.component';
+import { ManageDeliveryComponent } from './manage-delivery.component';
 import { DummyComponent, asyncData, asyncError } from '../../testing/helpers';
 import { CompanyService } from '../company.service';
 import { ModalBasicComponent } from '../../shared/modal-basic/modal-basic.component';
 import { DeliveryComponent } from '../../shared/delivery/delivery.component';
 
-describe('CompanyDeliveriesComponent', () => {
-  let component: CompanyDeliveriesComponent;
-  let fixture: ComponentFixture<CompanyDeliveriesComponent>;
+describe('ManageDeliveryComponent', () => {
+  let component: ManageDeliveryComponent;
+  let fixture: ComponentFixture<ManageDeliveryComponent>;
   let companyServiceStub;
   let toastrStub;
   let routerStub;
@@ -38,26 +38,26 @@ describe('CompanyDeliveriesComponent', () => {
         ToastrModule.forRoot({})
       ],
       declarations: [
-        CompanyDeliveriesComponent,
+        ManageDeliveryComponent,
         DummyComponent,
         ModalBasicComponent,
         DeliveryComponent
       ],
       providers: [
-        { provide: CompanyService, useValue: jasmine.createSpyObj('CompanyService', ['getDeliveries']) },
+        { provide: CompanyService, useValue: jasmine.createSpyObj('CompanyService', ['getDelivery']) },
         { provide: ToastrService, useValue: jasmine.createSpyObj('toastrStub', ['error']) }
       ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(CompanyDeliveriesComponent);
+    fixture = TestBed.createComponent(ManageDeliveryComponent);
     component = fixture.componentInstance;
 
     routerStub = TestBed.get(Router);
     companyServiceStub = TestBed.get(CompanyService);
     toastrStub = TestBed.get(ToastrService);
 
-    companyServiceStub.getDeliveries.and.returnValue(asyncData(deliveries));
+    companyServiceStub.getDelivery.and.returnValue(asyncData(deliveries));
     fixture.detectChanges();
   }));
 
@@ -67,23 +67,29 @@ describe('CompanyDeliveriesComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(companyServiceStub.getDeliveries).toBeDefined();
+    expect(companyServiceStub.getDelivery).toBeDefined();
     expect(toastrStub.error).toBeDefined();
     expect(routerStub).toBeDefined();
     expect(toastrStub).toBeDefined();
   });
 
-  describe('list deliveries', () => {
-    it('should successfully list all deliveries ', fakeAsync(() => {
+  describe('manage delivery', () => {
+    it('should successfully list all users under a delivery', fakeAsync(() => {
+      component.getDelivery(1);
+      expect(component.loading).toEqual(true);
+
+      tick(100);
+      expect(component.loading).toEqual(false);
+
       expect(component.deliveries).toEqual(deliveries);
       expect(toastrStub.error.calls.count()).toEqual(0);
     }));
 
-    it('Error: fails listing all deliveries - show toast error', fakeAsync(() => {
+    it('Error: fails listing all users under a delivery - show toast error', fakeAsync(() => {
       component.deliveries = [];
-      companyServiceStub.getDeliveries.and.returnValue(asyncError(new Error()));
+      companyServiceStub.getDelivery.and.returnValue(asyncError(new Error()));
 
-      component.getDeliveries();
+      component.getDelivery(1);
       expect(component.loading).toEqual(true);
 
       tick(100);

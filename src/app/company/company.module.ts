@@ -14,6 +14,7 @@ import { CompanySearchComponent } from './company-search/company-search.componen
 import { CompanyDeliveriesComponent } from './company-deliveries/company-deliveries.component';
 import { SetupDeliveryComponent } from './setup-delivery/setup-delivery.component';
 import { SharedModule } from '../shared/shared.module';
+import { ManageDeliveryComponent } from './manage-delivery/manage-delivery.component';
 
 @NgModule({
   imports: [
@@ -34,6 +35,7 @@ import { SharedModule } from '../shared/shared.module';
     NewCompanyCrewComponent,
     CompanySearchComponent,
     CompanyDeliveriesComponent,
+    ManageDeliveryComponent,
     SetupDeliveryComponent
   ]
 })
