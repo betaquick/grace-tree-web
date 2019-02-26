@@ -104,7 +104,7 @@ export class CompanySearchComponent implements OnInit {
     modal.show();
   }
 
-  checkAll(e) {
+  toggleAllUsers(e) {
     let recipients;
     if (e.target.checked) {
       recipients = this.recipients.map(recipient => {
@@ -136,10 +136,10 @@ export class CompanySearchComponent implements OnInit {
     });
 
     if (this.loading || users.length === 0) {
-      return true;
+      return false;
     }
 
-    return false;
+    return true;
   }
 
   sendRequest() {

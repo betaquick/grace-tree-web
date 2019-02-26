@@ -83,7 +83,7 @@
                             <th>
                               <div class="checkbox-fade fade-in-primary">
                                 <label>
-                                  <input type="checkbox" name="selected" (change)="checkAll($event)">
+                                  <input type="checkbox" name="selected" (change)="toggleAllUsers($event)">
                                   <span class="cr">
                                     <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
                                   </span>
@@ -147,7 +147,7 @@
                             &nbsp;
                             <button class="btn btn-primary" (click)="toggleListMapView()" *ngIf="mapView">List
                               View</button>
-                            <button class="btn btn-success" (click)="sendRequest()" *ngIf="!mapView" [disabled]="isUserSelected()">Send
+                            <button class="btn btn-success" (click)="sendRequest()" *ngIf="!mapView" [disabled]="!isUserSelected()">Send
                               Request</button>
                             <button class="btn btn-primary" (click)="toggleListMapView()" *ngIf="!mapView">Map
                               View</button>

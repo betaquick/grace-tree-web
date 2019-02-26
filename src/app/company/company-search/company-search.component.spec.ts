@@ -5,6 +5,7 @@ import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng5-validation';
+import { UserStatus } from '@betaquick/grace-tree-constants';
 
 import { CompanySearchComponent } from './company-search.component';
 import { ModalBasicComponent } from '../../shared/modal-basic/modal-basic.component';
@@ -29,6 +30,11 @@ describe('CompanySearchComponent', () => {
     longitude: -122.0851244
   };
 
+  const event = {
+    target: {
+      checked: true
+    }
+  };
   const response = {
     users: [{
       userId: 1,
@@ -40,7 +46,20 @@ describe('CompanySearchComponent', () => {
       zip: '23401',
       website: 'example.com',
       latitude: 37.4219931,
-      longitude: -122.0851244
+      longitude: -122.0851244,
+      status: UserStatus.Pause
+    }, {
+      userId: 2,
+      firstName: 'Test',
+      lastName: 'Recipient 2',
+      street: 'Test Address',
+      city: 'City',
+      state: 'AL',
+      zip: '23401',
+      website: 'example.com',
+      latitude: 37.4219931,
+      longitude: -122.0851244,
+      status: UserStatus.Ready
     }],
     coordinates: {
       latitude: 37.4219931,
@@ -63,10 +82,13 @@ describe('CompanySearchComponent', () => {
         FormsModule,
         CustomFormsModule
       ],
-      declarations: [ CompanySearchComponent, ModalBasicComponent, DummyComponent ],
+      declarations: [CompanySearchComponent, ModalBasicComponent, DummyComponent],
       providers: [
-        { provide: CompanyService, useValue: jasmine.createSpyObj('CompanyService', ['searchUsers', 'getCompanyInfo']) },
-        { provide: ToastrService, useValue: jasmine.createSpyObj('toastrStub', ['error']) }
+        {
+          provide: CompanyService,
+          useValue: jasmine.createSpyObj('CompanyService', ['searchUsers', 'getCompanyInfo', 'scheduleDelivery'])
+        },
+        { provide: ToastrService, useValue: jasmine.createSpyObj('toastrStub', ['success', 'error']) }
       ]
     })
     .compileComponents();
@@ -91,6 +113,7 @@ describe('CompanySearchComponent', () => {
     expect(component).toBeTruthy();
     expect(companyServiceStub.getCompanyInfo).toBeDefined();
     expect(companyServiceStub.searchUsers).toBeDefined();
+    expect(companyServiceStub.scheduleDelivery).toBeDefined();
     expect(toastrStub.error).toBeDefined();
     expect(routerStub).toBeDefined();
     expect(toastrStub).toBeDefined();
@@ -136,6 +159,48 @@ describe('CompanySearchComponent', () => {
       companyServiceStub.searchUsers.and.returnValue(asyncError(new Error()));
       expect(component.loading).toEqual(false);
       component.search();
+      expect(component.loading).toEqual(true);
+      tick(100);
+      expect(toastrStub.error.calls.count()).toEqual(1);
+    }));
+  });
+
+  describe('Delivery request tests', () => {
+    beforeEach(fakeAsync(() => {
+      component.loading = false;
+      event.target.checked = true;
+      companyServiceStub.searchUsers.and.returnValue(asyncData(response));
+      component.search();
+      tick(100);
+    }));
+
+    it('should successfully select all recipients in Pause state - show toast success', fakeAsync(() => {
+      component.toggleAllUsers(event);
+      expect(component.isUserSelected()).toEqual(true);
+    }));
+
+    it('should successfully deselect all recipients in Pause state - show toast success', fakeAsync(() => {
+      event.target.checked = false;
+      component.toggleAllUsers(event);
+      expect(component.isUserSelected()).toEqual(false);
+    }));
+
+    it('should successfully send delivery request to recipients in pause state - show toast success', fakeAsync(() => {
+      companyServiceStub.scheduleDelivery.and.returnValue(asyncData(response.users[1]));
+      component.toggleAllUsers(event);
+      expect(component.loading).toEqual(false);
+      component.sendRequest();
+      expect(component.loading).toEqual(true);
+      tick(100);
+      expect(toastrStub.success.calls.count()).toEqual(1);
+      expect(toastrStub.error.calls.count()).toEqual(0);
+    }));
+
+    it('Error: fails sending delivery requests - show toast error', fakeAsync(() => {
+      companyServiceStub.scheduleDelivery.and.returnValue(asyncError(new Error()));
+      component.toggleAllUsers(event);
+      expect(component.loading).toEqual(false);
+      component.sendRequest();
       expect(component.loading).toEqual(true);
       tick(100);
       expect(toastrStub.error.calls.count()).toEqual(1);
