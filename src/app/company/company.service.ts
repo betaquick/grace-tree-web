@@ -20,24 +20,6 @@ export class CompanyService {
     private http: HttpClient
   ) { }
 
-  getCompanyInfo(): Observable<BusinessInfo> {
-    if (this.company) {
-      return of(this.company);
-    }
-
-    return this.http.get(`${AppConfig.API_URL}/user/company`)
-      .pipe(
-        map(response => {
-          const body = _.get(response, 'body');
-          const company = _.get(body, 'company');
-          this.company = company;
-
-          return company;
-        }),
-        catchError(utils.handleError)
-      );
-  }
-
   updateCompanyInfo(company: BusinessInfo, user: User) {
     return this.http
       .put(`${AppConfig.API_URL}/user/company`, { company, user })
@@ -45,9 +27,10 @@ export class CompanyService {
         map(response => {
           const body = _.get(response, 'body');
           user = _.get(body, 'user');
-          this.company = _.get(body, 'company');
+          const company = _.get(body, 'company');
+          this.company = company;
 
-          return { user, company: this.company };
+          return { user, company };
         }),
         catchError(utils.handleError)
       );
