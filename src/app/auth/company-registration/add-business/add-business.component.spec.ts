@@ -68,6 +68,12 @@ describe('AddBusinessComponent', () => {
       businessInfo.state = states[0].abbr;
       businessInfo.zip = '23401';
       businessInfo.website = 'example.com';
+
+      component.setCompanyAddress({
+        street: 'Test Street',
+        city: 'City',
+        state: states[0].abbr
+      });
     });
 
     it('should successfully add a new business - navigate to company', fakeAsync(() => {

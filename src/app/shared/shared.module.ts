@@ -5,6 +5,7 @@ import { ModalBasicComponent } from './modal-basic/modal-basic.component';
 import { MenuItems } from './menu-items/menu-items';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { DeliveryComponent } from './delivery/delivery.component';
+import { PlacesAutocompleteDirective } from './places-autocomplete/places-autocomplete.directive';
 
 @NgModule({
   imports: [
@@ -13,12 +14,14 @@ import { DeliveryComponent } from './delivery/delivery.component';
   exports: [
     ModalBasicComponent,
     SpinnerComponent,
-    DeliveryComponent
+    DeliveryComponent,
+    PlacesAutocompleteDirective
   ],
   declarations: [
     ModalBasicComponent,
     SpinnerComponent,
-    DeliveryComponent
+    DeliveryComponent,
+    PlacesAutocompleteDirective
   ],
   providers: [
     MenuItems

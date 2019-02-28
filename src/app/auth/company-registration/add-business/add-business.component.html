@@ -40,7 +40,7 @@
                 <div class="input">
                   <input [ngClass]="{'form-control-danger': companyAddress.dirty && companyAddress.invalid}"
                     [ngModelOptions]="{updateOn: 'blur'}" type="text" placeholder="Street" #companyAddress="ngModel" id="companyAddress"
-                    name="companyAddress" [(ngModel)]="businessInfo.companyAddress" required>
+                    appPlacesAutocomplete (setAddress)="setCompanyAddress($event)" name="companyAddress" [(ngModel)]="businessInfo.companyAddress" required>
                 </div>
               </div>
               <div class="unit">
