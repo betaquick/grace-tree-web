@@ -27,10 +27,11 @@ export class CompanyService {
         map(response => {
           const body = _.get(response, 'body');
           user = _.get(body, 'user');
-          const company = _.get(body, 'company');
-          this.company = company;
 
-          return { user, company };
+          const companyInfo = _.get(body, 'company');
+          this.company = companyInfo;
+
+          return { user, company: companyInfo };
         }),
         catchError(utils.handleError)
       );
