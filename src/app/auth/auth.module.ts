@@ -21,13 +21,15 @@ import { LogoutComponent } from './logout/logout.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { DeliveryRequestComponent } from './delivery-request/delivery-request.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     CustomFormsModule,
-    AuthRoutingModule
+    AuthRoutingModule,
+    SharedModule
   ],
   providers: [
     AuthGuard,

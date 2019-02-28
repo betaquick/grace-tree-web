@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { states } from '@betaquick/grace-tree-constants';
@@ -18,6 +18,7 @@ import { utils } from '../../../shared/utils';
 })
 export class AddDeliveryComponent implements OnInit {
   deliveryInfo: DeliveryInfo;
+  placeholderAddress: Address;
   products: Product[];
   stateArray: State[] = states;
   loading: boolean;
@@ -25,7 +26,9 @@ export class AddDeliveryComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private zone: NgZone,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -49,6 +52,16 @@ export class AddDeliveryComponent implements OnInit {
       });
   }
 
+  setUserAddress(address: Address) {
+    this.deliveryInfo.address.street = '';
+    this.cdRef.detectChanges();
+
+    this.zone.run(() => {
+      this.deliveryInfo.address = address;
+      this.placeholderAddress = address;
+    });
+  }
+
   addDeliveryInfo() {
     if (this.loading === true) {
       return;
@@ -62,6 +75,15 @@ export class AddDeliveryComponent implements OnInit {
         status: utils.getBoolean(status)
       };
     });
+
+    if (
+      this.placeholderAddress.street !== this.deliveryInfo.address.street ||
+      this.placeholderAddress.city !== this.deliveryInfo.address.city ||
+      this.placeholderAddress.state !== this.deliveryInfo.address.state
+    ) {
+      this.deliveryInfo.address.latitude = null;
+      this.deliveryInfo.address.longitude = null;
+    }
 
     this.deliveryInfo.userProducts = userProducts;
 

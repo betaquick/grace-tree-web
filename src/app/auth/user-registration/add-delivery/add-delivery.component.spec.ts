@@ -87,7 +87,7 @@ describe('AddDeliveryComponent', () => {
       navigateStub = spyOn(routerStub, 'navigate');
       deliveryInfo = new DeliveryInfo();
       deliveryInfo.address = {
-        street: 'Test',
+        street: 'Test Street',
         state: states[0].abbr,
         city: 'Test',
         zip: '23401'
@@ -96,6 +96,12 @@ describe('AddDeliveryComponent', () => {
         productId: 1,
         status: true
       }];
+
+      component.setUserAddress({
+        street: 'Test Street',
+        city: 'City',
+        state: states[0].abbr
+      });
     });
 
     it('should successfully add delivery info - navigate to /user', fakeAsync(() => {

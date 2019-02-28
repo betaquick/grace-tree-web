@@ -102,6 +102,14 @@ describe('CompanyProfileComponent', () => {
   });
 
   describe('Update company profile', () => {
+    beforeEach(async(() => {
+      component.setCompanyAddress({
+        street: 'Test Street',
+        city: 'City',
+        state: 'AL'
+      });
+    }));
+
     it('should successfully update company profile - show toast success', fakeAsync(() => {
       companyServiceStub.updateCompanyInfo.and.returnValue(asyncData({ company, user }));
       expect(component.loading).toEqual(false);

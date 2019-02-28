@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { states } from '@betaquick/grace-tree-constants';
 import * as _ from 'lodash';
@@ -19,6 +19,7 @@ import { State } from '../../shared/models/company-model';
 export class UserAddressComponent implements OnInit {
 
   newAddress: Address;
+  placeholderAddress: Address;
   editMode: boolean;
   errorMessage: string;
   address: Address;
@@ -27,7 +28,9 @@ export class UserAddressComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private zone: NgZone,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -38,23 +41,44 @@ export class UserAddressComponent implements OnInit {
       .subscribe(addy => {
         if (addy) {
           this.address = addy;
+          this.placeholderAddress = addy;
         }
         this.newAddress = Object.assign({}, this.address);
       }, err => this.toastr.error(err));
 
   }
 
+  setUserAddress(address: Address) {
+    this.newAddress.street = '';
+    this.cdRef.detectChanges();
+
+    this.zone.run(() => {
+      this.newAddress = Object.assign({}, address);
+      this.placeholderAddress = Object.assign({}, this.newAddress);
+    });
+  }
 
   updateAddress() {
     this.loading = true;
-    const { city, street, state, zip, deliveryInstruction } = this.newAddress;
-    const newAddress = { city, street, state, zip, deliveryInstruction };
+    const { city, street, state, zip, longitude, latitude, deliveryInstruction } = this.newAddress;
+    const newAddress: Address = { city, street, state, zip, deliveryInstruction };
+
+    if (
+      this.placeholderAddress.street === street &&
+      this.placeholderAddress.city === city &&
+      this.placeholderAddress.state === state
+    ) {
+      newAddress.longitude = longitude;
+      newAddress.latitude = latitude;
+    }
+
     this.userService.updateUserAddress(newAddress)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
-        (address) => {
+        address => {
           this.toastr.success('Address updated successfully');
           this.address = address;
+          this.placeholderAddress = address;
           this.newAddress = Object.assign({}, address);
           this.editMode = false;
           this.loading = false;
@@ -65,5 +89,4 @@ export class UserAddressComponent implements OnInit {
         }
       );
   }
-
 }

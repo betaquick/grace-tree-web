@@ -46,7 +46,7 @@
                 <div class="input">
                   <input [ngClass]="{'form-control-danger': street.dirty && street.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
                     type="text" placeholder="Street" #street="ngModel" id="street" name="street" [(ngModel)]="deliveryInfo.address.street"
-                    required>
+                    appPlacesAutocomplete (setAddress)="setUserAddress($event)" required autocomplete="off" />
                 </div>
               </div>
               <div class="unit">

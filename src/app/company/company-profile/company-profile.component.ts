@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
 import * as _ from 'lodash';
 import { finalize } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { states, PhoneTypes } from '@betaquick/grace-tree-constants';
 
-import { User, Email, Phone, RegisterUser } from '../../shared/models/user-model';
+import { User, Email, Phone, RegisterUser, Address } from '../../shared/models/user-model';
 import { CompanyService } from '../company.service';
 import { BusinessInfo, State } from '../../shared/models/company-model';
 import { SessionStorage } from 'ngx-store';
@@ -22,6 +22,7 @@ export class CompanyProfileComponent implements OnInit {
   isProfileEdit: boolean;
   @SessionStorage() user: RegisterUser = new RegisterUser();
   company: BusinessInfo;
+  placeholderAddress: Address;
   loading: boolean;
   errorMessage: string;
   stateArray: State[] = states;
@@ -29,6 +30,8 @@ export class CompanyProfileComponent implements OnInit {
   constructor(
     private companyService: CompanyService,
     private toastr: ToastrService,
+    private zone: NgZone,
+    private cdRef: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -74,6 +77,22 @@ export class CompanyProfileComponent implements OnInit {
     }
   }
 
+  setCompanyAddress(address: Address) {
+    this.company.companyAddress = '';
+    this.cdRef.detectChanges();
+
+    this.zone.run(() => {
+      this.company.companyAddress = address.street;
+      this.company.city = address.city;
+      this.company.state = address.state;
+      this.company.zip = address.zip;
+      this.company.longitude = address.longitude;
+      this.company.latitude = address.latitude;
+
+      this.placeholderAddress = address;
+    });
+  }
+
   updateCompanyInfo() {
     const { firstName, lastName, password, confirmPassword } = this.user;
     if (password && password !== confirmPassword) {
@@ -115,7 +134,7 @@ export class CompanyProfileComponent implements OnInit {
       confirmPassword
     };
 
-    const company = _.pick(
+    const company: BusinessInfo = _.pick(
       this.company,
       [
         'companyId',
@@ -128,6 +147,15 @@ export class CompanyProfileComponent implements OnInit {
         'website'
       ]
     );
+
+    if (
+      this.placeholderAddress.street === company.companyAddress &&
+      this.placeholderAddress.city === company.city &&
+      this.placeholderAddress.state === company.state
+    ) {
+      company.longitude = this.placeholderAddress.longitude;
+      company.latitude = this.placeholderAddress.latitude;
+    }
 
     this.companyService.updateCompanyInfo(company, user)
       .pipe(finalize(() => this.loading = false))
