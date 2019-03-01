@@ -30,44 +30,6 @@ describe('CompanyService', () => {
     expect(companyService).toBeTruthy();
   });
 
-  describe('Get company information', () => {
-    const response = {
-      company: {
-        companyId: 1,
-        companyName: 'Test Company',
-        companyAddress: 'Test Address',
-        city: 'Test City',
-        state: 'LA'
-      }
-    };
-
-    it('Get company info- returns company', () => {
-      companyService.getCompanyInfo()
-        .subscribe(
-          data => {
-            expect(data).toEqual(response.company);
-          }
-        );
-
-      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/company`);
-      expect(req.request.method).toBe('GET');
-      req.flush({body: response});
-      httpMock.verify();
-    });
-
-    it('Error: Get company info - server returns error', () => {
-      companyService.getCompanyInfo()
-        .subscribe(
-          data => fail('Request failed'),
-          err => expect(err).toEqual('Something went wrong. Please contact support!')
-        );
-
-      const req = httpMock.expectOne(`${AppConfig.API_URL}/user/company`);
-      req.flush('System Error', { status: 500, statusText: 'System Error' });
-      httpMock.verify();
-    });
-  });
-
   describe('update company profile', () => {
     let user: RegisterUser;
     let company: BusinessInfo;

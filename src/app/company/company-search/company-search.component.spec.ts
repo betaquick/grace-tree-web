@@ -11,6 +11,7 @@ import { CompanySearchComponent } from './company-search.component';
 import { ModalBasicComponent } from '../../shared/modal-basic/modal-basic.component';
 import { DummyComponent, asyncData, asyncError } from '../../testing/helpers';
 import { CompanyService } from '../company.service';
+import { BusinessInfo } from '../../shared/models/company-model';
 
 
 describe('CompanySearchComponent', () => {
@@ -26,8 +27,8 @@ describe('CompanySearchComponent', () => {
     state: 'AL',
     zip: '23401',
     website: 'example.com',
-    latitude: 37.4219931,
-    longitude: -122.0851244
+    latitude: '37.4219931',
+    longitude: '-122.0851244'
   };
 
   const event = {
@@ -86,7 +87,7 @@ describe('CompanySearchComponent', () => {
       providers: [
         {
           provide: CompanyService,
-          useValue: jasmine.createSpyObj('CompanyService', ['searchUsers', 'getCompanyInfo', 'scheduleDelivery'])
+          useValue: jasmine.createSpyObj('CompanyService', ['searchUsers', 'scheduleDelivery'])
         },
         { provide: ToastrService, useValue: jasmine.createSpyObj('toastrStub', ['success', 'error']) }
       ]
@@ -95,13 +96,12 @@ describe('CompanySearchComponent', () => {
 
     fixture = TestBed.createComponent(CompanySearchComponent);
     component = fixture.componentInstance;
-    // component.user = user;
+    component.company = company;
 
     routerStub = TestBed.get(Router);
     companyServiceStub = TestBed.get(CompanyService);
     toastrStub = TestBed.get(ToastrService);
 
-    companyServiceStub.getCompanyInfo.and.returnValue(asyncData(company));
     fixture.detectChanges();
   }));
 
@@ -111,7 +111,6 @@ describe('CompanySearchComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(companyServiceStub.getCompanyInfo).toBeDefined();
     expect(companyServiceStub.searchUsers).toBeDefined();
     expect(companyServiceStub.scheduleDelivery).toBeDefined();
     expect(toastrStub.error).toBeDefined();
@@ -120,31 +119,31 @@ describe('CompanySearchComponent', () => {
   });
 
   describe('Get company lng/lat', () => {
-    it('should successfully get company info', fakeAsync(() => {
+    it('should successfully get company lng/lat', fakeAsync(() => {
       expect(component.loading).toEqual(false);
       component.getGeocode();
       tick(100);
-      expect(companyServiceStub.getCompanyInfo.calls.count()).toEqual(2);
-      expect(component.lat).toEqual(company.latitude);
-      expect(component.lng).toEqual(company.longitude);
-      expect(toastrStub.error.calls.count()).toEqual(0);
+      expect(component.lat).toEqual(parseFloat(company.latitude));
+      expect(component.lng).toEqual(parseFloat(company.longitude));
     }));
 
     it('Error: fails fetching company lng/lat - show toast error', fakeAsync(() => {
       component.lat = null;
       component.lng = null;
-      companyServiceStub.getCompanyInfo.and.returnValue(asyncError(new Error()));
+      component.company = new BusinessInfo();
       expect(component.loading).toEqual(false);
       component.getGeocode();
       tick(100);
-      expect(companyServiceStub.getCompanyInfo.calls.count()).toEqual(2);
       expect(component.lat).toEqual(null);
       expect(component.lng).toEqual(null);
-      expect(toastrStub.error.calls.count()).toEqual(1);
     }));
   });
 
   describe('Search recipients', () => {
+    beforeEach(fakeAsync(() => {
+      component.company = company;
+    }));
+
     it('should successfully fetch all available recipient - show toast success', fakeAsync(() => {
       companyServiceStub.searchUsers.and.returnValue(asyncData(response));
       expect(component.loading).toEqual(false);
@@ -168,6 +167,7 @@ describe('CompanySearchComponent', () => {
   describe('Delivery request tests', () => {
     beforeEach(fakeAsync(() => {
       component.loading = false;
+      component.company = company;
       event.target.checked = true;
       companyServiceStub.searchUsers.and.returnValue(asyncData(response));
       component.search();

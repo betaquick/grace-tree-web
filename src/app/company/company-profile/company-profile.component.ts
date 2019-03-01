@@ -21,7 +21,7 @@ export class CompanyProfileComponent implements OnInit {
 
   isProfileEdit: boolean;
   @SessionStorage() user: RegisterUser = new RegisterUser();
-  company: BusinessInfo;
+  @SessionStorage() company: BusinessInfo = new BusinessInfo();
   placeholderAddress: Address;
   loading: boolean;
   errorMessage: string;
@@ -38,16 +38,7 @@ export class CompanyProfileComponent implements OnInit {
     this.isProfileEdit = false;
     this.loading = false;
 
-    this.company = new BusinessInfo();
-    this.getCompanyInfo();
-  }
-
-  getCompanyInfo() {
-    this.companyService
-      .getCompanyInfo()
-      .subscribe(company => this.company = company,
-      err => this.toastr.error(err)
-    );
+    this.placeholderAddress = new Address();
   }
 
   toggleUpdateProfile() {
@@ -162,6 +153,7 @@ export class CompanyProfileComponent implements OnInit {
       .subscribe(
         data => {
           this.user = data.user;
+          this.company = data.company;
           this.toastr.success('Company profile updated successfully');
           this.isProfileEdit = false;
         },

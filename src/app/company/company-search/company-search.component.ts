@@ -6,6 +6,7 @@ import { UserStatus, DeliveryStatusCodes, UserDeliveryStatus } from '@betaquick/
 
 import { CompanyService } from '../company.service';
 import { ScheduleDelivery, User } from '../../shared/models/user-model';
+import { BusinessInfo } from '../../shared/models/company-model';
 
 @Component({
   selector: 'app-company-search',
@@ -36,6 +37,7 @@ export class CompanySearchComponent implements OnInit {
   };
 
   @SessionStorage() user: User = new User();
+  @SessionStorage() company: BusinessInfo = new BusinessInfo();
 
   constructor(
     private companyService: CompanyService,
@@ -52,17 +54,11 @@ export class CompanySearchComponent implements OnInit {
   }
 
   getGeocode() {
-    this.companyService
-      .getCompanyInfo()
-      .subscribe(company => {
-        const { latitude, longitude } = company;
-        if (latitude && longitude) {
-          this.lat = parseFloat(latitude);
-          this.lng = parseFloat(longitude);
-        }
-      },
-      err => this.toastr.error(err)
-    );
+    const { latitude, longitude } = this.company;
+    if (latitude && longitude) {
+      this.lat = parseFloat(latitude);
+      this.lng = parseFloat(longitude);
+    }
   }
 
   toggleListMapView() {

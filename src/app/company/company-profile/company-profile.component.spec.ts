@@ -47,7 +47,7 @@ describe('CompanyProfileComponent', () => {
       imports: [RouterTestingModule.withRoutes(routes), FormsModule, CustomFormsModule, ToastrModule.forRoot({})],
       declarations: [CompanyProfileComponent, DummyComponent],
       providers: [
-        { provide: CompanyService, useValue: jasmine.createSpyObj('CompanyService', ['updateCompanyInfo', 'getCompanyInfo']) },
+        { provide: CompanyService, useValue: jasmine.createSpyObj('CompanyService', ['updateCompanyInfo']) },
         { provide: ToastrService, useValue: jasmine.createSpyObj('toastrStub', ['success', 'error']) }
       ]
     })
@@ -56,12 +56,12 @@ describe('CompanyProfileComponent', () => {
     fixture = TestBed.createComponent(CompanyProfileComponent);
     component = fixture.componentInstance;
     component.user = user;
+    component.company = company;
 
     routerStub = TestBed.get(Router);
     companyServiceStub = TestBed.get(CompanyService);
     toastrStub = TestBed.get(ToastrService);
 
-    companyServiceStub.getCompanyInfo.and.returnValue(asyncData(company));
     fixture.detectChanges();
   }));
 
@@ -71,34 +71,11 @@ describe('CompanyProfileComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-    expect(companyServiceStub.getCompanyInfo).toBeDefined();
     expect(companyServiceStub.updateCompanyInfo).toBeDefined();
     expect(toastrStub.success).toBeDefined();
     expect(toastrStub.error).toBeDefined();
     expect(routerStub).toBeDefined();
     expect(toastrStub).toBeDefined();
-  });
-
-  describe('Get company Info', () => {
-    it('should successfully get company info', fakeAsync(() => {
-      expect(component.loading).toEqual(false);
-      component.getCompanyInfo();
-      tick(100);
-      expect(companyServiceStub.getCompanyInfo.calls.count()).toEqual(2);
-      expect(component.company).toEqual(company);
-      expect(toastrStub.error.calls.count()).toEqual(0);
-    }));
-
-    it('Error: fails fetching company info - show toast error', fakeAsync(() => {
-      component.company = null;
-      companyServiceStub.getCompanyInfo.and.returnValue(asyncError(new Error()));
-      expect(component.loading).toEqual(false);
-      component.getCompanyInfo();
-      tick(100);
-      expect(companyServiceStub.getCompanyInfo.calls.count()).toEqual(2);
-      expect(component.company).toEqual(null);
-      expect(toastrStub.error.calls.count()).toEqual(1);
-    }));
   });
 
   describe('Update company profile', () => {
