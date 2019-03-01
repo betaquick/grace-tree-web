@@ -11,6 +11,7 @@ import { CompanyProfileComponent } from './company-profile/company-profile.compo
 import { CompanyCrewComponent } from './company-crew/company-crew.component';
 import { NewCompanyCrewComponent } from './company-crew/new/new-company-crew.component';
 import { ManageDeliveryComponent } from './manage-delivery/manage-delivery.component';
+import { CrewProfileComponent } from './crew-profile/crew-profile.component';
 
 const routes: Routes = [{
   path: 'company',
@@ -24,6 +25,7 @@ const routes: Routes = [{
       { path: 'deliveries', component: CompanyDeliveriesComponent },
       { path: 'deliveries/:deliveryId', component: ManageDeliveryComponent },
       { path: 'profile', component: CompanyProfileComponent },
+      { path: 'crew-profile', component: CrewProfileComponent },
       { path: 'crews', component: CompanyCrewComponent },
       { path: 'crews/new', component: NewCompanyCrewComponent },
       { path: 'setup-delivery/:userId', component: SetupDeliveryComponent },

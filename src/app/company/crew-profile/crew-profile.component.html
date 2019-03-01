@@ -1,0 +1,172 @@
+<div class="pcoded-content">
+  <div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+      <div class="page-wrapper">
+
+        <div class="page-body">
+          <div class="row">
+
+            <div class="col-xl-12 col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-header-text">About Me</h5>
+                  <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
+                    (click)="toggleUpdateProfile()">
+                    <i class="icofont icofont-edit"></i>
+                  </button>
+                </div>
+                <div class="card-block">
+                  <div class="view-info" *ngIf="!isProfileEdit else profileEdit">
+                    <div class="row">
+                      <div class="col-lg-12">
+                        <div class="general-info">
+                          <div class="row">
+                            <div class="col-lg-12 col-xl-6">
+                              <div class="table-responsive">
+                                <table class="table m-0">
+                                  <tbody>
+                                    <tr>
+                                      <th scope="row">First Name</th>
+                                      <td>{{user.firstName}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">Last Name</th>
+                                      <td>{{user.lastName}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">Phone number</th>
+                                      <td>{{user.phones[0]?.phoneNumber}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">Email Address</th>
+                                      <td>{{user.email}}</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            <!-- end of table col-lg-6 -->
+
+                            <!-- end of table col-lg-6 -->
+                          </div>
+                          <!-- end of row -->
+                        </div>
+                        <!-- end of general info -->
+                      </div>
+                      <!-- end of col-lg-12 -->
+                    </div>
+                    <!-- end of row -->
+                  </div>
+                  <!-- end of view-info -->
+                  <ng-template #profileEdit>
+                    <div class="edit-info">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <form #profileForm="ngForm" (ngSubmit)="profileForm.form.valid && updateprofile()">
+                            <div class="general-info j-forms">
+                              <div class="row">
+                                <div class="col-sm-12">
+                                  <div class="alert alert-danger background-danger"
+                                    *ngIf="firstName.dirty && firstName.errors?.required">First
+                                    name is required</div>
+                                  <div class="alert alert-danger background-danger"
+                                    *ngIf="lastName.dirty && lastName.errors?.required">Last
+                                    name is required</div>
+                                  <div class="alert alert-danger background-danger"
+                                    *ngIf="primaryNum.dirty && primaryNum.errors?.required">Phone number is required
+                                  </div>
+                                  <div class="alert alert-danger background-danger"
+                                    *ngIf="primaryNum.dirty && primaryNum.errors?.phone">Phone number is not valid</div>
+                                  <div class="alert alert-danger background-danger"
+                                    *ngIf="primaryEmail.dirty && primaryEmail.errors?.required">Email is required</div>
+                                  <div class="alert alert-danger background-danger"
+                                    *ngIf="primaryEmail.dirty && primaryEmail.errors?.email">Email is invalid</div>
+                                  <div class="alert alert-danger background-danger" *ngIf="errorMessage">
+                                    {{errorMessage}}</div>
+                                </div>
+                                <div class="col-lg-6">
+                                  <div class="j-row">
+                                    <div class="span6 unit">
+                                      <div class="input">
+                                        <input [ngClass]="{'form-control-danger': firstName.dirty && firstName.invalid}"
+                                          [ngModelOptions]="{updateOn: 'blur'}" type="text" placeholder="First Name"
+                                          #firstName="ngModel" name="firstName" [(ngModel)]="user.firstName" required>
+                                      </div>
+                                    </div>
+                                    <div class="span6 unit">
+                                      <div class="input">
+                                        <input [ngClass]="{'form-control-danger': firstName.dirty && firstName.invalid}"
+                                          [ngModelOptions]="{updateOn: 'blur'}" type="text" placeholder="Last Name"
+                                          #lastName="ngModel" name="lastName" [(ngModel)]="user.lastName" required>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="unit">
+                                    <div class="input">
+                                      <input
+                                        [ngClass]="{'form-control-danger': primaryNum.dirty && primaryNum.invalid}"
+                                        [ngModelOptions]="{updateOn: 'blur'}" type="text" class="form-control"
+                                        name="primaryNum" placeholder="Phone Number" #primaryNum="ngModel"
+                                        [(ngModel)]="user.phones[0].phoneNumber" required>
+                                    </div>
+                                  </div>
+                                  <div class="unit">
+                                    <div class="input">
+                                      <input
+                                        [ngClass]="{'form-control-danger': primaryEmail.dirty && primaryEmail.invalid}"
+                                        [ngModelOptions]="{updateOn: 'blur'}" type="email" name="primaryEmail"
+                                        #primaryEmail="ngModel" placeholder="Primary Email Address"
+                                        [(ngModel)]="user.emails[0].emailAddress" required>
+                                    </div>
+                                  </div>
+                                  <!-- end name email -->
+                                  <!-- start password -->
+                                  <div class="j-row">
+                                    <div class="span6 unit">
+                                      <div class="input">
+                                        <input [ngClass]="{'form-control-danger': errorMessage}" type="password"
+                                          name="password" placeholder="Password" [(ngModel)]="user.password">
+                                      </div>
+                                    </div>
+                                    <div class="span6 unit">
+                                      <div class="input">
+                                        <input [ngClass]="{'form-control-danger': errorMessage}" type="password"
+                                          name="confirmPassword" placeholder="Confirm Password"
+                                          [(ngModel)]="user.confirmPassword">
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <!-- end of table col-lg-6 -->
+
+                                <!-- end of table col-lg-6 -->
+                              </div>
+                              <!-- end of row -->
+                              <div class="text-center">
+                                <button type="submit" class="btn btn-primary waves-effect waves-light m-r-20"
+                                  [disabled]="loading">Save</button>
+                                <a href="javascript:" class="btn btn-default waves-effect"
+                                  (click)="toggleUpdateProfile()">Cancel</a>
+                              </div>
+                            </div>
+                          </form>
+                          <!-- end of edit info -->
+                        </div>
+                        <!-- end of col-lg-12 -->
+                      </div>
+                      <!-- end of row -->
+                    </div>
+                  </ng-template>
+                  <!-- end of edit-info -->
+                </div>
+                <!-- end of card-block -->
+              </div>
+            </div>
+            <!-- Recent Orders end -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
