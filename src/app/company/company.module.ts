@@ -15,6 +15,7 @@ import { CompanyDeliveriesComponent } from './company-deliveries/company-deliver
 import { SetupDeliveryComponent } from './setup-delivery/setup-delivery.component';
 import { SharedModule } from '../shared/shared.module';
 import { ManageDeliveryComponent } from './manage-delivery/manage-delivery.component';
+import { CrewProfileComponent } from './crew-profile/crew-profile.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { ManageDeliveryComponent } from './manage-delivery/manage-delivery.compo
     CompanySearchComponent,
     CompanyDeliveriesComponent,
     ManageDeliveryComponent,
-    SetupDeliveryComponent
+    SetupDeliveryComponent,
+    CrewProfileComponent
   ]
 })
 export class CompanyModule { }

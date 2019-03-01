@@ -37,6 +37,15 @@ export class CompanyService {
       );
   }
 
+  updateProfile(profile: User) {
+    return this.http
+      .put(`${AppConfig.API_URL}/user`, profile)
+      .pipe(
+        map(response => _.get(response, 'body')),
+        catchError(utils.handleError)
+      );
+  }
+
   getCompanyCrews(): Observable<User[]> {
     return this.http.get(`${AppConfig.API_URL}/user/company/crews`)
       .pipe(

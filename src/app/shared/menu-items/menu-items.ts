@@ -122,7 +122,7 @@ const CREW_MENU = {
     icon: 'ti-layout'
   },
   {
-    state: 'profile',
+    state: 'crew-profile',
     main_state: 'company',
     short_label: 'P',
     name: 'Profile',
