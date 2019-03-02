@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as _ from 'lodash';
 import { finalize } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
@@ -17,7 +17,7 @@ import { SessionStorage } from 'ngx-store';
     '../../../assets/icon/icofont/css/icofont.scss'
   ]
 })
-export class UserProfileComponent implements OnInit {
+export class UserProfileComponent implements OnInit, OnDestroy {
 
   isProfileEdit: boolean;
   isPreferenceEdit: boolean;
@@ -40,6 +40,8 @@ export class UserProfileComponent implements OnInit {
     this.userProducts = [new UserProduct()];
     this.getUserProducts();
   }
+
+  ngOnDestroy() {}
 
   getUserProducts() {
     this.userService

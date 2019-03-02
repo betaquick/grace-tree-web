@@ -1,13 +1,13 @@
-import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, NgZone, ChangeDetectorRef, OnDestroy } from '@angular/core';
 import * as _ from 'lodash';
 import { finalize } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { states, PhoneTypes } from '@betaquick/grace-tree-constants';
+import { SessionStorage } from 'ngx-store';
 
-import { User, Email, Phone, RegisterUser, Address } from '../../shared/models/user-model';
+import { Email, Phone, RegisterUser, Address } from '../../shared/models/user-model';
 import { CompanyService } from '../company.service';
 import { BusinessInfo, State } from '../../shared/models/company-model';
-import { SessionStorage } from 'ngx-store';
 
 @Component({
   selector: 'app-company-profile',
@@ -17,7 +17,7 @@ import { SessionStorage } from 'ngx-store';
     '../../../assets/icon/icofont/css/icofont.scss'
   ]
 })
-export class CompanyProfileComponent implements OnInit {
+export class CompanyProfileComponent implements OnInit, OnDestroy {
 
   isProfileEdit: boolean;
   @SessionStorage() user: RegisterUser = new RegisterUser();
@@ -40,6 +40,8 @@ export class CompanyProfileComponent implements OnInit {
 
     this.placeholderAddress = new Address();
   }
+
+  ngOnDestroy() {}
 
   toggleUpdateProfile() {
     this.isProfileEdit = !this.isProfileEdit;

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ParamMap, ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { UserStatus, DeliveryStatusCodes } from '@betaquick/grace-tree-constants';
@@ -13,7 +13,7 @@ import { User, UserProduct } from '../../../shared/models/user-model';
   templateUrl: './update-delivery.component.html',
   styleUrls: ['./update-delivery.component.scss']
 })
-export class UpdateDeliveryComponent implements OnInit {
+export class UpdateDeliveryComponent implements OnInit, OnDestroy {
   loading: boolean;
 
   userStatus = UserStatus;
@@ -49,6 +49,8 @@ export class UpdateDeliveryComponent implements OnInit {
       }
     });
   }
+
+  ngOnDestroy() {}
 
   getDelivery(deliveryId: number) {
     this.userService.getDelivery(deliveryId)

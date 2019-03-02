@@ -28,6 +28,7 @@ export class AddBusinessComponent implements OnInit {
 
   ngOnInit() {
     this.loading = false;
+    this.placeholderAddress = new Address();
     this.businessInfo = new BusinessInfo();
     this.businessInfo.state = this.stateArray[0].abbr;
   }
