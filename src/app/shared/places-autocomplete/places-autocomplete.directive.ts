@@ -25,6 +25,8 @@ export class PlacesAutocompleteDirective implements OnInit, AfterViewInit {
       componentRestrictions: { country: 'US' }
     });
 
+    autocomplete.setFields(['address_components', 'geometry.location']);
+
     // Event listener to monitor place changes in the input
     google.maps.event.addListener(autocomplete, 'place_changed', () => {
       // Emit the new address object for the updated place

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { SessionStorage } from 'ngx-store';
 import * as _ from 'lodash';
@@ -15,7 +15,7 @@ import { User } from '../../shared/models/user-model';
     './user-dashboard.component.scss'
   ]
 })
-export class UserDashboardComponent implements OnInit {
+export class UserDashboardComponent implements OnInit, OnDestroy {
 
   @SessionStorage() user: User = new User();
   status: boolean;
@@ -36,6 +36,8 @@ export class UserDashboardComponent implements OnInit {
     this.getPendingDeliveries();
     this.getRecentDeliveries();
   }
+
+  ngOnDestroy() {}
 
   getPendingDeliveries() {
     this.userService.getPendingDeliveries()

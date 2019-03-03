@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -11,7 +11,7 @@ import { AppConfig } from '../app.config';
 import { utils } from '../shared/utils';
 
 @Injectable()
-export class UserService {
+export class UserService implements OnDestroy {
 
   @SessionStorage() user: User = new User();
   @SessionStorage() userProducts: UserProduct[];
@@ -19,6 +19,8 @@ export class UserService {
   constructor(
     private http: HttpClient
   ) {}
+
+  ngOnDestroy() {} // event empty method is needed to allow ngx-store handle class destruction
 
   updateProfile(profile: User) {
     return this.http

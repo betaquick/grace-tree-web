@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as _ from 'lodash';
 import { finalize } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
@@ -17,7 +17,7 @@ import { SessionStorage } from 'ngx-store';
     '../../../assets/icon/icofont/css/icofont.scss'
   ]
 })
-export class CrewProfileComponent implements OnInit {
+export class CrewProfileComponent implements OnInit, OnDestroy {
 
   isProfileEdit: boolean;
   loading: boolean;
@@ -29,6 +29,8 @@ export class CrewProfileComponent implements OnInit {
     private companyService: CompanyService,
     private toastr: ToastrService
   ) { }
+
+  ngOnDestroy() {}
 
   ngOnInit() {
     this.isProfileEdit = false;

@@ -38,6 +38,8 @@ export class AddDeliveryComponent implements OnInit {
     this.deliveryInfo.address = new Address();
     this.deliveryInfo.address.state = this.stateArray[0].abbr;
 
+    this.placeholderAddress = new Address();
+
     this.authService.getProducts()
       .subscribe(products => {
         this.products = products;

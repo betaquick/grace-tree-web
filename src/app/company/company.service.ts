@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { SessionStorage } from 'ngx-store';
-import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
 
 import { User, RegisterUser, ScheduleDelivery } from '../shared/models/user-model';
@@ -13,12 +12,14 @@ import { BusinessInfo } from '../shared/models/company-model';
 
 
 @Injectable()
-export class CompanyService {
+export class CompanyService implements OnDestroy {
   @SessionStorage() company: BusinessInfo;
 
   constructor(
     private http: HttpClient
   ) { }
+
+  ngOnDestroy() {} // event empty method is needed to allow ngx-store handle class destruction
 
   updateCompanyInfo(company: BusinessInfo, user: User) {
     return this.http

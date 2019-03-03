@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs/operators';
 import { SessionStorage } from 'ngx-store';
@@ -16,7 +16,7 @@ import { BusinessInfo } from '../../shared/models/company-model';
     '../../../assets/icon/icofont/css/icofont.scss'
   ]
 })
-export class CompanySearchComponent implements OnInit {
+export class CompanySearchComponent implements OnInit, OnDestroy {
 
   mapView = true;
   userStatus = UserStatus;
@@ -52,6 +52,8 @@ export class CompanySearchComponent implements OnInit {
 
     this.getGeocode();
   }
+
+  ngOnDestroy() {}
 
   getGeocode() {
     const { latitude, longitude } = this.company;

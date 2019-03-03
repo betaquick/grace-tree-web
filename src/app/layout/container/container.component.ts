@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SessionStorage } from 'ngx-store';
 
 import { User } from '../../shared/models/user-model';
@@ -8,7 +8,7 @@ import { User } from '../../shared/models/user-model';
   templateUrl: './container.component.html',
   styleUrls: ['./container.component.scss']
 })
-export class ContainerComponent implements OnInit {
+export class ContainerComponent implements OnInit, OnDestroy {
 
   @SessionStorage() user: User = new User();
 
@@ -16,5 +16,7 @@ export class ContainerComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  ngOnDestroy() {}
 
 }
