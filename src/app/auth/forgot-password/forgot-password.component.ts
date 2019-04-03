@@ -31,6 +31,7 @@ export class ForgotPasswordComponent implements OnInit {
   ngOnInit() {
     this.loading = false;
     this.authUser = new AuthDetails();
+    this.authService.logout();
   }
 
   requestPasswordReset(): void {

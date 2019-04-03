@@ -19,23 +19,23 @@
                 <a [routerLink]="['/user-registration']">Register as user</a>
               </p>
               <div class="col-sm-12">
-                <div class="alert alert-danger background-danger" *ngIf="firstName.dirty && firstName.errors?.required">First
+                <div class="alert alert-danger background-danger" *ngIf="(firstName.dirty || registerForm.submitted) && firstName.errors?.required">First
                   name is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="lastName.dirty && lastName.errors?.required">Last
+                <div class="alert alert-danger background-danger" *ngIf="(lastName.dirty || registerForm.submitted) && lastName.errors?.required">Last
                   name is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="number.dirty && number.errors?.required">Phone
+                <div class="alert alert-danger background-danger" *ngIf="(number.dirty || registerForm.submitted) && number.errors?.required">Phone
                   number is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="number.dirty && number.errors?.phone">Phone
+                <div class="alert alert-danger background-danger" *ngIf="(number.dirty || registerForm.submitted) && number.errors?.phone">Phone
                   number is not valid</div>
-                <div class="alert alert-danger background-danger" *ngIf="password.dirty && password.errors?.required">Password
+                <div class="alert alert-danger background-danger" *ngIf="(password.dirty || registerForm.submitted) && password.errors?.required">Password
                   is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="password.dirty && password.errors?.minlength">Password
+                <div class="alert alert-danger background-danger" *ngIf="(password.dirty || registerForm.submitted) && password.errors?.minlength">Password
                   is too short</div>
-                <div class="alert alert-danger background-danger" *ngIf="confirmPassword.dirty && confirmPassword.errors?.equalTo">Password
+                <div class="alert alert-danger background-danger" *ngIf="(confirmPassword.dirty || registerForm.submitted) && confirmPassword.errors?.equalTo">Password
                   is not the same</div>
-                <div class="alert alert-danger background-danger" *ngIf="email.dirty && email.errors?.required">Email
+                <div class="alert alert-danger background-danger" *ngIf="(email.dirty || registerForm.submitted) && email.errors?.required">Email
                   is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="email.dirty && email.errors?.email">Email is
+                <div class="alert alert-danger background-danger" *ngIf="(email.dirty || registerForm.submitted) && email.errors?.email">Email is
                   invalid</div>
               </div>
               <!-- start name -->

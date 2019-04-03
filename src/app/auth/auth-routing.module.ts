@@ -30,10 +30,10 @@ const routes: Routes = [
     component: UserBaseRegistrationComponent,
     children: [
       { path: '', component: UserRegistrationComponent },
-      { path: 'add-delivery', canActivateChild: [AuthGuard], component: AddDeliveryComponent },
-      { path: 'agreement', canActivateChild: [AuthGuard], component: AgreementComponent },
-      { path: 'verification', canActivateChild: [AuthGuard], component: UserVerificationComponent },
-      { path: 'verification/:verifyType/:token', canActivateChild: [AuthGuard], component: UserVerificationComponent }
+      { path: 'add-delivery', component: AddDeliveryComponent },
+      { path: 'agreement', component: AgreementComponent },
+      { path: 'verification', component: UserVerificationComponent },
+      { path: 'verification/:verifyType/:token', component: UserVerificationComponent }
     ]
   },
   {
@@ -41,9 +41,9 @@ const routes: Routes = [
     component: CompanyBaseRegistrationComponent,
     children: [
       { path: '', component: CompanyRegistrationComponent },
-      { path: 'add-business', canActivateChild: [AuthGuard], component: AddBusinessComponent },
-      { path: 'verification', canActivateChild: [AuthGuard], component: CompanyVerificationComponent },
-      { path: 'verification/:verifyType/:token', canActivateChild: [AuthGuard], component: CompanyVerificationComponent }
+      { path: 'add-business', component: AddBusinessComponent },
+      { path: 'verification', component: CompanyVerificationComponent },
+      { path: 'verification/:verifyType/:token', component: CompanyVerificationComponent }
     ]
   }
 ];

@@ -30,6 +30,7 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
     this.loading = false;
     this.authUser = new AuthDetails();
+    this.authService.logout();
   }
 
   logIn(): void {
@@ -50,10 +51,10 @@ export class LoginComponent implements OnInit {
           const user = _.get(credentials, 'user');
 
           if (user.userType === UserTypes.TreeAdmin || user.userType === UserTypes.Crew) {
-            return this.router.navigate(['/company']);
+            this.router.navigate(['/company']);
+          } else {
+            this.router.navigate(['/user']);
           }
-
-          return this.router.navigate(['/user']);
         },
         (err) => this.toastr.error(err)
       );

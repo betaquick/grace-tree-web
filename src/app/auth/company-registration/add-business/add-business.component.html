@@ -16,15 +16,15 @@
                 </div>
               </div>
               <div class="col-sm-12">
-                <div class="alert alert-danger background-danger" *ngIf="companyName.dirty && companyName.errors?.required">Company
+                <div class="alert alert-danger background-danger" *ngIf="(companyName.dirty || businessForm.submitted) && companyName.errors?.required">Company
                   name is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="companyAddress.dirty && companyAddress.errors?.required">Street
+                <div class="alert alert-danger background-danger" *ngIf="(companyAddress.dirty || businessForm.submitted) && companyAddress.errors?.required">Street
                   is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="city.dirty && city.errors?.required">City
+                <div class="alert alert-danger background-danger" *ngIf="(city.dirty || businessForm.submitted) && city.errors?.required">City
                   is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="zip.dirty && zip.errors?.required">Zip
+                <div class="alert alert-danger background-danger" *ngIf="(zip.dirty || businessForm.submitted) && zip.errors?.required">Zip
                   code is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="website.dirty && website.errors?.required">Website
+                <div class="alert alert-danger background-danger" *ngIf="(website.dirty || businessForm.submitted) && website.errors?.required">Website
                   is required</div>
               </div>
 

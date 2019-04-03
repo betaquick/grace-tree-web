@@ -30,7 +30,8 @@ export class ResetPasswordComponent implements OnInit {
   ngOnInit() {
     this.loading = false;
     this.resetDetails = new ResetPasswordDetails();
-
+    this.authService.logout();
+    
     this.route.paramMap.subscribe(
       (params: ParamMap) => this.confirmToken(params.get('token'))
     );

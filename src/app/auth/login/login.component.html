@@ -21,8 +21,8 @@
                   <input [ngClass]="{'form-control-danger': email.dirty && email.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
                     type="email" id="email" name="email" #email="ngModel" placeholder="Primary Email" [(ngModel)]="authUser.email" required email>
                     <div class="col-form-label" *ngIf="email.errors">
-                      <div *ngIf="email.dirty && email.errors?.required">Email is required</div>
-                      <div *ngIf="email.dirty && email.errors?.email">Email is invalid</div>
+                      <div *ngIf="(email.dirty || loginForm.submitted) && email.errors?.required">Email is required</div>
+                      <div *ngIf="(email.dirty || loginForm.submitted) && email.errors?.email">Email is invalid</div>
                     </div>
                 </div>
               </div>
@@ -31,8 +31,8 @@
                   <input [ngClass]="{'form-control-danger': password.dirty && password.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
                     type="password" id="password" name="password" #password="ngModel" placeholder="Password" [(ngModel)]="authUser.password" required minlength="5">
                   <div class="col-form-label" *ngIf="password.errors">
-                      <div *ngIf="password.dirty && password.errors?.required">Password is required</div>
-                      <div *ngIf="password.dirty && password.errors?.minlength">Password is too short</div>
+                      <div *ngIf="(password.dirty || loginForm.submitted) && password.errors?.required">Password is required</div>
+                      <div *ngIf="(password.dirty || loginForm.submitted) && password.errors?.minlength">Password is too short</div>
                     </div>
                 </div>
               </div>

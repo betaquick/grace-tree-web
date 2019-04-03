@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { finalize } from 'rxjs/operators';
+import { finalize, flatMap } from 'rxjs/operators';
+
+import { UserTypes } from '@betaquick/grace-tree-constants';
 
 import { AuthService } from '../../auth.service';
 
@@ -16,7 +18,7 @@ import { AuthService } from '../../auth.service';
 export class AgreementComponent implements OnInit {
   loading: boolean;
   acceptAcceptment: boolean;
-
+  
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -35,10 +37,19 @@ export class AgreementComponent implements OnInit {
     this.loading = true;
 
     this.authService.acceptAgreement()
-      .pipe(finalize(() => this.loading = false))
+      .pipe(
+        flatMap(() => this.authService.fetchUser()),
+        finalize(() => this.loading = false)
+      )
       .subscribe(
-        () => this.router.navigate(['/login']),
-        err => this.toastr.error(err)
+        user => {
+          if (user.userType === UserTypes.TreeAdmin || user.userType === UserTypes.Crew) {
+            this.router.navigate(['/company']);
+          } else {
+            this.router.navigate(['/user']);
+          }
+        },
+        err => this.toastr.error(err)  
       );
   }
 }

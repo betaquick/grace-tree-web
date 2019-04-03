@@ -43,7 +43,7 @@ export class UserService implements OnDestroy {
         map(response => {
           const body = _.get(response, 'body');
           const user = this.user;
-          user.status = _.get(body, 'user.status');
+          user.profile.status = _.get(body, 'user.profile.status');
           this.user = user;
 
           return body;

@@ -63,7 +63,7 @@ export class UserVerificationComponent implements OnInit {
       );
   }
 
-  /* verifyPhone() {
+  verifyPhone() {
     this.loading = true;
 
     this.authService.verify(this.phone, VerificationTypes.SMS)
@@ -83,5 +83,5 @@ export class UserVerificationComponent implements OnInit {
         () => this.toastr.success('Email verification link sent'),
         err => this.toastr.error(err)
       );
-  } */
+  }
 }
