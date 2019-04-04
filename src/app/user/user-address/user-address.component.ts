@@ -1,12 +1,15 @@
-import { Component, OnInit, NgZone, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { states } from '@betaquick/grace-tree-constants';
 import * as _ from 'lodash';
 import { finalize } from 'rxjs/operators';
+import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
+import { Address as PlacesAddress } from 'ngx-google-places-autocomplete/objects/address';
 
 import { UserService } from '../user.service';
 import { Address } from '../../shared/models/user-model';
 import { State } from '../../shared/models/company-model';
+import { addressUtils } from '../../shared/addressUtils';
 
 @Component({
   selector: 'app-user-profile-address',
@@ -18,75 +21,46 @@ import { State } from '../../shared/models/company-model';
 })
 export class UserAddressComponent implements OnInit {
 
-  newAddress: Address;
-  placeholderAddress: Address;
   editMode: boolean;
   errorMessage: string;
-  address: Address;
+  @Input() address: Address;
   loading: boolean;
   stateArray: State[] = states;
 
   constructor(
     private userService: UserService,
-    private toastr: ToastrService,
-    private zone: NgZone,
-    private cdRef: ChangeDetectorRef
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
     this.editMode = false;
     this.loading = false;
-
-    this.userService.getUserAddress()
-      .subscribe(addy => {
-        if (addy) {
-          this.address = addy;
-          this.placeholderAddress = addy;
-        }
-        this.newAddress = Object.assign({}, this.address);
-      }, err => this.toastr.error(err));
-
   }
 
-  setUserAddress(address: Address) {
-    this.newAddress.street = '';
-    this.cdRef.detectChanges();
-
-    this.zone.run(() => {
-      this.newAddress = Object.assign({}, address);
-      this.placeholderAddress = Object.assign({}, this.newAddress);
-    });
+  setUserAddress(add: PlacesAddress) {
+    this.address = {...this.address, ...addressUtils.convertAddress(add)};
+  }
+  
+  updateLatLon(event) {
+    const name = _.get(event, 'target.name', '');
+    const value = _.get(event, 'target.value', '');
+    // clean up latlon - user has updated a field
+    this.address.latitude = '';
+    this.address.longitude = '';
+    _.set(this.address, name, value);
   }
 
   updateAddress() {
     this.loading = true;
-    const { city, street, state, zip, longitude, latitude, deliveryInstruction } = this.newAddress;
-    const newAddress: Address = { city, street, state, zip, deliveryInstruction };
 
-    if (
-      this.placeholderAddress.street === street &&
-      this.placeholderAddress.city === city &&
-      this.placeholderAddress.state === state
-    ) {
-      newAddress.longitude = longitude;
-      newAddress.latitude = latitude;
-    }
-
-    this.userService.updateUserAddress(newAddress)
-      .pipe(finalize(() => this.loading = false))
+    this.userService.updateUserAddress(this.address)
+      .pipe(finalize(() => {
+        this.loading = false;
+        this.editMode = false;
+      }))
       .subscribe(
-        address => {
-          this.toastr.success('Address updated successfully');
-          this.address = address;
-          this.placeholderAddress = address;
-          this.newAddress = Object.assign({}, address);
-          this.editMode = false;
-          this.loading = false;
-        },
-        err => {
-          this.toastr.error(err);
-          this.loading = false;
-        }
+        () => this.toastr.success('Address updated successfully'),
+        err => this.toastr.error(err)
       );
   }
 }

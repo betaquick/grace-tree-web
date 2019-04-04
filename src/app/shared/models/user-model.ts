@@ -22,6 +22,7 @@ export class Email {
 }
 
 export class Address {
+  userAddressId?: number;
   street?: string;
   city?: string;
   state?: string;

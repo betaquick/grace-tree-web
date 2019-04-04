@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, flatMap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { SessionStorage } from 'ngx-store';
 import { Observable } from 'rxjs/Observable';
@@ -24,13 +24,12 @@ export class UserService implements OnDestroy {
 
   updateProfile(profile: User) {
     return this.http
-      .put(`${AppConfig.API_URL}/user`, profile)
+      .put(`${AppConfig.API_URL}/user/profile`, profile)
       .pipe(
-        map(response => {
-          const body = _.get(response, 'body');
-          this.user = _.get(body, 'user');
-
-          return body;
+        flatMap(() => this.fetchUser()),
+        map(body => {
+          this.user = body;
+          return this.user;
         }),
         catchError(utils.handleError)
       );
@@ -40,13 +39,10 @@ export class UserService implements OnDestroy {
     return this.http
       .put(`${AppConfig.API_URL}/user/status/${status}`, null)
       .pipe(
-        map(response => {
-          const body = _.get(response, 'body');
-          const user = this.user;
-          user.profile.status = _.get(body, 'user.profile.status');
-          this.user = user;
-
-          return body;
+        flatMap(() => this.fetchUser()),
+        map(body => {
+          this.user = body;
+          return this.user;
         }),
         catchError(utils.handleError)
       );
@@ -83,22 +79,14 @@ export class UserService implements OnDestroy {
       );
   }
 
-  getUserAddress(): Observable<Address> {
-    return this.http.get(`${AppConfig.API_URL}/user/address`)
-      .pipe(
-        map(response => {
-          return _.get(response, 'body');
-        }),
-        catchError(utils.handleError)
-      );
-  }
-
   updateUserAddress(address: any) {
     return this.http
       .put(`${AppConfig.API_URL}/user/address`, address)
       .pipe(
-        map(response => {
-          return _.get(response, 'body');
+        flatMap(() => this.fetchUser()),
+        map(body => {
+          this.user = body;
+          return this.user;
         }),
         catchError(utils.handleError)
       );
@@ -157,6 +145,17 @@ export class UserService implements OnDestroy {
       .pipe(
         map(response => {
           return _.get(response, 'body');
+        }),
+        catchError(utils.handleError)
+      );
+  }
+  
+  fetchUser(): Observable<User> {
+    return this.http.get(`${AppConfig.API_URL}/user/${this.user.userId}`)
+      .pipe(
+        map(response => {
+          this.user = _.get(response, 'body');
+          return this.user;
         }),
         catchError(utils.handleError)
       );

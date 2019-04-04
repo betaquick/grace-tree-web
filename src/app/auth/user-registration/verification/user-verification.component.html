@@ -23,27 +23,36 @@
               <p><strong>Account Verification Status:</strong></p>
               
               <div>
-              <form class="j-forms" novalidate #emailForm="ngForm" (ngSubmit)="verifyEmail()">
-                  <div class="span8">
-                    <input class="icofont icofont-ui-volume" [ngClass]="{'form-control-danger': email.dirty && email.invalid}" #emailText="ngModel" id="email"
-                      name="email" type="email" [(ngModel)]="email.emailAddress" required>
-                  </div>
-                  <div class="btn-group">
-                    <button class="btn btn-primary submit" type="submit" [disabled]="!emailForm.form.valid || loading">Resend</button>
-                  </div>
-                </form>
+                <div class="input-group">
+                  <span class="input-group-prepend">
+                    <label class="input-group-text red" *ngIf="!email.isVerified">
+                      <span>Not verified</span>
+                    </label>
+                    <label class="input-group-text green" *ngIf="email.isVerified">
+                      <span>Verified</span>
+                    </label>
+                  </span>
+                  <input class="form-control" [(ngModel)]="email.emailAddress" required />
+                  <button *ngIf="!email.isVerified" class="input-group-addon btn btn-primary" (click)="verifyEmail()">
+                    <span class="">Resend Link</span>
+                  </button>
                 </div>
-                
-                <div>
-                <form class="j-forms" novalidate #phoneForm="ngForm" (ngSubmit)="verifyPhone()">
-                  <div class="span8">
-                    <input [ngClass]="{'form-control-danger': phone.dirty && phone.invalid}" #phoneText="ngModel" id="phone"
-                      name="phone" type="text" [(ngModel)]="phone.phoneNumber" required>
-                  </div>
-                  <div class="btn-group">
-                    <button class="btn btn-primary submit" type="submit" [disabled]="!phoneForm.form.valid || loading">Resend</button>
-                  </div>
-                </form>
+
+                <div class="input-group">
+                  <span class="input-group-prepend">
+                    <label class="input-group-text red" *ngIf="!phone.isVerified">
+                      <span>Not verified</span>
+                    </label>
+                    <label class="input-group-text green" *ngIf="phone.isVerified">
+                      <span>Verified</span>
+                    </label>
+                  </span>
+                  <input class="form-control" [(ngModel)]="phone.phoneNumber" required>
+                  <button *ngIf="!phone.isVerified" class="input-group-addon btn btn-primary" (click)="verifyPhone()">
+                    <span class="">Resend Link</span>
+                  </button>
+                </div>
+                  
               </div>
                 
               <p class="m-t-25 text-primary" *ngIf="email.isVerified && phone.isVerified">Your account has been fully verified, which means you can

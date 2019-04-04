@@ -152,7 +152,7 @@ export class AuthService implements OnDestroy {
     const credentials = _.get(response, 'body');
     this.token = _.get(credentials, 'token');
     this.user = _.get(credentials, 'user');
-    this.company = _.get(credentials, 'company', null);
+    this.company = _.get(credentials, 'credentials.user.company', null);
     this.isLoggedIn = true;
     return credentials;
   }

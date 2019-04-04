@@ -5,7 +5,7 @@ import { states } from '@betaquick/grace-tree-constants';
 import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
 import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
-import { Address as PlacesAddress } from 'ngx-google-places-autocomplete/objects/address'
+import { Address as PlacesAddress } from 'ngx-google-places-autocomplete/objects/address';
 
 import { DeliveryInfo, UserProduct, Address } from '../../../shared/models/user-model';
 import { AuthService } from '../../auth.service';
