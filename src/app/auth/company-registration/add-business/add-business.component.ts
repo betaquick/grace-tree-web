@@ -44,7 +44,7 @@ export class AddBusinessComponent implements OnInit {
     this.businessInfo.latitude = add.latitude;
     this.businessInfo.longitude = add.longitude;
   }
-  
+
   updateLatLon(event) {
     const name = _.get(event, 'target.name', '');
     const value = _.get(event, 'target.value', '');
@@ -53,7 +53,7 @@ export class AddBusinessComponent implements OnInit {
     this.businessInfo.longitude = '';
     _.set(this.businessInfo, name, value);
   }
-  
+
   addBusinessInfo() {
     if (this.loading === true) {
       return;

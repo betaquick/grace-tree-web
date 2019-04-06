@@ -3,7 +3,7 @@ import { UserTypes } from '@betaquick/grace-tree-constants';
 
 export class Profile {
   status?: String;
-  agreement? = false;
+  agreement ? = false;
   createdAt?: String;
 }
 export class Phone {
@@ -30,7 +30,7 @@ export class Address {
   deliveryInstruction?: string;
   latitude?: string;
   longitude?: string;
-  
+
   constructor() {
     this.street = '';
   }

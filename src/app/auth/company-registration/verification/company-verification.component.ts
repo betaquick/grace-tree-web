@@ -29,14 +29,14 @@ export class CompanyVerificationComponent implements OnInit {
 
   ngOnInit() {
     this.loading = false;
-    
+
     const {user} = this.authService;
-    
+
     if (user) {
       this.email = _.find(user.emails, e => e.primary);
       this.phone = _.find(user.phones, p => p.primary);
     }
-    
+
     this.activatedRoute.params.subscribe((params: Params) => {
       const verifyType = params['verifyType'];
       const token = params['token'];
@@ -86,5 +86,5 @@ export class CompanyVerificationComponent implements OnInit {
         () => this.toastr.success('Email verification link sent'),
         err => this.toastr.error(err)
       );
-  } 
+  }
 }

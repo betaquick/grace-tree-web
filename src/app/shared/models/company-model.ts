@@ -14,7 +14,7 @@ export class BusinessInfo {
   zip: string;
   latitude?: string;
   longitude?: string;
-  
+
   constructor() {
     this.companyAddress = '';
   }

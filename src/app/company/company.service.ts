@@ -13,7 +13,7 @@ import { BusinessInfo } from '../shared/models/company-model';
 
 @Injectable()
 export class CompanyService implements OnDestroy {
-  
+
   @SessionStorage() company: BusinessInfo;
   @SessionStorage() user: User = new User();
 
@@ -160,7 +160,7 @@ export class CompanyService implements OnDestroy {
         catchError(utils.handleError)
       );
   }
-  
+
   fetchUserData(): Observable<User> {
     return this.http.get(`${AppConfig.API_URL}/user/${this.user.userId}`)
       .pipe(

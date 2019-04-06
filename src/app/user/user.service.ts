@@ -149,7 +149,7 @@ export class UserService implements OnDestroy {
         catchError(utils.handleError)
       );
   }
-  
+
   fetchUser(): Observable<User> {
     return this.http.get(`${AppConfig.API_URL}/user/${this.user.userId}`)
       .pipe(

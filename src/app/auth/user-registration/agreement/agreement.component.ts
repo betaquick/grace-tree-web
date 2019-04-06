@@ -18,7 +18,7 @@ import { AuthService } from '../../auth.service';
 export class AgreementComponent implements OnInit {
   loading: boolean;
   acceptAcceptment: boolean;
-  
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -49,7 +49,7 @@ export class AgreementComponent implements OnInit {
             this.router.navigate(['/user']);
           }
         },
-        err => this.toastr.error(err)  
+        err => this.toastr.error(err)
       );
   }
 }

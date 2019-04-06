@@ -24,7 +24,7 @@ export class AddDeliveryComponent implements OnInit {
   products: Product[];
   stateArray: State[] = states;
   loading: boolean;
-  
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -51,7 +51,7 @@ export class AddDeliveryComponent implements OnInit {
   setUserAddress(address: PlacesAddress) {
     this.deliveryInfo.address = addressUtils.convertAddress(address);
   }
-  
+
   updateLatLon(event) {
     const name = _.get(event, 'target.name', '');
     const value = _.get(event, 'target.value', '');

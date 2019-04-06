@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     const url: string = state.url;
-    
+
     const canActivate = this.checkLogin(url);
 
     return canActivate;
@@ -30,11 +30,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
 
     // Store the attempted URL for redirecting
     this.authService.redirectUrl = url;
-    
+
     this.router.navigate(['/login']);
     return false;
   }
-  
+
   canActivateChild(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
@@ -53,11 +53,11 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         this.router.navigate(['user-registration/agreement']);
         return false;
       }
-      if(_.find(user.phones, phone => phone.primary && !phone.isVerified)) {
+      if (_.find(user.phones, phone => phone.primary && !phone.isVerified)) {
         this.router.navigate(['user-registration/verification']);
         return false;
       }
-      if(_.find(user.emails, email => email.primary && !email.isVerified)) {
+      if (_.find(user.emails, email => email.primary && !email.isVerified)) {
         this.router.navigate(['user-registration/verification']);
         return false;
       }
@@ -68,16 +68,16 @@ export class AuthGuard implements CanActivate, CanActivateChild {
         this.router.navigate(['company-registration/add-business']);
         return false;
       }
-      if(_.find(user.phones, phone => phone.primary && !phone.isVerified)) {
+      if (_.find(user.phones, phone => phone.primary && !phone.isVerified)) {
         this.router.navigate(['company-registration/verification']);
         return false;
       }
-      if(_.find(user.emails, email => email.primary && !email.isVerified)) {
+      if (_.find(user.emails, email => email.primary && !email.isVerified)) {
         this.router.navigate(['company-registration/verification']);
         return false;
       }
     }
-    
+
     return true;
   }
 }

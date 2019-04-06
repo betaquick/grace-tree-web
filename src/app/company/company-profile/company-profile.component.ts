@@ -28,7 +28,7 @@ export class CompanyProfileComponent implements OnInit, OnDestroy {
   company: BusinessInfo;
   password: string;
   confirmPassword: string;
-  
+
   loading: boolean;
   errorMessage: string;
   stateArray: State[] = states;
@@ -41,7 +41,7 @@ export class CompanyProfileComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.user = this.companyService.user;
     this.company = this.companyService.company;
-    
+
     this.isProfileEdit = false;
     this.loading = false;
   }
@@ -84,7 +84,7 @@ export class CompanyProfileComponent implements OnInit, OnDestroy {
     this.company.latitude = add.latitude;
     this.company.longitude = add.longitude;
   }
-  
+
   updateLatLon(event) {
     const name = _.get(event, 'target.name', '');
     const value = _.get(event, 'target.value', '');

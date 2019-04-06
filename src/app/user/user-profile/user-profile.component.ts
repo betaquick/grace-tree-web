@@ -40,7 +40,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
     this.userProducts = [new UserProduct()];
     this.primaryAddress = _.head(_.get(this.user, 'addresses'));
-    
+
     this.getUserProducts();
   }
 

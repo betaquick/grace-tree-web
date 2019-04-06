@@ -40,7 +40,7 @@ export class UserAddressComponent implements OnInit {
   setUserAddress(add: PlacesAddress) {
     this.address = {...this.address, ...addressUtils.convertAddress(add)};
   }
-  
+
   updateLatLon(event) {
     const name = _.get(event, 'target.name', '');
     const value = _.get(event, 'target.value', '');

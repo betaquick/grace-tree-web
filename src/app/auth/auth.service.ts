@@ -6,7 +6,16 @@ import * as _ from 'lodash';
 import { SessionStorage } from 'ngx-store';
 
 import { AppConfig } from '../app.config';
-import { AuthDetails, Credentials, User, RegisterUser, DeliveryInfo, ResetPasswordDetails, Email, Phone } from '../shared/models/user-model';
+import {
+  AuthDetails,
+  Credentials,
+  User,
+  RegisterUser,
+  DeliveryInfo,
+  ResetPasswordDetails,
+  Email,
+  Phone
+} from '../shared/models/user-model';
 import { utils } from '../shared/utils';
 import { BusinessInfo } from '../shared/models/company-model';
 import { Product } from '../shared/models/product-model';
@@ -43,7 +52,7 @@ export class AuthService implements OnDestroy {
         catchError(utils.handleError)
       );
   }
-  
+
   fetchUser(): Observable<User> {
     return this.http
       .get(`${AppConfig.API_URL}/user/${this.user.userId}`)
@@ -147,7 +156,7 @@ export class AuthService implements OnDestroy {
     this.company = null;
     this.token = '';
   }
-  
+
   private handleSuccessAuth(response) {
     const credentials = _.get(response, 'body');
     this.token = _.get(credentials, 'token');
