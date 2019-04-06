@@ -56,11 +56,7 @@
                                     </tr>
                                     <tr>
                                       <th scope="row">Business Address</th>
-                                      <td>{{company.companyAddress}}, {{company.city}}, {{company.state}}</td>
-                                    </tr>
-                                    <tr>
-                                      <th scope="row">Zip Code</th>
-                                      <td>{{company.zip}}</td>
+                                      <td>{{company.companyAddress}}, {{company.city}}, {{company.state}} {{company.zip}}</td>
                                     </tr>
                                   </tbody>
                                 </table>
@@ -170,29 +166,29 @@
                                   </div>
                                   <div class="unit">
                                     <div class="input">
-                                      <input [ngClass]="{'form-control-danger': companyAddress.dirty && companyAddress.invalid}"
+                                      <input ngx-google-places-autocomplete [ngClass]="{'form-control-danger': companyAddress.dirty && companyAddress.invalid}"
                                         [ngModelOptions]="{updateOn: 'blur'}" type="text" placeholder="Company Address"
                                         #companyAddress="ngModel" name="companyAddress" [(ngModel)]="company.companyAddress"
-                                        appPlacesAutocomplete (setAddress)="setCompanyAddress($event)" required>
+                                        (onAddressChange)="setBusinessAddress($event)" required>
                                     </div>
                                   </div>
                                   <div class="unit">
                                     <div class="input">
-                                      <input [ngClass]="{'form-control-danger': city.dirty && city.invalid}"
+                                      <input [ngClass]="{'form-control-danger': city.dirty && city.invalid}" (change)="updateLatLon($event)"
                                         [ngModelOptions]="{updateOn: 'blur'}" type="text" placeholder="City" #city="ngModel"
                                         name="city" [(ngModel)]="company.city" required>
                                     </div>
                                   </div>
                                   <div class="unit">
                                     <div class="input">
-                                      <select name="state" name="state" [(ngModel)]="company.state">
+                                      <select name="state" name="state" [(ngModel)]="company.state" (change)="updateLatLon($event)">
                                         <option *ngFor="let state of stateArray;" value="{{state.abbr}}">{{state.name}}</option>
                                       </select>
                                     </div>
                                   </div>
                                   <div class="unit">
                                     <div class="input">
-                                      <input [ngClass]="{'form-control-danger': zip.dirty && zip.invalid}"
+                                      <input [ngClass]="{'form-control-danger': zip.dirty && zip.invalid}" (change)="updateLatLon($event)"
                                         [ngModelOptions]="{updateOn: 'blur'}" type="text" placeholder="Zip Code" #zip="ngModel"
                                         name="zip" [(ngModel)]="company.zip" required>
                                     </div>
@@ -210,13 +206,13 @@
                                     <div class="span6 unit">
                                       <div class="input">
                                         <input [ngClass]="{'form-control-danger': errorMessage}" type="password" name="password"
-                                          placeholder="Password" [(ngModel)]="user.password">
+                                          placeholder="Password" [(ngModel)]="password">
                                       </div>
                                     </div>
                                     <div class="span6 unit">
                                       <div class="input">
                                         <input [ngClass]="{'form-control-danger': errorMessage}" type="password" name="confirmPassword"
-                                          placeholder="Confirm Password" [(ngModel)]="user.confirmPassword">
+                                          placeholder="Confirm Password" [(ngModel)]="confirmPassword">
                                       </div>
                                     </div>
                                   </div>

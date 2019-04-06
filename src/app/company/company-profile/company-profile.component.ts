@@ -1,13 +1,17 @@
-import { Component, OnInit, NgZone, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as _ from 'lodash';
 import { finalize } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
-import { states, PhoneTypes } from '@betaquick/grace-tree-constants';
 import { SessionStorage } from 'ngx-store';
+import { GooglePlaceDirective } from 'ngx-google-places-autocomplete';
+import { Address as PlacesAddress } from 'ngx-google-places-autocomplete/objects/address';
 
-import { Email, Phone, RegisterUser, Address } from '../../shared/models/user-model';
+import { states, PhoneTypes } from '@betaquick/grace-tree-constants';
+
+import { Email, Phone, User, Address } from '../../shared/models/user-model';
 import { CompanyService } from '../company.service';
 import { BusinessInfo, State } from '../../shared/models/company-model';
+import { addressUtils } from '../../shared/addressUtils';
 
 @Component({
   selector: 'app-company-profile',
@@ -20,25 +24,26 @@ import { BusinessInfo, State } from '../../shared/models/company-model';
 export class CompanyProfileComponent implements OnInit, OnDestroy {
 
   isProfileEdit: boolean;
-  @SessionStorage() user: RegisterUser = new RegisterUser();
-  @SessionStorage() company: BusinessInfo = new BusinessInfo();
-  placeholderAddress: Address;
+  user: User;
+  company: BusinessInfo;
+  password: string;
+  confirmPassword: string;
+
   loading: boolean;
   errorMessage: string;
   stateArray: State[] = states;
 
   constructor(
     private companyService: CompanyService,
-    private toastr: ToastrService,
-    private zone: NgZone,
-    private cdRef: ChangeDetectorRef
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {
+    this.user = this.companyService.user;
+    this.company = this.companyService.company;
+
     this.isProfileEdit = false;
     this.loading = false;
-
-    this.placeholderAddress = new Address();
   }
 
   ngOnDestroy() {}
@@ -70,25 +75,28 @@ export class CompanyProfileComponent implements OnInit, OnDestroy {
     }
   }
 
-  setCompanyAddress(address: Address) {
-    this.company.companyAddress = '';
-    this.cdRef.detectChanges();
+  setBusinessAddress(address: PlacesAddress) {
+    const add = addressUtils.convertAddress(address);
+    this.company.companyAddress = add.street;
+    this.company.city = add.city;
+    this.company.state = add.state;
+    this.company.zip = add.zip;
+    this.company.latitude = add.latitude;
+    this.company.longitude = add.longitude;
+  }
 
-    this.zone.run(() => {
-      this.company.companyAddress = address.street;
-      this.company.city = address.city;
-      this.company.state = address.state;
-      this.company.zip = address.zip;
-      this.company.longitude = address.longitude;
-      this.company.latitude = address.latitude;
-
-      this.placeholderAddress = address;
-    });
+  updateLatLon(event) {
+    const name = _.get(event, 'target.name', '');
+    const value = _.get(event, 'target.value', '');
+    // clean up latlon - user has updated a field
+    this.company.latitude = '';
+    this.company.longitude = '';
+    _.set(this.company, name, value);
   }
 
   updateCompanyInfo() {
-    const { firstName, lastName, password, confirmPassword } = this.user;
-    if (password && password !== confirmPassword) {
+    const { firstName, lastName } = this.user;
+    if (this.password && this.password !== this.confirmPassword) {
       this.errorMessage = 'Password and confirm password don\'t match';
       return;
     }
@@ -123,8 +131,8 @@ export class CompanyProfileComponent implements OnInit, OnDestroy {
       lastName,
       emails,
       phones,
-      password,
-      confirmPassword
+      password: this.password,
+      confirmPassword: this.password
     };
 
     const company: BusinessInfo = _.pick(
@@ -141,23 +149,16 @@ export class CompanyProfileComponent implements OnInit, OnDestroy {
       ]
     );
 
-    if (
-      this.placeholderAddress.street === company.companyAddress &&
-      this.placeholderAddress.city === company.city &&
-      this.placeholderAddress.state === company.state
-    ) {
-      company.longitude = this.placeholderAddress.longitude;
-      company.latitude = this.placeholderAddress.latitude;
-    }
-
     this.companyService.updateCompanyInfo(company, user)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => {
+        this.loading = false;
+        this.isProfileEdit = false;
+      }))
       .subscribe(
         data => {
           this.user = data.user;
           this.company = data.company;
           this.toastr.success('Company profile updated successfully');
-          this.isProfileEdit = false;
         },
         err => this.toastr.error(err)
       );

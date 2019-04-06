@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng5-validation';
 import { AgmCoreModule } from '@agm/core';
+import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
 import { CompanyRoutingModule } from './company-routing.module';
 import { CompanyDashboardComponent } from './company-dashboard/company-dashboard.component';
@@ -26,7 +27,8 @@ import { CrewProfileComponent } from './crew-profile/crew-profile.component';
     CompanyRoutingModule,
     FormsModule,
     CustomFormsModule,
-    SharedModule
+    SharedModule,
+    GooglePlaceModule
   ],
   providers: [CompanyService],
   declarations: [

@@ -1,6 +1,11 @@
 import { Product } from './product-model';
 import { UserTypes } from '@betaquick/grace-tree-constants';
 
+export class Profile {
+  status?: String;
+  agreement ? = false;
+  createdAt?: String;
+}
 export class Phone {
   userPhoneId?: number;
   userId?: number;
@@ -17,6 +22,7 @@ export class Email {
 }
 
 export class Address {
+  userAddressId?: number;
   street?: string;
   city?: string;
   state?: string;
@@ -24,6 +30,10 @@ export class Address {
   deliveryInstruction?: string;
   latitude?: string;
   longitude?: string;
+
+  constructor() {
+    this.street = '';
+  }
 }
 
 export class User {
@@ -35,9 +45,8 @@ export class User {
   phones?: Array<Phone>;
   emails?: Array<Email>;
   addresses?: Array<Address>;
+  profile?: Profile;
   userType?: UserTypes;
-  status?: String;
-  agreement?: boolean;
 }
 
 export class AuthDetails {

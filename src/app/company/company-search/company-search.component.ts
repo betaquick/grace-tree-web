@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs/operators';
+import * as _ from 'lodash';
 import { SessionStorage } from 'ngx-store';
 import { UserStatus, DeliveryStatusCodes, UserDeliveryStatus } from '@betaquick/grace-tree-constants';
 
@@ -76,6 +77,9 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
       .pipe(finalize(() => this.loading = false))
       .subscribe(
         data => {
+          if (_.size(data.users) === 0) {
+            this.toastr.warning('No users found.');
+          }
           this.recipients = data.users;
           this.lat = data.coordinates.lat;
           this.lng = data.coordinates.lng;
@@ -98,7 +102,6 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
 
   openNote(modal: any, recipient) {
     this.recipient = recipient;
-
     modal.show();
   }
 
@@ -125,21 +128,6 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
     this.recipients = recipients;
   }
 
-  isUserSelected(): boolean {
-    const users = [];
-    this.recipients.forEach(recipient => {
-      if (recipient.selected) {
-        users.push(recipient.userId);
-      }
-    });
-
-    if (this.loading || users.length === 0) {
-      return false;
-    }
-
-    return true;
-  }
-
   sendRequest() {
     const users = [];
     this.recipients.forEach(recipient => {
@@ -164,6 +152,8 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
           () => this.toastr.success('Delivery request has been sent successfully'),
           err => this.toastr.error(err)
         );
+    } else {
+      window.alert('You must select one or more users');
     }
   }
 }

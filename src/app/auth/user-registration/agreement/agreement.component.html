@@ -15,10 +15,6 @@
                 </div>
               </div>
               <hr />
-              <div class="col-sm-12">
-                <div class="alert alert-danger background-danger" *ngIf="agreement.dirty && agreement.errors?.required">Please
-                  accept agreement</div>
-              </div>
 
               <div class="terms">
                 <p>I understand that by signing up to participate in this totally free program, I am agreeing to do
@@ -50,8 +46,7 @@
                       </span>
                       <span class="text-inverse">I agree with the terms and conditions</span>
                     </label>
-                  </div>
-                </div>
+                    <div class="alert alert-danger" *ngIf="agreement.invalid && agreementForm.submitted && agreement.errors?.required">Please accept terms and condition agreement</div></div></div>
               </div>
               <div class="j-row">
                 <div class="col-12">

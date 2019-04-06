@@ -31,7 +31,7 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.status = this.user.status === UserStatus.Ready ? true : false;
+    this.status = this.user.profile.status === UserStatus.Ready ? true : false;
 
     this.getPendingDeliveries();
     this.getRecentDeliveries();

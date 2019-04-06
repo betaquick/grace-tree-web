@@ -6,7 +6,16 @@ import * as _ from 'lodash';
 import { SessionStorage } from 'ngx-store';
 
 import { AppConfig } from '../app.config';
-import { AuthDetails, Credentials, User, RegisterUser, DeliveryInfo, ResetPasswordDetails } from '../shared/models/user-model';
+import {
+  AuthDetails,
+  Credentials,
+  User,
+  RegisterUser,
+  DeliveryInfo,
+  ResetPasswordDetails,
+  Email,
+  Phone
+} from '../shared/models/user-model';
 import { utils } from '../shared/utils';
 import { BusinessInfo } from '../shared/models/company-model';
 import { Product } from '../shared/models/product-model';
@@ -40,6 +49,18 @@ export class AuthService implements OnDestroy {
       .post(`${AppConfig.API_URL}/auth/login`, authUser)
       .pipe(
         map(this.handleSuccessAuth.bind(this)),
+        catchError(utils.handleError)
+      );
+  }
+
+  fetchUser(): Observable<User> {
+    return this.http
+      .get(`${AppConfig.API_URL}/user/${this.user.userId}`)
+      .pipe(
+        map(res => {
+          this.user = _.get(res, 'body');
+          return this.user;
+        }),
         catchError(utils.handleError)
       );
   }
@@ -105,13 +126,13 @@ export class AuthService implements OnDestroy {
       );
   }
 
-  /* verify(body: Email | Phone, verifyType: string) {
+  verify(body: Email | Phone, verifyType: string) {
     return this.http.post(`${AppConfig.API_URL}/auth/verify`, { body, verifyType })
       .pipe(
         map(response => _.get(response, 'body')),
         catchError(utils.handleError)
       );
-  } */
+  }
 
   validateToken(verifyType: string, token: string) {
     return this.http.put(`${AppConfig.API_URL}/auth/validate/${verifyType}/${token}`, null)
@@ -129,19 +150,20 @@ export class AuthService implements OnDestroy {
       );
   }
 
-  private handleSuccessAuth(response) {
-    const credentials = _.get(response, 'body');
-    this.token = _.get(credentials, 'token');
-    this.user = _.get(credentials, 'user');
-    this.company = _.get(credentials, 'company', null);
-    this.isLoggedIn = true;
-    return credentials;
-  }
-
   logout() {
     this.isLoggedIn = false;
     this.user = null;
     this.company = null;
     this.token = '';
   }
+
+  private handleSuccessAuth(response) {
+    const credentials = _.get(response, 'body');
+    this.token = _.get(credentials, 'token');
+    this.user = _.get(credentials, 'user');
+    this.company = _.get(credentials, 'user.company', null);
+    this.isLoggedIn = true;
+    return credentials;
+  }
+
 }

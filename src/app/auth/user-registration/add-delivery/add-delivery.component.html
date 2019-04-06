@@ -9,20 +9,62 @@
               <h3 class="logo">Green Tree</h3>
             </div>
             <div class="auth-box">
+              
+              <div class="col-sm-12">
+                <div class="alert alert-danger background-danger" *ngIf="(street.dirty || deliveryForm.submitted) && street.errors?.required">Street
+                  is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="(city.dirty || deliveryForm.submitted) && city.errors?.required">City
+                  is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="(zip.dirty || deliveryForm.submitted) && zip.errors?.required">Zip
+                  code is required</div>
+              </div>
+
+                            
+              <div class="row m-b-20">
+                <div class="col-md-12">
+                  <h3 class="text-left">Delivery Address</h3>
+                </div>
+              </div>
+
+              <div class="unit">
+                <div class="input">
+                  <input ngx-google-places-autocomplete [ngClass]="{'form-control-danger': street.dirty && street.invalid}"
+                    type="text" placeholder="Street" #street="ngModel" id="street" name="street" [(ngModel)]="deliveryInfo.address.street"
+                    (onAddressChange)="setUserAddress($event)" required autocomplete="off" />
+                </div>
+              </div>
+              <div class="unit">
+                <div class="input">
+                  <input [ngClass]="{'form-control-danger': city.dirty && city.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                    type="text" placeholder="City" #city="ngModel" id="city" name="city" [(ngModel)]="deliveryInfo.address.city"
+                    (change)="updateLatLon($event)" required>
+                </div>
+              </div>
+              <div class="unit">
+                <label class="input select">
+                  <select name="state" [(ngModel)]="deliveryInfo.address.state" (change)="updateLatLon($event)" required>
+                    <option *ngFor="let state of stateArray;" value="{{state.abbr}}">{{state.name}}</option>
+                  </select>
+                  <i></i>
+                </label>
+              </div>
+              <div class="unit">
+                <div class="input">
+                  <input [ngClass]="{'form-control-danger': zip.dirty && zip.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                    type="text" #zip="ngModel" id="zip" placeholder="Zip Code" name="zip" [(ngModel)]="deliveryInfo.address.zip"
+                    (change)="updateLatLon($event)"
+                    required>
+                </div>
+              </div> 
+              
+              <div class="divider gap-bottom-25"></div>
+              
               <div class="row m-b-20">
                 <div class="col-md-12">
                   <h3 class="text-left">Product selection</h3>
                 </div>
               </div>
-              <div class="col-sm-12">
-                <div class="alert alert-danger background-danger" *ngIf="street.dirty && street.errors?.required">Street
-                  is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="city.dirty && city.errors?.required">City
-                  is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="zip.dirty && zip.errors?.required">Zip
-                  code is required</div>
-              </div>
-
+              
               <div class="unit" *ngFor="let product of products; let i = index">
                 <label class="input select">
                   <span>Want {{product.productDesc}}?</span>
@@ -34,45 +76,6 @@
                 </label>
               </div>
 
-              <div class="divider gap-bottom-25"></div>
-              
-              <div class="row m-b-20">
-                <div class="col-md-12">
-                  <h3 class="text-left">Delivery Address</h3>
-                </div>
-              </div>
-
-              <div class="unit">
-                <div class="input">
-                  <input [ngClass]="{'form-control-danger': street.dirty && street.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
-                    type="text" placeholder="Street" #street="ngModel" id="street" name="street" [(ngModel)]="deliveryInfo.address.street"
-                    appPlacesAutocomplete (setAddress)="setUserAddress($event)" required autocomplete="off" />
-                </div>
-              </div>
-              <div class="unit">
-                <div class="input">
-                  <input [ngClass]="{'form-control-danger': city.dirty && city.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
-                    type="text" placeholder="City" #city="ngModel" id="city" name="city" [(ngModel)]="deliveryInfo.address.city"
-                    required>
-                </div>
-              </div>
-              <!-- end name -->
-              <!-- start gender -->
-              <div class="unit">
-                <label class="input select">
-                  <select name="state" [(ngModel)]="deliveryInfo.address.state" required>
-                    <option *ngFor="let state of stateArray;" value="{{state.abbr}}">{{state.name}}</option>
-                  </select>
-                  <i></i>
-                </label>
-              </div>
-              <div class="unit">
-                <div class="input">
-                  <input [ngClass]="{'form-control-danger': zip.dirty && zip.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
-                    type="text" #zip="ngModel" id="zip" placeholder="Zip Code" name="zip" [(ngModel)]="deliveryInfo.address.zip"
-                    required>
-                </div>
-              </div>
               <div class="j-row">
                 <div class="col-12">
                   <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"

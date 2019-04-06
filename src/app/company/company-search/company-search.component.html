@@ -64,7 +64,7 @@
                                 <button (click)="openNote(modalDefault, user)" class="btn btn-sm btn-outline-primary">
                                   View Note
                                 </button>
-                                <a [routerLink]="['/company/setup-delivery', user.userId]"
+                                <a *ngIf="user.status === userStatus.Ready" [routerLink]="['/company/setup-delivery', user.userId]"
                                   class="btn btn-primary btn-sm">Setup Delivery</a>
                               </h6>
                             </agm-info-window>
@@ -146,8 +146,8 @@
                             &nbsp;
                             <button class="btn btn-primary" (click)="toggleListMapView()" *ngIf="mapView">List
                               View</button>
-                            <button class="btn btn-success" (click)="sendRequest()" *ngIf="!mapView" [disabled]="!isUserSelected()">Send
-                              Request</button>
+                            <button class="btn btn-success" (click)="sendRequest()" *ngIf="!mapView" [disabled]="loading">Send
+                              Delivery Request</button>
                             <button class="btn btn-primary" (click)="toggleListMapView()" *ngIf="!mapView">Map
                               View</button>
                           </div>
@@ -176,6 +176,6 @@
     </button>
   </div>
   <div class="app-modal-body">
-    <p>{{recipient.deliveryInstruction}}</p>
+    <p>{{recipient.deliveryInstruction || "No delivery instructions"}}</p>
   </div>
 </app-modal-basic>

@@ -3,7 +3,7 @@ import * as _ from 'lodash';
 import { finalize } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 
-import { Email, Phone, RegisterUser, UserProduct } from '../../shared/models/user-model';
+import { Email, Phone, RegisterUser, UserProduct, Address } from '../../shared/models/user-model';
 import { UserService } from '../user.service';
 import { PhoneTypes } from '@betaquick/grace-tree-constants';
 import { utils } from '../../shared/utils';
@@ -24,6 +24,7 @@ export class UserProfileComponent implements OnInit, OnDestroy {
   userProducts: UserProduct[];
   loading: boolean;
   errorMessage: string;
+  primaryAddress: Address;
 
   @SessionStorage() user: RegisterUser = new RegisterUser();
 
@@ -38,6 +39,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.loading = false;
 
     this.userProducts = [new UserProduct()];
+    this.primaryAddress = _.head(_.get(this.user, 'addresses'));
+
     this.getUserProducts();
   }
 
@@ -124,13 +127,12 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     };
 
     this.userService.updateProfile(user)
-      .pipe(finalize(() => this.loading = false))
+      .pipe(finalize(() => {
+        this.loading = false;
+        this.isProfileEdit = false;
+      }))
       .subscribe(
-        data => {
-          this.toastr.success('Profile updated successfully');
-          this.isProfileEdit = false;
-          this.user = data.user;
-        },
+        data => this.toastr.success('Profile updated successfully'),
         err => this.toastr.error(err)
       );
   }

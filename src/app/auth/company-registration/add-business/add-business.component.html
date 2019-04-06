@@ -16,15 +16,15 @@
                 </div>
               </div>
               <div class="col-sm-12">
-                <div class="alert alert-danger background-danger" *ngIf="companyName.dirty && companyName.errors?.required">Company
+                <div class="alert alert-danger background-danger" *ngIf="(companyName.dirty || businessForm.submitted) && companyName.errors?.required">Company
                   name is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="companyAddress.dirty && companyAddress.errors?.required">Street
+                <div class="alert alert-danger background-danger" *ngIf="(companyAddress.dirty || businessForm.submitted) && companyAddress.errors?.required">Street
                   is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="city.dirty && city.errors?.required">City
+                <div class="alert alert-danger background-danger" *ngIf="(city.dirty || businessForm.submitted) && city.errors?.required">City
                   is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="zip.dirty && zip.errors?.required">Zip
+                <div class="alert alert-danger background-danger" *ngIf="(zip.dirty || businessForm.submitted) && zip.errors?.required">Zip
                   code is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="website.dirty && website.errors?.required">Website
+                <div class="alert alert-danger background-danger" *ngIf="(website.dirty || businessForm.submitted) && website.errors?.required">Website
                   is required</div>
               </div>
 
@@ -38,15 +38,15 @@
               </div>
               <div class="unit">
                 <div class="input">
-                  <input [ngClass]="{'form-control-danger': companyAddress.dirty && companyAddress.invalid}"
+                  <input ngx-google-places-autocomplete [ngClass]="{'form-control-danger': companyAddress.dirty && companyAddress.invalid}"
                     [ngModelOptions]="{updateOn: 'blur'}" type="text" placeholder="Street" #companyAddress="ngModel" id="companyAddress"
-                    appPlacesAutocomplete (setAddress)="setCompanyAddress($event)" name="companyAddress" [(ngModel)]="businessInfo.companyAddress" required>
+                    (onAddressChange)="setBusinessAddress($event)" name="companyAddress" [(ngModel)]="businessInfo.companyAddress" required>
                 </div>
               </div>
               <div class="unit">
                 <div class="input">
                   <input [ngClass]="{'form-control-danger': city.dirty && city.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
-                    type="text" placeholder="City" #city="ngModel" id="city" name="city" [(ngModel)]="businessInfo.city"
+                    type="text" placeholder="City" #city="ngModel" id="city" name="city" [(ngModel)]="businessInfo.city" (change)="updateLatLon($event)"
                     required>
                 </div>
               </div>
@@ -54,7 +54,7 @@
               <!-- start gender -->
               <div class="unit">
                 <label class="input select">
-                  <select name="state" name="state" [(ngModel)]="businessInfo.state">
+                  <select name="state" name="state" [(ngModel)]="businessInfo.state" (change)="updateLatLon($event)">
                     <option *ngFor="let state of stateArray;" value="{{state.abbr}}">{{state.name}}</option>
                   </select>
                   <i></i>
@@ -63,7 +63,7 @@
               <div class="unit">
                 <div class="input">
                   <input [ngClass]="{'form-control-danger': zip.dirty && zip.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
-                    type="text" placeholder="Zip Code" #zip="ngModel" id="zip" name="zip" [(ngModel)]="businessInfo.zip"
+                    type="text" placeholder="Zip Code" #zip="ngModel" id="zip" name="zip" [(ngModel)]="businessInfo.zip" (change)="updateLatLon($event)"
                     required>
                 </div>
               </div>
