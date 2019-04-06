@@ -1,6 +1,6 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { map, catchError } from 'rxjs/operators';
+import { map, catchError, flatMap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { SessionStorage } from 'ngx-store';
 import { Observable } from 'rxjs/Observable';
@@ -13,7 +13,9 @@ import { BusinessInfo } from '../shared/models/company-model';
 
 @Injectable()
 export class CompanyService implements OnDestroy {
+  
   @SessionStorage() company: BusinessInfo;
+  @SessionStorage() user: User = new User();
 
   constructor(
     private http: HttpClient
@@ -25,14 +27,9 @@ export class CompanyService implements OnDestroy {
     return this.http
       .put(`${AppConfig.API_URL}/user/company`, { company, user })
       .pipe(
+        flatMap(() => this.fetchUserData()),
         map(response => {
-          const body = _.get(response, 'body');
-          user = _.get(body, 'user');
-
-          const companyInfo = _.get(body, 'company');
-          this.company = companyInfo;
-
-          return { user, company: companyInfo };
+          return response;
         }),
         catchError(utils.handleError)
       );
@@ -40,9 +37,12 @@ export class CompanyService implements OnDestroy {
 
   updateProfile(profile: User) {
     return this.http
-      .put(`${AppConfig.API_URL}/user`, profile)
+      .put(`${AppConfig.API_URL}/user/profile`, profile)
       .pipe(
-        map(response => _.get(response, 'body')),
+        flatMap(() => this.fetchUserData()),
+        map(response => {
+          return response;
+        }),
         catchError(utils.handleError)
       );
   }
@@ -157,6 +157,18 @@ export class CompanyService implements OnDestroy {
     return this.http
       .put(`${AppConfig.API_URL}/user/company/deliveries/${deliveryId}`, delivery)
       .pipe(
+        catchError(utils.handleError)
+      );
+  }
+  
+  fetchUserData(): Observable<User> {
+    return this.http.get(`${AppConfig.API_URL}/user/${this.user.userId}`)
+      .pipe(
+        map(response => {
+          this.user = _.get(response, 'body');
+          this.company = _.get(response, 'body.company');
+          return {user: this.user, company: this.company};
+        }),
         catchError(utils.handleError)
       );
   }
