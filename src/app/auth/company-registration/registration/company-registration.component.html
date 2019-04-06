@@ -68,7 +68,7 @@
                   <div class="input">
                     <input [ngClass]="{'form-control-danger': number.dirty && number.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
                       type="text" class="form-control" #number="ngModel" id="number" name="number" placeholder="Primary Phone Number"
-                      [(ngModel)]="user.phones[0].phoneNumber" required phone>
+                      [(ngModel)]="user.phones[0].phoneNumber" required phone="US">
                   </div>
                 </div>
               </div>
