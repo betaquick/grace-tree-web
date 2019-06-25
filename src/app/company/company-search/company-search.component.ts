@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -9,6 +9,8 @@ import { CompanyService } from '../company.service';
 import { ScheduleDelivery, User } from '../../shared/models/user-model';
 import { BusinessInfo } from '../../shared/models/company-model';
 
+type SortKey = 'status' | 'distance';
+
 @Component({
   selector: 'app-company-search',
   templateUrl: './company-search.component.html',
@@ -18,9 +20,14 @@ import { BusinessInfo } from '../../shared/models/company-model';
   ]
 })
 export class CompanySearchComponent implements OnInit, OnDestroy {
-
+  private _refTable: ElementRef;
+  @ViewChild('sortableTable') set refTable(ref: ElementRef) {
+    this._refTable = ref;
+  }
   mapView = true;
   userStatus = UserStatus;
+  currentSortMethod: SortKey = 'distance';
+  reversed = false;
 
   // initial center position for the map
   lat: number;
@@ -66,6 +73,9 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
 
   toggleListMapView() {
     this.mapView = !this.mapView;
+    if (!this.mapView) {
+      setTimeout(() => { this.attachSortEventListener();  });
+    }
   }
 
   search() {
@@ -80,12 +90,40 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
           if (_.size(data.users) === 0) {
             this.toastr.warning('No users found.');
           }
-          this.recipients = data.users;
+          this.recipients = [...data.users].sort((a, b) => a['distance'] > b['distance'] ? 1 : -1);
           this.lat = data.coordinates.lat;
           this.lng = data.coordinates.lng;
         },
         err => this.toastr.error(err)
       );
+  }
+
+  attachSortEventListener(): void {
+    if (this._refTable) {
+      Array.from((this._refTable.nativeElement as HTMLTableElement)
+      .querySelectorAll('th[data-sort]'))
+      .forEach(header => header
+      .addEventListener('click', evt => {
+        this.performSort((evt.target as HTMLElement).dataset['sort']);
+      }));
+    }
+  }
+
+  performSort(sortKey: SortKey | string): void {
+    if (this.currentSortMethod === sortKey) {
+      this.reversed = !this.reversed;
+      this.recipients = [...this.recipients.reverse()];
+    } else {
+      this.currentSortMethod = sortKey as SortKey;
+      this.reversed = false;
+      if (['distance', 'status'].indexOf(sortKey) > -1) {
+        this.recipients.sort((a, b) => a[sortKey] > b[sortKey] ? 1 : -1);
+      }
+    }
+  }
+
+  sortingBy(key: string | SortKey): boolean {
+    return this.currentSortMethod === key;
   }
 
   convertToNumber(str: string) {

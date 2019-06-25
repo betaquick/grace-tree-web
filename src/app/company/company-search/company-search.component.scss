@@ -27,3 +27,7 @@ agm-map {
 .input-group-append {
   margin-left: 10px;
 }
+
+th[data-sort] {
+  cursor: pointer;
+}

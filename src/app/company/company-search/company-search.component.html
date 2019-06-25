@@ -77,7 +77,7 @@
                       </div>
 
                       <div class="table-responsive" *ngIf="!mapView">
-                        <table class="table">
+                        <table class="table" #sortableTable>
                           <tr>
                             <th>
                               <div class="checkbox-fade fade-in-primary">
@@ -92,7 +92,14 @@
                             <th>Recipient</th>
                             <th>Email Address</th>
                             <th>Phone Number</th>
-                            <th>Status</th>
+                            <th data-sort="status" title="Click to sort by status">
+                                <span *ngIf="sortingBy('status')"><i class="fa fa-caret-{{ reversed ? 'down' : 'up' }}"></i></span>
+                              Status
+                            </th>
+                            <th data-sort="distance" title="Click to sort by distance">
+                                <span *ngIf="sortingBy('distance')"><i class="fa fa-caret-{{ reversed ? 'down' : 'up' }}"></i></span>
+                              Address
+                            </th>
                             <th>Zipcode</th>
                             <th>Delivery Note</th>
                             <th></th>
@@ -108,12 +115,21 @@
                                 </label>
                               </div>
                             </td>
-                            <td>{{user.firstName}} {{user.lastName}}</td>
+                            <td>
+                              {{user.firstName}} {{user.lastName}}
+                              <div class="m-t-15">
+                                  <label class="badge badge-warning" *ngFor="let productDesc of user.productDesc">
+                                    {{productDesc}} </label>
+                              </div>
+                            </td>
                             <td>{{user.email}}</td>
-                            <td>{{user.phoneNumber}}</td>
+                            <td>{{user.phoneNumber[0] || 'N/A'}}</td>
                             <td>
                               <span class="label label-warning" *ngIf="user.status === userStatus.Pause">Pause</span>
                               <span class="label label-success" *ngIf="user.status === userStatus.Ready">Ready</span>
+                            </td>
+                            <td>
+                              {{ user.street }}, {{ user.city }}, {{ user.state }} ({{ user.distance | number:'1.0-2' }} miles away)
                             </td>
                             <td>{{user.zip}}</td>
                             <td>
