@@ -28,27 +28,27 @@
                                   <tbody>
                                     <tr>
                                       <th scope="row">First Name</th>
-                                      <td>{{user.firstName}}</td>
+                                      <td>{{user?.firstName}}</td>
                                     </tr>
                                     <tr>
                                       <th scope="row">Last Name</th>
-                                      <td>{{user.lastName}}</td>
+                                      <td>{{user?.lastName}}</td>
                                     </tr>
                                     <tr>
                                       <th scope="row">Primary Phone number</th>
-                                      <td>{{user.phones[0].phoneNumber}}</td>
+                                      <td>{{user?.phones[0]?.phoneNumber || 'N/A' }}</td>
                                     </tr>
                                     <tr *ngIf="user.phones.length > 1">
                                       <th scope="row">Secondary Phone number</th>
-                                      <td>{{user.phones[1].phoneNumber}}</td>
+                                      <td>{{user?.phones[1]?.phoneNumber}}</td>
                                     </tr>
                                     <tr>
                                       <th scope="row">Primary Email Address</th>
-                                      <td>{{user.emails[0].emailAddress}}</td>
+                                      <td>{{user?.emails[0]?.emailAddress || 'N/A'}}</td>
                                     </tr>
                                     <tr *ngIf="user.emails.length > 1">
                                       <th scope="row">Secondary Email Address</th>
-                                      <td>{{user.emails[1].emailAddress}}</td>
+                                      <td>{{user?.emails[1]?.emailAddress}}</td>
                                     </tr>
                                   </tbody>
                                 </table>
