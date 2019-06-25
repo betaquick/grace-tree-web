@@ -40,7 +40,7 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
   loading: boolean;
   searchParams = {
     address: '',
-    radius: 30,
+    radius: 10,
     includePause: false
   };
 
