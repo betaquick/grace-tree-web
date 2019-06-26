@@ -1,7 +1,7 @@
 import { ActivatedRouteSnapshot, CanActivate, Router } from '@angular/router';
 import { UserTypes } from '@betaquick/grace-tree-constants';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs/observable';
+import { Observable } from 'rxjs/Observable';
 
 import { AuthService } from './auth.service';
 
