@@ -12,11 +12,14 @@ import { CompanyCrewComponent } from './company-crew/company-crew.component';
 import { NewCompanyCrewComponent } from './company-crew/new/new-company-crew.component';
 import { ManageDeliveryComponent } from './manage-delivery/manage-delivery.component';
 import { CrewProfileComponent } from './crew-profile/crew-profile.component';
+import { RoleGuard } from '../auth/role.guard';
+import { UserTypes } from '@betaquick/grace-tree-constants';
 
 const routes: Routes = [{
   path: 'company',
   component: ContainerComponent,
-  canActivate: [AuthGuard],
+  canActivate: [AuthGuard, RoleGuard],
+  data: {roles: [UserTypes.TreeAdmin]},
   children: [{
     path: '',
     children: [

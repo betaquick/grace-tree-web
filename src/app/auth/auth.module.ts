@@ -13,6 +13,7 @@ import { AgreementComponent } from './user-registration/agreement/agreement.comp
 import { CompanyBaseRegistrationComponent } from './company-registration/company-base-registration';
 import { CompanyRegistrationComponent } from './company-registration/registration/company-registration.component';
 import { AuthGuard } from './auth.guard';
+import { RoleGuard } from './role.guard';
 import { AddBusinessComponent } from './company-registration/add-business/add-business.component';
 import { CompanyVerificationComponent } from './company-registration/verification/company-verification.component';
 import { UserVerificationComponent } from './user-registration/verification/user-verification.component';
@@ -35,7 +36,8 @@ import { SharedModule } from '../shared/shared.module';
   ],
   providers: [
     AuthGuard,
-    AuthService
+    AuthService,
+    RoleGuard
   ],
   declarations: [
     LoginComponent,
