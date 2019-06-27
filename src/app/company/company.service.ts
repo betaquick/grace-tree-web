@@ -99,6 +99,15 @@ export class CompanyService implements OnDestroy {
       );
   }
 
+  duplicateCompanyTemplate(templateId: number) {
+    return this.http
+      .post(`${AppConfig.API_URL}/user/company/templates/${templateId}/copy`, {})
+      .pipe(
+        map(response => response['body']['template']),
+        catchError(utils.handleError)
+      );
+  }
+
   updateCompanyTemplate(templateId: number, template: Partial<Template>) {
     return this.http
       .put(`${AppConfig.API_URL}/user/company/templates/${templateId}`, template)
