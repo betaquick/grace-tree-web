@@ -23,17 +23,25 @@
                           <th>Content</th>
                           <th>Visibility</th>
                           <th>Date Created</th>
-                          <th></th>
+                          <th colspan="2"></th>
                         </tr>
                         <tr *ngFor="let template of templates">
                           <td class="constrain__width w-20" title="{{template.name}}">{{template.name}}</td>
                           <td class="constrain__width w-30" title="{{template.content}}">{{ template.content }}</td>
-                          <td>{{ template.public ? 'Company Wide' : 'Only You' }}</td>
+                          <td>{{ template.public ? 'PRESET' : 'Only You' }}</td>
                           <td>{{template.createdAt | date: 'MMMM d, y'}}</td>
                           <td>
-                            <a [routerLink]="['.', template.templateId]"
+                            <button class="btn btn-primary waves-effecr waves-light"
+                            title="Duplicate Template"
+                            style="float: none;margin: 0"
+                            (click)="duplicateTemplate(template.templateId)">
+                              <span class="ti-layers-alt"></span>
+                            </button>
+                          </td>
+                          <td>
+                            <a *ngIf="!template.public" [routerLink]="['.', template.templateId]"
                             class="tabledit-update-button btn btn-primary waves-effect waves-light"
-                            style="float: none;margin: 0;">
+                            style="float: none;margin: 0;" title="Update Template">
                                 <span class="icofont icofont-ui-edit"></span>
                             </a>
                           </td>

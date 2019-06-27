@@ -37,11 +37,13 @@ export class SetupDeliveryComponent implements OnInit {
     return (this.templates || []).filter(template => template.templateId === +this.delivery.templateId)[0];
   }
 
+  get smsTemplate(): Template {
+    return (this.templates || []).filter(template => template.templateId === +this.delivery.smsTemplateId)[0];
+  }
+
   ngOnInit() {
     this.loading = false;
     this.delivery = new ScheduleDelivery();
-    this.delivery.assignedToUserId = -1;
-    this.delivery.templateId = -1;
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       const userId = parseInt(params.get('userId'), 10);
@@ -84,6 +86,10 @@ export class SetupDeliveryComponent implements OnInit {
 
   isTemplateSelected(templateId) {
     return parseInt(templateId, 10) !== -1;
+  }
+
+  isSmsTemplateSelected(smsTemplateId) {
+    return parseInt(smsTemplateId, 10) !== -1;
   }
 
   scheduleDelivery() {
