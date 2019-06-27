@@ -28,7 +28,7 @@
                         <tr *ngFor="let template of templates">
                           <td class="constrain__width w-20" title="{{template.name}}">{{template.name}}</td>
                           <td class="constrain__width w-30" title="{{template.content}}">{{ template.content }}</td>
-                          <td>{{ template.public ? 'Company Wide' : 'Only You' }}</td>
+                          <td>{{ template.public ? 'PRESET' : 'Only You' }}</td>
                           <td>{{template.createdAt | date: 'MMMM d, y'}}</td>
                           <td>
                             <a [routerLink]="['.', template.templateId]"
