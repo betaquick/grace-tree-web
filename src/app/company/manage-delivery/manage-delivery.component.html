@@ -41,7 +41,7 @@
                           <span class="label label-success" *ngIf="delivery.isAssigned === 1">Yes</span>
                           <span class="label label-warning" *ngIf="delivery.isAssigned === 0">No</span>
                         </td>
-                        <td>{{delivery.updatedAt | date: 'dd-MM-yyyy'}}</td>
+                        <td>{{delivery.updatedAt | date: 'MMMM d, y'}}</td>
                         <td>
                           <ng-template [ngIf]="delivery.userStatus === userStatus.Ready">
                             <a [routerLink]="['/company/setup-delivery', delivery.userId, 'delivery', delivery.deliveryId]"

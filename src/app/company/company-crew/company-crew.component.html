@@ -30,7 +30,7 @@
                         <td>{{crew.firstName}}</td>
                         <td>{{crew.lastName}}</td>
                         <td>{{crew.email}}</td>
-                        <td>{{crew.createdAt | date: 'dd-MM-yyyy'}}</td>
+                        <td>{{crew.createdAt | date: 'MMMM d, y'}}</td>
                         <td>
                           <button type="button" class="tabledit-delete-button btn btn-danger waves-effect waves-light"
                             style="float: none;margin: 0;" (click)="deleteCompanyCrew(crew.userId)"><span class="icofont icofont-ui-delete"></span></button>
