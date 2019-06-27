@@ -9,7 +9,7 @@ import { User, RegisterUser, ScheduleDelivery } from '../shared/models/user-mode
 import { AppConfig } from '../app.config';
 import { utils } from '../shared/utils';
 import { BusinessInfo } from '../shared/models/company-model';
-
+import { Template } from '../shared/models/template-model';
 
 @Injectable()
 export class CompanyService implements OnDestroy {
@@ -60,6 +60,22 @@ export class CompanyService implements OnDestroy {
       );
   }
 
+  getTemplates(): Observable<Template[]> {
+    return this.http.get(`${AppConfig.API_URL}/user/company/templates`)
+      .pipe(
+        map(response => response['body']['templates']),
+        catchError(utils.handleError)
+      );
+  }
+
+  getTemplate(templateId: number): Observable<Template> {
+    return this.http.get(`${AppConfig.API_URL}/user/company/templates/${templateId}`)
+      .pipe(
+        map(response => response['body']['template']),
+        catchError(utils.handleError)
+      );
+  }
+
   deleteCompanyCrew(crewId: number) {
     return this.http.delete(`${AppConfig.API_URL}/user/company/crews/${crewId}`)
       .pipe(
@@ -70,6 +86,22 @@ export class CompanyService implements OnDestroy {
   addCompanyCrew(crew: RegisterUser) {
     return this.http
       .post(`${AppConfig.API_URL}/user/company/crews`, crew)
+      .pipe(
+        catchError(utils.handleError)
+      );
+  }
+
+  addCompanyTemplate(template: Template) {
+    return this.http
+      .post(`${AppConfig.API_URL}/user/company/templates`, template)
+      .pipe(
+        catchError(utils.handleError)
+      );
+  }
+
+  updateCompanyTemplate(templateId: number, template: Partial<Template>) {
+    return this.http
+      .put(`${AppConfig.API_URL}/user/company/templates/${templateId}`, template)
       .pipe(
         catchError(utils.handleError)
       );

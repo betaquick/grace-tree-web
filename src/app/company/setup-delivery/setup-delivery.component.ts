@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 import { CompanyService } from '../company.service';
 import { BusinessInfo } from '../../shared/models/company-model';
 import { User, ScheduleDelivery } from '../../shared/models/user-model';
+import { Template } from '../../shared/models/template-model';
 
 @Component({
   selector: 'app-setup-delivery',
@@ -20,6 +21,7 @@ export class SetupDeliveryComponent implements OnInit {
   recipient: any;
   company: BusinessInfo;
   crews: User[];
+  templates: Template[];
 
   delivery: ScheduleDelivery;
   deliveryId: number;
@@ -31,10 +33,15 @@ export class SetupDeliveryComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
+  get template(): Template {
+    return (this.templates || []).filter(template => template.templateId === +this.delivery.templateId)[0];
+  }
+
   ngOnInit() {
     this.loading = false;
     this.delivery = new ScheduleDelivery();
     this.delivery.assignedToUserId = -1;
+    this.delivery.templateId = -1;
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       const userId = parseInt(params.get('userId'), 10);
@@ -42,6 +49,7 @@ export class SetupDeliveryComponent implements OnInit {
 
       if (userId) {
         this.getDeliveryInfo(userId);
+        this.getTemplates();
       } else {
         this.router.navigate(['/company/search']);
       }
@@ -62,8 +70,20 @@ export class SetupDeliveryComponent implements OnInit {
       );
   }
 
+  getTemplates() {
+    this.companyService
+      .getTemplates()
+      .subscribe(templates => this.templates = templates,
+      err => this.toastr.error(err)
+    );
+  }
+
   isDeliveryAssigned(userId) {
     return parseInt(userId, 10) !== -1;
+  }
+
+  isTemplateSelected(templateId) {
+    return parseInt(templateId, 10) !== -1;
   }
 
   scheduleDelivery() {

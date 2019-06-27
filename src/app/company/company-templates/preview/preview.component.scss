@@ -1,0 +1,15 @@
+@media (max-width: 900px) {
+    pre {
+      width: initial;
+      word-wrap: break-word;
+    }
+  }
+  
+  pre {
+    white-space: pre-wrap;
+    background-color: #f8f8f8;
+    padding: 10px 5px;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 3px;
+    width: fit-content;
+  }
