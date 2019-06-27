@@ -10,6 +10,7 @@ import { CompanyDashboardComponent } from './company-dashboard/company-dashboard
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
 import { CompanyService } from './company.service';
 import { CompanyCrewComponent } from './company-crew/company-crew.component';
+import { CompanyTemplateComponent, TemplatePreviewComponent, NewCompanyTemplateComponent } from './company-templates';
 import { NewCompanyCrewComponent } from './company-crew/new/new-company-crew.component';
 import { CompanySearchComponent } from './company-search/company-search.component';
 import { CompanyDeliveriesComponent } from './company-deliveries/company-deliveries.component';
@@ -40,7 +41,10 @@ import { CrewProfileComponent } from './crew-profile/crew-profile.component';
     CompanyDeliveriesComponent,
     ManageDeliveryComponent,
     SetupDeliveryComponent,
-    CrewProfileComponent
+    CrewProfileComponent,
+    CompanyTemplateComponent,
+    TemplatePreviewComponent,
+    NewCompanyTemplateComponent
   ]
 })
 export class CompanyModule { }

@@ -5,6 +5,7 @@ import { ModalBasicComponent } from './modal-basic/modal-basic.component';
 import { MenuItems } from './menu-items/menu-items';
 import { SpinnerComponent } from './spinner/spinner.component';
 import { DeliveryComponent } from './delivery/delivery.component';
+import { SanitizeHtmlPipe, NewlineToBreakTag } from './pipes';
 
 @NgModule({
   imports: [
@@ -13,12 +14,16 @@ import { DeliveryComponent } from './delivery/delivery.component';
   exports: [
     ModalBasicComponent,
     SpinnerComponent,
-    DeliveryComponent
+    DeliveryComponent,
+    SanitizeHtmlPipe,
+    NewlineToBreakTag
   ],
   declarations: [
     ModalBasicComponent,
     SpinnerComponent,
-    DeliveryComponent
+    DeliveryComponent,
+    SanitizeHtmlPipe,
+    NewlineToBreakTag
   ],
   providers: [
     MenuItems

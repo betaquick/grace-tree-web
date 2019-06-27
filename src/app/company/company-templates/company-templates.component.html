@@ -1,0 +1,53 @@
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+      <!-- Main-body start -->
+      <div class="main-body">
+        <div class="page-wrapper">
+  
+          <div class="page-body">
+            <div class="row">
+  
+              <div class="col-xl-12 col-md-12">
+                <div class="card">
+                  <div class="card-header">
+                    <h5>Templates</h5>
+                    <div class="card-header-right">
+                      <button type="button" name="button" class="btn btn-primary" [routerLink]="['new']">New Template</button>
+                    </div>
+                  </div>
+                  <div class="card-block p-3">
+                    <div class="table-responsive">
+                      <table class="table">
+                        <tr>
+                          <th>Name</th>
+                          <th>Content</th>
+                          <th>Visibility</th>
+                          <th>Date Created</th>
+                          <th></th>
+                        </tr>
+                        <tr *ngFor="let template of templates">
+                          <td class="constrain__width w-20" title="{{template.name}}">{{template.name}}</td>
+                          <td class="constrain__width w-30" title="{{template.content}}">{{ template.content }}</td>
+                          <td>{{ template.public ? 'Company Wide' : 'Only You' }}</td>
+                          <td>{{template.createdAt | date: 'dd-MM-yyyy'}}</td>
+                          <td>
+                            <a [routerLink]="['.', template.templateId]"
+                            class="tabledit-update-button btn btn-primary waves-effect waves-light"
+                            style="float: none;margin: 0;">
+                                <span class="icofont icofont-ui-edit"></span>
+                            </a>
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Recent Orders end -->
+  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

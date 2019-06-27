@@ -92,6 +92,14 @@ const ADMIN_MENU = {
     name: 'Crews',
     type: 'link',
     icon: 'ti-view-grid'
+  },
+  {
+    state: 'templates',
+    main_state: 'company',
+    short_label: 'T',
+    name: 'Templates',
+    type: 'link',
+    icon: 'ti-agenda'
   }]
 };
 
