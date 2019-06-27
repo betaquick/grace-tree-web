@@ -4,5 +4,5 @@ export class Template {
   content: string;
   createdAt: string;
   name: string;
-  public: boolean
-};
+  public: boolean;
+}
