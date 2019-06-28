@@ -77,29 +77,7 @@ export class NewCompanyTemplateComponent implements OnInit {
   }
 
   submitForm() {
-    if (this.template.templateId) {
       this.updateTemplate();
-    } else {
-      this.addTemplate();
-    }
-  }
-
-  addTemplate() {
-    if (this.loading === true) {
-      return;
-    }
-
-    this.loading = true;
-
-    this.companyService.addCompanyTemplate(this.template)
-    .pipe(finalize(() => this.loading = false))
-      .subscribe(
-        () => {
-          this.toastr.success('Template added successfully');
-          this.router.navigate(['/company/templates']);
-        },
-        err => this.toastr.error(err)
-      );
   }
 
   updateTemplate() {

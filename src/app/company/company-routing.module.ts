@@ -32,7 +32,6 @@ const routes: Routes = [{
       { path: 'crew-profile', component: CrewProfileComponent },
       { path: 'crews', component: CompanyCrewComponent },
       { path: 'templates', component: CompanyTemplateComponent },
-      { path: 'templates/new', component: NewCompanyTemplateComponent },
       { path: 'templates/:templateId', component: NewCompanyTemplateComponent, data: { edit: true } },
       { path: 'crews/new', component: NewCompanyCrewComponent },
       { path: 'setup-delivery/:userId', component: SetupDeliveryComponent },

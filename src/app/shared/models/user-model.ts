@@ -96,5 +96,4 @@ export class ScheduleDelivery {
   statusCode?: string;
   userDeliveryStatus?: string;
   isAssigned?: boolean;
-  templateId?: number;
 }

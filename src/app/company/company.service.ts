@@ -91,14 +91,6 @@ export class CompanyService implements OnDestroy {
       );
   }
 
-  addCompanyTemplate(template: Template) {
-    return this.http
-      .post(`${AppConfig.API_URL}/user/company/templates`, template)
-      .pipe(
-        catchError(utils.handleError)
-      );
-  }
-
   updateCompanyTemplate(templateId: number, template: Partial<Template>) {
     return this.http
       .put(`${AppConfig.API_URL}/user/company/templates/${templateId}`, template)

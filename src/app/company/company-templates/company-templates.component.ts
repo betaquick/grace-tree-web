@@ -41,18 +41,4 @@ export class CompanyTemplateComponent implements OnInit {
       err => this.toastr.error(err)
     );
   }
-
-  deleteCompanyCrew(crewId: number) {
-    this.loading = true;
-
-    this.companyService
-      .deleteCompanyCrew(crewId)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(() => {
-        this.toastr.success('Crew deleted successfully');
-        this.getTemplates();
-      },
-      err => this.toastr.error(err)
-    );
-  }
 }

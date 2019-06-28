@@ -11,24 +11,19 @@
                 <div class="card">
                   <div class="card-header">
                     <h5>Templates</h5>
-                    <div class="card-header-right">
-                      <button type="button" name="button" class="btn btn-primary" [routerLink]="['new']">New Template</button>
-                    </div>
                   </div>
                   <div class="card-block p-3">
                     <div class="table-responsive">
                       <table class="table">
                         <tr>
-                          <th>Name</th>
-                          <th>Content</th>
-                          <th>Visibility</th>
+                          <th>Notification</th>
+                          <th>Message Template</th>
                           <th>Date Created</th>
                           <th></th>
                         </tr>
                         <tr *ngFor="let template of templates">
-                          <td class="constrain__width w-20" title="{{template.name}}">{{template.name}}</td>
-                          <td class="constrain__width w-30" title="{{template.content}}">{{ template.content }}</td>
-                          <td>{{ template.public ? 'Company Wide' : 'Only You' }}</td>
+                          <td class="constrain__width w-20" title="{{template.notificationType}}">{{template.notificationType}}</td>
+                          <td class="constrain__width w-30" title="{{template.message}}">{{ template.message }}</td>
                           <td>{{template.createdAt | date: 'MMMM d, y'}}</td>
                           <td>
                             <a [routerLink]="['.', template.templateId]"
