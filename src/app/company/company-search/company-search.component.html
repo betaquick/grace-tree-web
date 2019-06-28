@@ -31,7 +31,10 @@
                               <option value="10">10 miles</option>
                             </select>
                             <div class="input-group-append">
-                              <button type="submit" class="btn btn-primary" [disabled]="loading">Search</button>
+                              <button type="submit" class="btn btn-primary" [disabled]="loading">
+                                <span *ngIf="loading"><img src="assets/spinner_blue_white_trans.svg" style="width: 1.5em; object-fit: contain;"/></span>
+                                Search
+                              </button>
                             </div>
                           </div>
                           <div class="checkbox-fade fade-in-primary d-">
