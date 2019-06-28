@@ -35,7 +35,7 @@
           
           <ng-template [ngIf]="user.userType !== userTypes.General">
             <button (click)="emitDelivery('link', delivery)" class="btn btn-sm btn-outline-success"
-              *ngIf="delivery.statusCode === statusCodes.Requested || delivery.usersCount > 1">Manage</button>
+              *ngIf="manageableDelivery(delivery)">Manage</button>
           </ng-template>
         </td>
       </tr>
