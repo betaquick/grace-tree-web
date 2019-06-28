@@ -29,4 +29,9 @@ export class DeliveryComponent implements OnInit, OnDestroy {
   emitDelivery(action, delivery) {
     this.setDelivery.emit({ action, delivery });
   }
+
+  manageableDelivery(delivery: any): boolean {
+    const { Requested, Scheduled } = DeliveryStatusCodes;
+    return ([Scheduled, Requested].indexOf(delivery.statusCode) > -1) || delivery.usersCount > 1;
+  }
 }

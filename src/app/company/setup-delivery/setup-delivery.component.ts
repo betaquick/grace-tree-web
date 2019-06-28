@@ -80,14 +80,6 @@ export class SetupDeliveryComponent implements OnInit {
     return parseInt(userId, 10) !== -1;
   }
 
-  isTemplateSelected(templateId) {
-    return parseInt(templateId, 10) !== -1;
-  }
-
-  isSmsTemplateSelected(smsTemplateId) {
-    return parseInt(smsTemplateId, 10) !== -1;
-  }
-
   scheduleDelivery() {
     if (this.loading) {
       return;
