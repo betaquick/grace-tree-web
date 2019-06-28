@@ -31,7 +31,10 @@
                               <option value="10">10 miles</option>
                             </select>
                             <div class="input-group-append">
-                              <button type="submit" class="btn btn-primary" [disabled]="loading">Search</button>
+                              <button type="submit" class="btn btn-primary" [disabled]="loading">
+                                <span *ngIf="loading"><img src="assets/spinner_blue_white_trans.svg" style="width: 1.5em; object-fit: contain;"/></span>
+                                Search
+                              </button>
                             </div>
                           </div>
                           <div class="checkbox-fade fade-in-primary d-">
@@ -100,7 +103,6 @@
                                 <span *ngIf="sortingBy('distance')"><i class="fa fa-caret-{{ reversed ? 'down' : 'up' }}"></i></span>
                               Address
                             </th>
-                            <th>Zipcode</th>
                             <th>Delivery Note</th>
                             <th></th>
                           </tr>
@@ -129,9 +131,10 @@
                               <span class="label label-success" *ngIf="user.status === userStatus.Ready">Ready</span>
                             </td>
                             <td>
-                              {{ user.street }}, {{ user.city }}, {{ user.state }} ({{ user.distance | number:'1.0-2' }} miles away)
+                              {{ user.street }} <br/>
+                              {{ user.city }}, {{ user.state }}, {{ user.zip }} <br />
+                              ({{ user.distance | number:'1.0-2' }} miles away)
                             </td>
-                            <td>{{user.zip}}</td>
                             <td>
                               <button (click)="openNote(modalDefault, user)" class="btn btn-sm btn-outline-primary"
                                 *ngIf="user.deliveryInstruction">
