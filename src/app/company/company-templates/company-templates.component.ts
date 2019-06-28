@@ -7,7 +7,7 @@ import { CompanyService } from '../company.service';
 
 
 @Component({
-  selector: 'app-company-crew',
+  selector: 'app-company-templates',
   templateUrl: './company-templates.component.html',
   styleUrls: [
     './company-templates.component.scss',
@@ -21,7 +21,7 @@ export class CompanyTemplateComponent implements OnInit {
 
   constructor(
     private companyService: CompanyService,
-    private toastr: ToastrService,
+    private toastr: ToastrService
   ) { }
 
   ngOnInit() {

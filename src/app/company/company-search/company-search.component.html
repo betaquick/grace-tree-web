@@ -131,7 +131,9 @@
                               <span class="label label-success" *ngIf="user.status === userStatus.Ready">Ready</span>
                             </td>
                             <td>
-                              {{ user.street }}, {{ user.city }}, {{ user.state }}, {{ user.zip }} ({{ user.distance | number:'1.0-2' }} miles away)
+                              {{ user.street }} <br/>
+                              {{ user.city }}, {{ user.state }}, {{ user.zip }} <br />
+                              ({{ user.distance | number:'1.0-2' }} miles away)
                             </td>
                             <td>
                               <button (click)="openNote(modalDefault, user)" class="btn btn-sm btn-outline-primary"

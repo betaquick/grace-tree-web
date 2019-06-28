@@ -34,7 +34,6 @@ export class SetupDeliveryComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
-
   ngOnInit() {
     this.loading = false;
     this.delivery = new ScheduleDelivery();
@@ -83,6 +82,10 @@ export class SetupDeliveryComponent implements OnInit {
 
   isTemplateSelected(templateId) {
     return parseInt(templateId, 10) !== -1;
+  }
+
+  isSmsTemplateSelected(smsTemplateId) {
+    return parseInt(smsTemplateId, 10) !== -1;
   }
 
   scheduleDelivery() {

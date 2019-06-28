@@ -8,25 +8,12 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { CompanyService } from '../../company.service';
 import { Template } from '../../../shared/models/template-model';
+import { Placeholders } from '@betaquick/grace-tree-constants';
 import { switchMap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/if';
-
-enum Placeholders {
-  RecipientFirstName = '{{RECIPIENTFIRSTNAME}}',
-  RecipientLastName = '{{RECIPIENTLASTNAME}}',
-  RecipientPhoneNumber = '{{RECIPIENTPHONENUMBER}}',
-  RecipientAddress = '{{RECIPIENTADDRESS}}',
-  CompanyName = '{{COMPANYNAME}}',
-  CompanyAddress = '{{COMPANYADDRESS}}',
-  AdditionalRecipientText = '{{ADDITIONALRECIPIENTTEXT}}',
-  AdditionalCompanyText = '{{ADDITIONALCOMPANYTEXT}}',
-  AssignedUserFirstName = '{{ASSIGNEDUSERFIRSTNAME}}',
-  AssignedUserLastName = '{{ASSIGNEDUSERLASTNAME}}',
-  AssignedUserPhoneNumber = '{{ASSIGNEDUSERPHONENUMBER}}'
-  }
 
 @Component({
   selector: 'app-new-company-template',
