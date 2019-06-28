@@ -103,7 +103,6 @@
                                 <span *ngIf="sortingBy('distance')"><i class="fa fa-caret-{{ reversed ? 'down' : 'up' }}"></i></span>
                               Address
                             </th>
-                            <th>Zipcode</th>
                             <th>Delivery Note</th>
                             <th></th>
                           </tr>
@@ -132,9 +131,8 @@
                               <span class="label label-success" *ngIf="user.status === userStatus.Ready">Ready</span>
                             </td>
                             <td>
-                              {{ user.street }}, {{ user.city }}, {{ user.state }} ({{ user.distance | number:'1.0-2' }} miles away)
+                              {{ user.street }}, {{ user.city }}, {{ user.state }}, {{ user.zip }} ({{ user.distance | number:'1.0-2' }} miles away)
                             </td>
-                            <td>{{user.zip}}</td>
                             <td>
                               <button (click)="openNote(modalDefault, user)" class="btn btn-sm btn-outline-primary"
                                 *ngIf="user.deliveryInstruction">
