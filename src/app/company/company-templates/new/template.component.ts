@@ -8,7 +8,7 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { CompanyService } from '../../company.service';
 import { Template } from '../../../shared/models/template-model';
-import { Placeholders } from '@betaquick/grace-tree-constants';
+import { Placeholders, AvailablePlaceholders } from '@betaquick/grace-tree-constants';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
@@ -37,12 +37,23 @@ export class UpdateCompanyTemplateComponent implements OnInit {
 
   ngOnInit() {
     this.loading = false;
-    this.placeholders = EnumValues.getNamesAndValues(Placeholders);
 
     this.getTemplate()
       .subscribe(
-        template => this.template = template,
+        template => {
+          this.template = template;
+          this.getPlaceholdersForTemplate();
+        },
         () => this.router.navigate(['company', 'templates']).catch());
+  }
+
+  getPlaceholdersForTemplate() {
+    const allowedPlaceholders: string[] = AvailablePlaceholders[this.template.notificationType] || [];
+    this.placeholders = allowedPlaceholders.map(value =>
+      ({
+        name: EnumValues.getNameFromValue(Placeholders, value),
+        value
+      }));
   }
 
   public handleDragStart(evt: DragEvent) {
