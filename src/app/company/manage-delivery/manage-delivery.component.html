@@ -49,7 +49,10 @@
                               <button class="btn btn-sm btn-outline-primary">Schedule</button>
                             </a>
                           </ng-template>
+                          <button [swal]="failureSwal"
+                          class="btn btn-sm btn-danger ml-1">Close</button>
                         </td>
+                        
                       </tr>
                     </table>
                   </div>
@@ -62,3 +65,13 @@
     </div>
   </div>
 </div>
+
+<swal #failureSwal
+      [focusCancel]="true"
+      [showCancelButton]="true"
+      confirmButtonColor="#e3644c"
+      confirmButtonText="Confirm deletion"
+      text="Do you want to close this delivery?"
+      title="Are you sure?"
+      type="warning">
+</swal>

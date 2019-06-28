@@ -27,11 +27,7 @@ export class DeliveryComponent implements OnInit, OnDestroy {
   ngOnDestroy() {}
 
   emitDelivery(action, delivery) {
-    let link;
-    if (delivery.statusCode === DeliveryStatusCodes.Scheduled) {
-      link = [`/company/setup-delivery/${delivery.userId}/delivery/${delivery.deliveryId}`];
-    }
-    this.setDelivery.emit({ action, delivery, link });
+    this.setDelivery.emit({ action, delivery });
   }
 
   manageableDelivery(delivery: any): boolean {

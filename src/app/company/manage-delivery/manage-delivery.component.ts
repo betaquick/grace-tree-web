@@ -51,4 +51,7 @@ export class ManageDeliveryComponent implements OnInit {
         err => this.toastr.error(err)
       );
   }
+
+  cancelDelivery(deliveryId: number) {
+  }
 }

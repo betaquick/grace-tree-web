@@ -123,6 +123,17 @@ export class CompanyService implements OnDestroy {
       );
   }
 
+  updateDeliveryStatus(deliveryId: number, statusCode: string): Observable<any> {
+    return this.http
+      .put(`${AppConfig.API_URL}/user/deliveries/${deliveryId}`, { statusCode })
+      .pipe(
+        map(response => {
+          return _.get(response, 'body');
+        }),
+        catchError(utils.handleError)
+      );
+  }
+
   scheduleDelivery(delivery: ScheduleDelivery) {
     return this.http
       .post(`${AppConfig.API_URL}/user/company/deliveries`, delivery)
