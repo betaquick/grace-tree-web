@@ -1,9 +1,9 @@
 <ng-container *ngIf="!template">
-    <span class="text-muted font-italic">Select a template to see preview</span>
+    <span class="text-muted font-italic">Template not found.</span>
 </ng-container>
 
 <ng-container *ngIf="template">
-    <p [innerHTML]="template.content | sanitizeHtml" style="white-space: pre-wrap">
+    <p [innerHTML]="template.message | sanitizeHtml" style="white-space: pre-wrap">
     </p>
     <p><span class="font-italic text-muted">Text in {{ '{'+'{'+'}'+'}' }}  are placeholders and will be replaced</span></p>
 </ng-container>

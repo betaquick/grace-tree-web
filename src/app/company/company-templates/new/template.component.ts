@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { finalize, catchError } from 'rxjs/operators';
+import { finalize } from 'rxjs/operators';
 import { EnumValues } from 'enum-values';
 import * as _ from 'lodash';
 import { ToastrService } from 'ngx-toastr';
@@ -8,9 +8,8 @@ import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 
 import { CompanyService } from '../../company.service';
 import { Template } from '../../../shared/models/template-model';
-import { Placeholders } from '@betaquick/grace-tree-constants';
+import { Placeholders, AvailablePlaceholders } from '@betaquick/grace-tree-constants';
 import { switchMap } from 'rxjs/operators';
-import { of } from 'rxjs/observable/of';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/if';
@@ -23,7 +22,7 @@ import 'rxjs/add/observable/if';
     '../../../../assets/icon/icofont/css/icofont.scss'
   ]
 })
-export class NewCompanyTemplateComponent implements OnInit {
+export class UpdateCompanyTemplateComponent implements OnInit {
 
   loading: boolean;
   template: Template;
@@ -38,55 +37,28 @@ export class NewCompanyTemplateComponent implements OnInit {
 
   ngOnInit() {
     this.loading = false;
-    this.placeholders = EnumValues.getNamesAndValues(Placeholders);
 
-    this.activatedRoute.data.pipe(
-      switchMap((data: { edit: boolean }) => {
-        return Observable.if(
-          () => data.edit,
-          this.getTemplate(),
-          of(new Template())
-        );
-      }),
-      catchError(err => {
-        this.router.navigate(['company', 'templates']).catch();
-        return Observable.throw(err);
-      })
-    )
-      .subscribe(template => {
-        this.template = template;
-      });
+    this.getTemplate()
+      .subscribe(
+        template => {
+          this.template = template;
+          this.getPlaceholdersForTemplate();
+        },
+        () => this.router.navigate(['company', 'templates']).catch());
+  }
+
+  getPlaceholdersForTemplate() {
+    const allowedPlaceholders: string[] = AvailablePlaceholders[this.template.notificationType] || [];
+    this.placeholders = allowedPlaceholders.map(value =>
+      ({
+        name: EnumValues.getNameFromValue(Placeholders, value),
+        value
+      }));
   }
 
   public handleDragStart(evt: DragEvent) {
     evt.dataTransfer.setData('text', (evt.target as HTMLLabelElement).dataset['value']);
     evt.dataTransfer.dropEffect = 'copy';
-  }
-
-  submitForm() {
-    if (this.template.templateId) {
-      this.updateTemplate();
-    } else {
-      this.addTemplate();
-    }
-  }
-
-  addTemplate() {
-    if (this.loading === true) {
-      return;
-    }
-
-    this.loading = true;
-
-    this.companyService.addCompanyTemplate(this.template)
-    .pipe(finalize(() => this.loading = false))
-      .subscribe(
-        () => {
-          this.toastr.success('Template added successfully');
-          this.router.navigate(['/company/templates']);
-        },
-        err => this.toastr.error(err)
-      );
   }
 
   updateTemplate() {

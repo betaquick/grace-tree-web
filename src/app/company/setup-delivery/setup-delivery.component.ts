@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ParamMap, ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { UserStatus, DeliveryStatusCodes, UserDeliveryStatus } from '@betaquick/grace-tree-constants';
+import { UserStatus, DeliveryStatusCodes, UserDeliveryStatus, NotificationTypes } from '@betaquick/grace-tree-constants';
 import { finalize } from 'rxjs/operators';
 
 import { CompanyService } from '../company.service';
@@ -21,7 +21,8 @@ export class SetupDeliveryComponent implements OnInit {
   recipient: any;
   company: BusinessInfo;
   crews: User[];
-  templates: Template[];
+  recipientTemplate: Template;
+  crewTemplate: Template;
 
   delivery: ScheduleDelivery;
   deliveryId: number;
@@ -33,17 +34,10 @@ export class SetupDeliveryComponent implements OnInit {
     private toastr: ToastrService
   ) { }
 
-  get template(): Template {
-    return (this.templates || []).filter(template => template.templateId === +this.delivery.templateId)[0];
-  }
-
-  get smsTemplate(): Template {
-    return (this.templates || []).filter(template => template.templateId === +this.delivery.smsTemplateId)[0];
-  }
-
   ngOnInit() {
     this.loading = false;
     this.delivery = new ScheduleDelivery();
+    this.delivery.assignedToUserId = -1;
 
     this.route.paramMap.subscribe((params: ParamMap) => {
       const userId = parseInt(params.get('userId'), 10);
@@ -51,7 +45,7 @@ export class SetupDeliveryComponent implements OnInit {
 
       if (userId) {
         this.getDeliveryInfo(userId);
-        this.getTemplates();
+        this.getTemplate();
       } else {
         this.router.navigate(['/company/search']);
       }
@@ -72,12 +66,14 @@ export class SetupDeliveryComponent implements OnInit {
       );
   }
 
-  getTemplates() {
+  getTemplate() {
     this.companyService
       .getTemplates()
-      .subscribe(templates => this.templates = templates,
-      err => this.toastr.error(err)
-    );
+      .subscribe(templates => {
+        this.recipientTemplate = templates.filter(t => t.notificationType === NotificationTypes.UserDeliveryEmail)[0];
+        this.crewTemplate = templates.filter(t => t.notificationType === NotificationTypes.CompanyDeliveryEmail)[0];
+      },
+      err => this.toastr.error(err));
   }
 
   isDeliveryAssigned(userId) {

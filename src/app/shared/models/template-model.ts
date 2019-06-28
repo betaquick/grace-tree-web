@@ -1,8 +1,7 @@
 export class Template {
   templateId: number;
-  userId: number;
-  content: string;
+  companyId: number;
+  message: string;
   createdAt: string;
-  name: string;
-  public: boolean;
+  notificationType: string;
 }

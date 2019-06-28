@@ -96,12 +96,4 @@ export class ScheduleDelivery {
   statusCode?: string;
   userDeliveryStatus?: string;
   isAssigned?: boolean;
-  templateId?: number;
-  smsTemplateId?: number;
-
-  constructor() {
-    this.smsTemplateId = -1;
-    this.templateId = -1;
-    this.assignedToUserId = -1;
-  }
 }

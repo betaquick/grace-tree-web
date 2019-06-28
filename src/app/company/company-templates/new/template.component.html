@@ -10,7 +10,7 @@
                   <div class="col-xl-12 col-md-12">
                     <div class="card">
                       <div class="card-header">
-                        <h5>New Template</h5>
+                        <h5>Customize Template</h5>
                         <div class="card-header-right">
                         </div>
                         <div class="m-t-15">
@@ -25,13 +25,11 @@
                         </div>
                       </div>
                       <form *ngIf="template"
-                        class="md-float-material j-forms" #templateForm="ngForm" (ngSubmit)="templateForm.form.valid && submitForm()">
+                        class="md-float-material j-forms" #templateForm="ngForm" (ngSubmit)="templateForm.form.valid && updateTemplate()">
                         <div class="card-block p-3">
                           <div class="edit-info">
                             <div class="col-sm-12">
-                              <div class="alert alert-danger background-danger" *ngIf="name.dirty && name.errors?.required">Template name is required</div>
-                              <div class="alert alert-danger background-danger" *ngIf="name.dirty && name.errors?.maxlength">Template name cannot be more than 255 characters</div>
-                              <div class="alert alert-danger background-danger" *ngIf="content.dirty && content.errors?.required">Template content is required</div>
+                              <div class="alert alert-danger background-danger" *ngIf="content.dirty && content.errors?.required">Template message is required</div>
                             </div>
                             <div class="row">
                               <div class="col-lg-12">
@@ -39,19 +37,18 @@
                                   <div class="row">
                                     <div class="col-lg-12">
                                       <div class="j-row">
-                                        <div class="span6 unit">
+                                        <div class="span12 unit">
                                           <div class="input">
-                                            <input [ngClass]="{'form-control-danger': name.dirty && name.invalid}"
-                                              [ngModelOptions]="{updateOn: 'blur'}" type="text" class="form-control"
-                                              #name="ngModel" placeholder="Template Name" name="name" maxlength="255"
-                                              [(ngModel)]="template.name" required>
+                                            <span class="form-control-plaintext">
+                                              {{ template.notificationType }}
+                                            </span>
                                           </div>
                                         </div>
                                       </div>
                                       <div class="unit">
                                           <div class="input">
-                                              <textarea rows="7" cols="5" style="height: unset" placeholder="Template Content, Drag placeholders from above"
-                                              #content="ngModel" name="content" [(ngModel)]="template.content"></textarea>
+                                              <textarea rows="7" cols="5" style="height: unset" placeholder="Template Message, Drag placeholders from above"
+                                              #content="ngModel" name="message" [(ngModel)]="template.message"></textarea>
                                           </div>
                                       </div>
                                     </div>
