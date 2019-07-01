@@ -35,14 +35,50 @@
     </button>
   </div>
   <div class="app-modal-body">
-    <div class="form-group row" *ngIf="delivery.additionalRecipientText">
-      <label class="col-sm-12 col-form-label"><strong>Additional Message to Recipient</strong></label>
-      <div class="col-sm-12">{{delivery.additionalRecipientText}}</div>
+    <div class="form-group row">
+      <label class="col-sm-12 col-form-label">
+        <strong>Recipient Address</strong>
+      </label>
+      <div class="col-sm-12">
+          <div class="f-13 m-b-15">
+              {{delivery.street}}, {{delivery.city}}, {{delivery.state}}, {{delivery.zip}}
+          </div>
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-12 col-form-label">
+        <strong>Scheduled Date</strong>
+      </label>
+      <div class="col-sm-12">
+        {{ delivery.createdAt | date: 'MMMM d, y' }}
+      </div>
     </div>
 
-    <div class="form-group row" *ngIf="delivery.additionalCompanyText">
+    <div class="form-group row">
+      <label class="col-sm-12 col-form-label">
+          <strong>Crew Member</strong>
+      </label>
+      <div class="col-sm-12">
+        {{  getCrewMemberName(delivery?.assignedToUserId) }}
+      </div>
+    </div>
+    <div class="form-group row">
+      <label class="col-sm-12 col-form-label"><strong>Additional Message to Recipient</strong></label>
+      <div class="col-sm-12">
+        {{delivery.additionalRecipientText}}
+        <span class="text-muted font-italic" *ngIf="!delivery.additionalRecipientText">
+          No Message
+        </span>
+      </div>
+    </div>
+
+    <div class="form-group row">
       <label class="col-sm-12 col-form-label"><strong>Additional Message to Crew/Company</strong></label>
-      <div class="col-sm-12">{{delivery.additionalCompanyText}}</div>
+      <div class="col-sm-12">
+        {{delivery.additionalCompanyText}}
+        <span *ngIf="!delivery.additionalCompanyText"
+        class="font-italic text-muted">No Message</span>
+      </div>
     </div>
   </div>
 </app-modal-basic>
