@@ -12,7 +12,8 @@
                 <div class="card-header">
                   <h5>Manage Delivery</h5>
                 </div>
-                <div class="card-block p-3">
+                <div *ngIf="!isScheduled"
+                class="card-block p-3">
                   <div class="table-responsive">
                     <table class="table">
                       <tr>
@@ -22,9 +23,6 @@
                         <th>Date</th>
                         <th>Details</th>
                       </tr>
-                      <tr *ngIf="deliveries.length === 0">
-                        <td colspan="4" class="text-center">No deliveries yet</td>
-                      </tr>
                       <tr *ngFor="let delivery of deliveries;">
                         <td>
                           {{delivery.firstName}} {{delivery.lastName}}
@@ -33,9 +31,9 @@
                         </td>
                         <td>
                           <span class="label label-warning"
-                            *ngIf="delivery.statusCode === userDeliveryStatus.Pending">Pending</span>
+                            *ngIf="delivery.userStatus === userDeliveryStatus.Pending">Pending</span>
                           <span class="label label-success"
-                            *ngIf="delivery.statusCode === userDeliveryStatus.Accepted">Accepted</span>
+                            *ngIf="delivery.deliveryStatus === userDeliveryStatus.Accepted">Accepted</span>
                         </td>
                         <td>
                           <span class="label label-success" *ngIf="delivery.isAssigned === 1">Yes</span>
@@ -45,7 +43,7 @@
                         <td>
                           <ng-template [ngIf]="delivery.userStatus === userStatus.Ready">
                             <a [routerLink]="['/company/setup-delivery', delivery.userId, 'delivery', delivery.deliveryId]"
-                              *ngIf="delivery.statusCode === userDeliveryStatus.Accepted">
+                              *ngIf="delivery.deliveryStatus === userDeliveryStatus.Accepted">
                               <button class="btn btn-sm btn-outline-primary">Schedule</button>
                             </a>
                           </ng-template>
@@ -54,6 +52,140 @@
                       </tr>
                     </table>
                   </div>
+                </div>
+                <div *ngIf="isScheduled"
+                class="card-block">
+                <form #deliveryForm="ngForm" (ngSubmit)="updateDelivery()">
+                  <div class="col-sm-12">
+                    <div class="alert alert-danger background-danger" *ngIf="status?.dirty && !statusCode">Delivery status is required</div>
+                  </div>
+                  <div class="row card-block">
+                    <div class="col-md-12">
+                      <ul class="list-view">
+                        <li class="">
+                          <div class="card list-view-media">
+                            <div class="card-block">
+                              <div class="media">
+
+                                <div class="media-body">
+                                  <div>
+                                    <h4>Recipient</h4>
+                                    <h6 class="d-inline-block">
+                                      {{delivery.firstName}} {{delivery.lastName}}
+                                    </h6>
+                                    <span class="label label-warning" *ngIf="delivery.status === userStatus.Pause">Pause</span>
+                                    <span class="label label-success" *ngIf="delivery.status === userStatus.Ready">Ready</span>
+                                  </div>
+                                  <div class="f-13 text-muted m-b-15">
+                                    {{delivery.street}}, {{delivery.city}}, {{delivery.state}}, {{delivery.zip}}
+                                  </div>
+                                  <p *ngIf="delivery.deliveryInstruction">{{delivery.deliveryInstruction}}</p>
+                                  <div class="m-t-15">
+                                    <label class="badge badge-warning mr-1" *ngFor="let product of delivery.productDesc;">
+                                      {{product}} </label>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Scheduled Date</label>
+                    <div class="col-sm-10 col-form-label">
+                      {{ delivery.createdAt | date: 'MMMM d, y' }}
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Company - Crew</label>
+                    <div class="col-sm-10 col-form-label">
+                      {{ company?.companyName }} - {{delivery?.crewFirstName}} {{delivery?.crewLastName}}
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Additional Recipient Message</label>
+                    <div class="col-sm-10 col-form-label">
+                      {{delivery.additionalRecipientText}}
+                      <span class="font-italic text-muted" *ngIf="!delivery.additionalRecipientText">No Message</span>
+                    </div>
+                  </div>
+
+                  <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Additional Company Message</label>
+                      <div class="col-sm-10 col-form-label">
+                        {{delivery.additionalCompanyText}}
+                        <span class="font-italic text-muted" *ngIf="!delivery.additionalCompanyText">No Message</span>
+                      </div>
+                  </div>
+
+                  <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Select Delivery Status</label>
+                      <div class="col-sm-5">
+                        <select class="form-control" name="deliveryStatus"
+                        [(ngModel)]="delivery.statusCode" required>
+                          <option [value]="statusCodes.Delivered">Delivered</option>
+                          <option value="{{statusCodes.Scheduled}}">Scheduled</option>
+                          <option value="{{statusCodes.Expired}}">Expired</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <!-- Update Recipient -->
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Select Recipient</label>
+                        <div class="col-sm-5">
+                          <select class="form-control" name="userId"
+                          [(ngModel)]="delivery.userId" required>
+                              <option value="{{delivery?.userId}}">{{delivery?.firstName}} {{ delivery?.lastName }}</option>
+                              <option *ngFor="let recipient of recipients;" value="{{recipient.userId}}">
+                                {{recipient.firstName}}  {{recipient.lastName}}</option>
+                          </select>
+                        </div>
+                      </div>
+  
+                    <!-- Update Crew -->
+                    <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Select Crew</label>
+                      <div class="col-sm-5">
+                        <select class="form-control" name="assignedToUserId" 
+                        [(ngModel)]="delivery.assignedToUserId" required>
+                            <option value="{{user?.userId}}">{{user?.firstName}} {{ user?.lastName }}</option>
+                            <option *ngFor="let crew of crews;" value="{{crew.userId}}">{{crew.firstName}}
+                              {{crew.lastName}}</option>
+                        </select>
+                      </div>
+                    </div>
+
+                  <!-- Message Recipient -->
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Send Message to Recipient</label>
+                    <div class="col-sm-10 col-form-label">
+                      <textarea rows="5" cols="5" class="form-control" placeholder="Message to Recipient"
+                        name="recipientMessage" [(ngModel)]="delivery.recipientMessage"></textarea>
+                    </div>
+                  </div>
+
+                  <!-- Message Crew -->
+                  <div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Send Message to Crew</label>
+                    <div class="col-sm-10 col-form-label">
+                      <textarea rows="5" cols="5" class="form-control" placeholder="Message to Crew"
+                        name="crewMessage" [(ngModel)]="delivery.crewMessage"></textarea>
+                    </div>
+                  </div>
+
+
+                  <div class="form-group row">
+                    <label class="col-sm-2"></label>
+                    <div class="col-sm-10">
+                      <button type="submit" class="btn btn-primary m-b-0" [disabled]="loading">Update Delivery</button>
+                    </div>
+                  </div>
+                </form>
                 </div>
               </div>
             </div>
