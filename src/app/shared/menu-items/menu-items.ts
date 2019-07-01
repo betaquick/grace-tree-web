@@ -40,14 +40,6 @@ const USER_MENU = {
     name: 'Profile',
     type: 'link',
     icon: 'ti-layout-cta-right'
-  },
-  {
-    state: 'notifications',
-    main_state: 'user',
-    short_label: 'N',
-    name: 'Notifications',
-    type: 'link',
-    icon: 'ti-view-grid'
   }]
 };
 

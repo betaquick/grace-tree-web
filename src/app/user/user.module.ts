@@ -10,7 +10,6 @@ import { UserDashboardComponent } from './user-dashboard/user-dashboard.componen
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserAddressComponent } from './user-address/user-address.component';
 import { UserService } from './user.service';
-import { NotificationComponent } from './notification/notification.component';
 import { SharedModule } from '../shared/shared.module';
 import { UserDeliveriesComponent } from './user-deliveries/user-deliveries.component';
 import { UpdateDeliveryComponent } from './user-deliveries/update-delivery/update-delivery.component';
@@ -29,7 +28,6 @@ import { UpdateDeliveryComponent } from './user-deliveries/update-delivery/updat
   declarations: [
     UserDashboardComponent,
     UserProfileComponent,
-    NotificationComponent,
     UserAddressComponent,
     UserDeliveriesComponent,
     UpdateDeliveryComponent

@@ -36,43 +36,8 @@
             </a>
           </div>
         </li>
-        <!-- <li class="header-search">
-          <div id="main-search" class="main-search morphsearch-search">
-            <div class="input-group">
-              <span class="input-group-addon search-close" (click)="searchOff()">
-                <i class="ti-close"></i>
-              </span>
-              <input type="text" class="form-control" [style.width]="searchWidthString">
-              <span class="input-group-addon search-btn" (click)="searchOn()">
-                <i class="ti-search"></i>
-              </span>
-            </div>
-          </div>
-        </li> -->
       </ul>
       <ul [@mobileHeaderNavRight]="navRight" [ngClass]="navRight" class="nav-right">
-        <li (clickOutside)="notificationOutsideClick('live')" class="header-notification" [ngClass]="liveNotificationClass"
-          (click)="toggleLiveNotification()">
-          <a href="javascript:">
-            <i class="ti-bell"></i>
-            <span class="badge bg-c-pink"></span>
-          </a>
-          <ul [@notificationBottom]="liveNotification" class="show-notification">
-            <li>
-              <h6>Notifications</h6>
-              <label class="label label-danger">New</label>
-            </li>
-            <li>
-              <div class="media">
-                <div class="media-body">
-                  <h5 class="notification-user">New Delivery Alert</h5>
-                  <p class="notification-msg">From Grace Tree Services</p>
-                  <span class="notification-time">30 minutes ago</span>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </li>
         <li (clickOutside)="notificationOutsideClick('profile')" class="user-profile header-notification" [ngClass]="profileNotificationClass"
           (click)="toggleProfileNotification()">
           <a href="javascript:">
