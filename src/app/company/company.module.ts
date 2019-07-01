@@ -18,8 +18,6 @@ import { SetupDeliveryComponent } from './setup-delivery/setup-delivery.componen
 import { SharedModule } from '../shared/shared.module';
 import { ManageDeliveryComponent } from './manage-delivery/manage-delivery.component';
 import { CrewProfileComponent } from './crew-profile/crew-profile.component';
-
-import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
@@ -30,8 +28,7 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
     FormsModule,
     CustomFormsModule,
     SharedModule,
-    GooglePlaceModule,
-    SweetAlert2Module.forRoot()
+    GooglePlaceModule
   ],
   providers: [CompanyService],
   declarations: [

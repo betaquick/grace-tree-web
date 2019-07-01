@@ -1,25 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { finalize } from 'rxjs/operators';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { UserStatus, UserDeliveryStatus } from '@betaquick/grace-tree-constants';
+import { UserStatus, UserDeliveryStatus, DeliveryStatusCodes } from '@betaquick/grace-tree-constants';
 
+import { SessionStorage } from 'ngx-store';
 import { CompanyService } from '../company.service';
+import { BusinessInfo as Company } from '../../shared/models/company-model';
+import { User } from '../../shared/models/user-model';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-manage-delivery',
   templateUrl: './manage-delivery.component.html',
   styleUrls: ['./manage-delivery.component.scss']
 })
-export class ManageDeliveryComponent implements OnInit {
+export class ManageDeliveryComponent implements OnInit, OnDestroy {
 
   loading: boolean;
 
   public userStatus = UserStatus;
   public userDeliveryStatus = UserDeliveryStatus;
+  public statusCodes = DeliveryStatusCodes;
 
   deliveries = [];
+  delivery: any = {};
+  crews: User[] = [];
+  recipients: User[] = [];
   deliveryId: number;
+  isScheduled: boolean;
+
+  @SessionStorage() company: Company = new Company();
+  @SessionStorage() user: User = new User();
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +48,8 @@ export class ManageDeliveryComponent implements OnInit {
 
       if (this.deliveryId) {
         this.getDelivery(this.deliveryId);
+        this.getCompanyCrews();
+        this.getReadyUsers();
       } else {
         this.router.navigate(['/company/deliveries']);
       }
@@ -47,11 +61,56 @@ export class ManageDeliveryComponent implements OnInit {
 
     this.companyService.getDelivery(deliveryId)
       .pipe(finalize(() => this.loading = false))
-      .subscribe(deliveries => this.deliveries = deliveries,
+      .subscribe(deliveries => {
+        this.deliveries = deliveries;
+        this.delivery = deliveries[0];
+        this.isScheduled = this.deliveries[0].statusCode === DeliveryStatusCodes.Scheduled;
+      },
         err => this.toastr.error(err)
       );
   }
 
-  cancelDelivery(deliveryId: number) {
+  getCompanyCrews() {
+    this.loading = true;
+
+    this.companyService
+      .getCompanyCrews()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(crews => this.crews = crews,
+      err => this.toastr.error(err)
+    );
   }
+
+  getReadyUsers() {
+    this.companyService
+      .getReadyUsers()
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(users => this.recipients = users,
+      err => this.toastr.error(err));
+  }
+
+  updateDelivery() {
+    if (this.loading) {
+      return;
+    }
+
+    this.loading = true;
+    const data: any = _.pick(this.delivery, ['details', 'isAssigned', 'deliveryId', 'statusCode',
+    'assignedToUserId', 'userId', 'recipientMessage', 'crewMessage']);
+    data.userDeliveryStatus = this.delivery.deliveryStatus;
+    data.assignedByUserId = this.user.userId || this.delivery.assignedByUserId;
+    data.details = this.delivery.details || '';
+    this.companyService.updateDelivery(this.deliveryId, data)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        () => {
+          this.toastr.success('Delivery Updated successfully');
+          setTimeout(() =>
+            this.router.navigate(['company', 'deliveries']), 300);
+        },
+        err => this.toastr.error(err)
+      );
+  }
+
+  ngOnDestroy(): void {}
 }

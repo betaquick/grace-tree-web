@@ -38,10 +38,10 @@ export class CompanyDeliveriesComponent implements OnInit {
   }
 
   openModal(modal: any, data) {
-    const { action, delivery, link } = data;
+    const { action, delivery } = data;
 
     if (action === 'link') {
-      this.router.navigate(link || ['/company/deliveries', delivery.deliveryId]);
+      this.router.navigate(['/company/deliveries', delivery.deliveryId]);
 
       return;
     }

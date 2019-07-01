@@ -123,17 +123,6 @@ export class CompanyService implements OnDestroy {
       );
   }
 
-  updateDeliveryStatus(deliveryId: number, statusCode: string): Observable<any> {
-    return this.http
-      .put(`${AppConfig.API_URL}/user/deliveries/${deliveryId}`, { statusCode })
-      .pipe(
-        map(response => {
-          return _.get(response, 'body');
-        }),
-        catchError(utils.handleError)
-      );
-  }
-
   scheduleDelivery(delivery: ScheduleDelivery) {
     return this.http
       .post(`${AppConfig.API_URL}/user/company/deliveries`, delivery)
@@ -192,6 +181,14 @@ export class CompanyService implements OnDestroy {
     return this.http
       .put(`${AppConfig.API_URL}/user/company/deliveries/${deliveryId}`, delivery)
       .pipe(
+        catchError(utils.handleError)
+      );
+  }
+
+  getReadyUsers(): Observable<User[]> {
+    return this.http.get(`${AppConfig.API_URL}/user`)
+      .pipe(
+        map(response => response['body']['users']),
         catchError(utils.handleError)
       );
   }
