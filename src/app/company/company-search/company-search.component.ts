@@ -27,6 +27,7 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
   @ViewChild('sortableTable') set refTable(ref: ElementRef) {
     this._refTable = ref;
   }
+  @ViewChild('bulkScheduleRef') bulkScheduleRef: ElementRef;
   public DIRECTIONS = DIRECTIONS;
   mapView = true;
   userStatus = UserStatus;
@@ -109,6 +110,9 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
           this.getNewItemsInView();
         }
       }
+    }
+    if (this.bulkScheduleRef) {
+      (this.bulkScheduleRef.nativeElement as HTMLInputElement).checked = false;
     }
     this.generatePaginationLinks();
   }
@@ -215,7 +219,7 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
 
   sendRequest() {
     const users = [];
-    this.recipients.forEach(recipient => {
+    this.currentlyShowing.forEach(recipient => {
       if (recipient.selected) {
         users.push(recipient.userId);
       }

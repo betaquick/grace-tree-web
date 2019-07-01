@@ -84,7 +84,8 @@
                             <th>
                               <div class="checkbox-fade fade-in-primary">
                                 <label>
-                                  <input type="checkbox" name="selected" (change)="toggleAllUsers($event)">
+                                  <input #bulkScheduleRef
+                                  type="checkbox" name="selected" (change)="toggleAllUsers($event)">
                                   <span class="cr">
                                     <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
                                   </span>
@@ -147,7 +148,7 @@
                             </td>
                           </tr>
                         </table>
-                        <nav aria-label="Search results pagination" *ngIf="links?.length" class="d-flex">
+                        <nav aria-label="Search results pagination" *ngIf="links?.length > 1" class="d-flex">
                           <ul class="pagination justify-content-center mx-auto mb-2">
                             <li class="page-item" 
                             (click)="paginate({ direction: DIRECTIONS.Backwards })"
