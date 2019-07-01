@@ -31,3 +31,10 @@ agm-map {
 th[data-sort] {
   cursor: pointer;
 }
+
+ul.pagination li {
+  cursor: pointer;
+  &.disabled {
+    cursor: none;
+  }
+}
