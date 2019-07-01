@@ -26,6 +26,7 @@ export class SetupDeliveryComponent implements OnInit {
 
   delivery: ScheduleDelivery;
   deliveryId: number;
+  template: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -110,5 +111,10 @@ export class SetupDeliveryComponent implements OnInit {
         },
         err => this.toastr.error(err)
       );
+  }
+
+  openTemplateModal(modal: any, template): void {
+    this.template = template;
+    modal.show();
   }
 }

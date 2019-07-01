@@ -5,5 +5,8 @@
 <ng-container *ngIf="template">
     <p [innerHTML]="template.message | sanitizeHtml" style="white-space: pre-wrap">
     </p>
-    <p><span class="font-italic text-muted">Text in {{ '{'+'{'+'}'+'}' }}  are placeholders and will be replaced</span></p>
+    <p>
+        <span class="text-muted">NOTE: </span>
+        <span class="font-italic text-muted">Text in {{ '{'+'{'+'}'+'}' }}  are placeholders and will be replaced</span>
+    </p>
 </ng-container>
