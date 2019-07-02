@@ -133,19 +133,6 @@
                         </select>
                       </div>
                     </div>
-
-                    <!-- Update Recipient -->
-                    <div class="form-group row">
-                        <label class="col-sm-2 col-form-label">Select Recipient</label>
-                        <div class="col-sm-5">
-                          <select class="form-control" name="userId"
-                          [(ngModel)]="delivery.userId" required>
-                              <option value="{{delivery?.userId}}">{{delivery?.firstName}} {{ delivery?.lastName }}</option>
-                              <option *ngFor="let recipient of recipients;" value="{{recipient.userId}}">
-                                {{recipient.firstName}}  {{recipient.lastName}}</option>
-                          </select>
-                        </div>
-                      </div>
   
                     <!-- Update Crew -->
                     <div class="form-group row">

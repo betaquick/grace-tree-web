@@ -49,7 +49,6 @@ export class ManageDeliveryComponent implements OnInit, OnDestroy {
       if (this.deliveryId) {
         this.getDelivery(this.deliveryId);
         this.getCompanyCrews();
-        this.getReadyUsers();
       } else {
         this.router.navigate(['/company/deliveries']);
       }
@@ -79,14 +78,6 @@ export class ManageDeliveryComponent implements OnInit, OnDestroy {
       .subscribe(crews => this.crews = crews,
       err => this.toastr.error(err)
     );
-  }
-
-  getReadyUsers() {
-    this.companyService
-      .getReadyUsers()
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(users => this.recipients = users,
-      err => this.toastr.error(err));
   }
 
   updateDelivery() {

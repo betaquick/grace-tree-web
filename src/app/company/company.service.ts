@@ -185,14 +185,6 @@ export class CompanyService implements OnDestroy {
       );
   }
 
-  getReadyUsers(): Observable<User[]> {
-    return this.http.get(`${AppConfig.API_URL}/user`)
-      .pipe(
-        map(response => response['body']['users']),
-        catchError(utils.handleError)
-      );
-  }
-
   fetchUserData(): Observable<User> {
     return this.http.get(`${AppConfig.API_URL}/user/${this.user.userId}`)
       .pipe(
