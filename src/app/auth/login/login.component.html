@@ -28,7 +28,7 @@
               </div>
               <div class="unit" class="form-group" [ngClass]="{'has-danger': (password.dirty || loginForm.submitted) && password.invalid}">
                 <div class="input">
-                  <input [ngClass]="{'form-control-danger': (password.dirty || loginForm.submitted) && password.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                  <input [ngClass]="{'form-control-danger': (password.dirty || loginForm.submitted) && password.invalid}" [ngModelOptions]="{updateOn: 'change'}"
                     type="password" id="password" name="password" #password="ngModel" placeholder="Password" [(ngModel)]="authUser.password" required minlength="5">
                   <div class="col-form-label">
                       <div *ngIf="(password.dirty || loginForm.submitted) && password.errors?.required">Password is required</div>
@@ -55,6 +55,7 @@
               </div>
               <div class="row m-t-30">
                 <div class="col-md-12">
+                  <input type="hidden" #focusForm />
                   <button type="submit" class="btn btn-primary btn-md btn-block waves-effect text-center m-b-20"
                   [disabled]="loading">Sign in</button>
                 </div>
