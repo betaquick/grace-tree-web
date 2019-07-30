@@ -69,7 +69,7 @@ export class AddDeliveryComponent implements OnInit {
     this.deliveryInfo.userProducts = this.deliveryInfo.userProducts.map(product => {
       const  {productId, status} = product;
       return {productId, status: utils.getBoolean(status)};
-    });
+    }).filter(p => p.status);
 
     this.loading = true;
 
