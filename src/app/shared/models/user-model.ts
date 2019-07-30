@@ -33,6 +33,7 @@ export class Address {
 
   constructor() {
     this.street = '';
+    this.deliveryInstruction = '';
   }
 }
 

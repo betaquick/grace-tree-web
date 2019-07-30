@@ -17,12 +17,15 @@
                   is required</div>
                 <div class="alert alert-danger background-danger" *ngIf="(zip.dirty || deliveryForm.submitted) && zip.errors?.required">Zip
                   code is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="(deliveryInstruction.dirty || deliveryForm.submitted) && (deliveryInstruction.errors?.required || !deliveryInstruction.value?.trim().length)">
+                  Delivery Instruction is required
+                </div>
               </div>
 
                             
               <div class="row m-b-20">
                 <div class="col-md-12">
-                  <h3 class="text-left">Delivery Address</h3>
+                  <h3 class="text-left">Delivery Address and Instructions</h3>
                 </div>
               </div>
 
@@ -55,6 +58,16 @@
                     (change)="updateLatLon($event)"
                     required>
                 </div>
+              </div> 
+
+              <div class="unit">
+                <textarea
+                    [ngClass]="{'form-control-danger': deliveryInstruction.dirty && (deliveryInstruction.invalid || !deliveryInstruction.value?.trim().length)}"
+                    type="text" placeholder="Delivery Instruction" required
+                    #deliveryInstruction="ngModel" name="deliveryInstruction"
+                    [(ngModel)]="deliveryInfo.address.deliveryInstruction" rows="5">
+                  {{ deliveryInfo.address.deliveryInstruction }}
+                </textarea>
               </div> 
               
               <div class="divider gap-bottom-25"></div>
