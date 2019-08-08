@@ -18,7 +18,7 @@
                 <div class="alert alert-danger background-danger" *ngIf="(zip.dirty || deliveryForm.submitted) && zip.errors?.required">Zip
                   code is required</div>
                 <div class="alert alert-danger background-danger" *ngIf="deliveryForm.submitted && !aProductSelected">
-                  At least a product is required
+                  At least one product is required
                 </div>
                 <div class="alert alert-danger background-danger" *ngIf="(deliveryInstruction.dirty || deliveryForm.submitted) && (deliveryInstruction.errors?.required || !deliveryInstruction.value?.trim().length)">
                   Delivery Instruction is required
