@@ -65,17 +65,17 @@ export class AddDeliveryComponent implements OnInit {
     _.set(this.deliveryInfo.address, name, value);
   }
 
+  toBoolean(value: string | boolean): boolean {
+    if (typeof value === 'boolean') {
+      return value;
+    }
+    return value === 'true';
+  }
+
   addDeliveryInfo() {
     if (this.loading) {
       return;
     }
-
-    const toBoolean = (value: string | boolean): boolean => {
-      if (typeof value === 'boolean') {
-        return value;
-      }
-      return value === 'true';
-    };
 
     this.deliveryInfo.userProducts = this.deliveryInfo.userProducts.map(product => {
       const  {productId, status} = product;
@@ -84,8 +84,8 @@ export class AddDeliveryComponent implements OnInit {
 
     this.deliveryInfo.preferences = {
       ...this.deliveryInfo.preferences,
-      self_pickup: toBoolean(this.deliveryInfo.preferences.self_pickup),
-      getEstimateInfo: toBoolean(this.deliveryInfo.preferences.getEstimateInfo)
+      self_pickup: this.toBoolean(this.deliveryInfo.preferences.self_pickup),
+      getEstimateInfo: this.toBoolean(this.deliveryInfo.preferences.getEstimateInfo)
     };
 
     if (!this.deliveryInfo.preferences.getEstimateInfo) {
