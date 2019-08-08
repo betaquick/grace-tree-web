@@ -28,3 +28,8 @@ span {
 .label--unset {
   width: unset !important;
 }
+
+.required[required]::after {
+  color: red;
+  content: ' *';
+}
