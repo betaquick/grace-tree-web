@@ -20,6 +20,19 @@
                 <div class="alert alert-danger background-danger" *ngIf="(deliveryInstruction.dirty || deliveryForm.submitted) && (deliveryInstruction.errors?.required || !deliveryInstruction.value?.trim().length)">
                   Delivery Instruction is required
                 </div>
+
+                <div class="alert alert-danger background-danger" *ngIf="deliveryForm.submitted &&  !getEstimateInfo.dirty">
+                  You have not specified if you want free estimates
+                </div>
+
+                <div class="alert alert-danger background-danger" *ngIf="deliveryForm.submitted &&  !self_pickup.dirty">
+                    You have not specified if you will be available tp pick up wood
+                </div>
+
+                <div class="alert alert-danger background-danger" 
+                *ngIf="(deliveryForm.dirty || deliveryForm.submitted) && ( deliveryInfo.preferences.getEstimateInfo === 'true' && !deliveryInfo.preferences?.service_needs?.length )">
+                  Service Needs are required since you opted in.
+                </div>
               </div>
 
                             
@@ -88,6 +101,77 @@
                   <i></i>
                 </label>
               </div>
+
+              <div class="divider gap-bottom-25"></div>
+
+              <div class="row m-b-20">
+                <div class="col-md-12">
+                  <h3 class="text-left">Do you need a free, written estimate for tree service (trimming or removal or for landscaping services)?</h3>
+                </div>
+              </div>
+              <div class="unit">
+                  <label class="label--unset mr-2">
+                    No
+                    <input name="getEstimateInfo" #getEstimateInfo="ngModel"
+                    type="radio" value="false" class="ml-2" required 
+                    [(ngModel)]="deliveryInfo.preferences.getEstimateInfo">
+                  </label>
+                  
+
+                  <label class="label--unset ml-2">
+                    Yes
+                    <input name="getEstimateInfo" #getEstimateInfo="ngModel"
+                    type="radio" value="true" class="ml-2" required 
+                    [(ngModel)]="deliveryInfo.preferences.getEstimateInfo">
+                  </label>
+              </div>
+
+              <ng-container *ngIf="deliveryInfo.preferences.getEstimateInfo === 'true'">
+                <div class="row m-b-20">
+                    <div class="col-md-12">
+                      <h3 class="text-left">
+                          Please tell us a little bit about your tree service need(s).
+                      </h3>
+                    </div>
+                  </div>
+
+                <div class="unit">
+                  <textarea 
+                    [ngClass]="{ 'form-control-danger': deliveryForm.dirty &&  !serviceNeeds?.length }"
+                    style="height: unset"
+                    #serviceNeeds="ngModel"
+                    placeholder="Your Tree Service need(s)"
+                    name="service_needs" rows="10" [(ngModel)]="deliveryInfo.preferences.service_needs">
+                    {{ deliveryInfo.preferences?.service_needs }}
+                  </textarea>
+                </div>
+              </ng-container>
+
+              <div class="row m-b-20">
+                <div class="col-md-12">
+                  <h3 class="text-left">
+                      Would you like to come to the jobs to pick up wood? (With a truck and/or trailer only, please).
+                  </h3>
+                </div>
+              </div>
+  
+              <div class="unit">
+                  <label class="label--unset mr-2">
+                    No
+                    <input name="self_pickup" #self_pickup="ngModel"
+                    type="radio" value="false" class="ml-2" required 
+                    [(ngModel)]="deliveryInfo.preferences.self_pickup">
+                  </label>
+                  
+
+                  <label class="label--unset ml-2">
+                    Yes
+                    <input name="self_pickup" #self_pickup="ngModel"
+                    type="radio" value="true" class="ml-2" required 
+                    [(ngModel)]="deliveryInfo.preferences.self_pickup">
+                  </label>
+              </div>
+             
 
               <div class="j-row">
                 <div class="col-12">
