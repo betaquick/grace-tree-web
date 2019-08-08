@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="login-card card-block auth-body mr-auto ml-auto">
-          <form class="md-float-material j-forms" #deliveryForm="ngForm" (ngSubmit)="deliveryForm.form.valid && addDeliveryInfo()">
+          <form class="md-float-material j-forms" #deliveryForm="ngForm" (ngSubmit)="aProductSelected && deliveryForm.form.valid && addDeliveryInfo()">
             <div class="text-center">
               <h3 class="logo">Green Tree</h3>
             </div>
@@ -17,6 +17,9 @@
                   is required</div>
                 <div class="alert alert-danger background-danger" *ngIf="(zip.dirty || deliveryForm.submitted) && zip.errors?.required">Zip
                   code is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="deliveryForm.submitted && !aProductSelected">
+                  At least a product is required
+                </div>
                 <div class="alert alert-danger background-danger" *ngIf="(deliveryInstruction.dirty || deliveryForm.submitted) && (deliveryInstruction.errors?.required || !deliveryInstruction.value?.trim().length)">
                   Delivery Instruction is required
                 </div>
@@ -87,7 +90,7 @@
               
               <div class="row m-b-20">
                 <div class="col-md-12">
-                  <h3 class="text-left">Product selection</h3>
+                  <h3 class="text-left required" required>Product selection</h3>
                 </div>
               </div>
               

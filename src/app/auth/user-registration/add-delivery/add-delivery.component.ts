@@ -52,6 +52,10 @@ export class AddDeliveryComponent implements OnInit {
       });
   }
 
+  get aProductSelected(): boolean {
+    return (this.deliveryInfo.userProducts || []).some(p => p.status);
+  }
+
   setUserAddress(address: PlacesAddress) {
     this.deliveryInfo.address = addressUtils.convertAddress(address);
   }
@@ -82,12 +86,6 @@ export class AddDeliveryComponent implements OnInit {
       return {productId, status: utils.getBoolean(status)};
     });
 
-    this.deliveryInfo.preferences = {
-      ...this.deliveryInfo.preferences,
-      self_pickup: this.toBoolean(this.deliveryInfo.preferences.self_pickup),
-      getEstimateInfo: this.toBoolean(this.deliveryInfo.preferences.getEstimateInfo)
-    };
-
     if (!this.deliveryInfo.preferences.getEstimateInfo) {
       this.deliveryInfo.preferences.service_needs = null;
     }
@@ -95,7 +93,11 @@ export class AddDeliveryComponent implements OnInit {
     this.loading = true;
 
     this.authService.addDeliveryInfo({...this.deliveryInfo,
-      userProducts: this.deliveryInfo.userProducts.filter(p => p.status)})
+      preferences: {
+        ...this.deliveryInfo.preferences,
+        self_pickup: this.toBoolean(this.deliveryInfo.preferences.self_pickup),
+        getEstimateInfo: this.toBoolean(this.deliveryInfo.preferences.getEstimateInfo)
+      }})
       .pipe(finalize(() => this.loading = false))
       .subscribe(
         () => this.router.navigate(['/user-registration/agreement']),

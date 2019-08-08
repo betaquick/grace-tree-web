@@ -19,7 +19,7 @@
           </div>
         </div>
       </div>
-      <a href="dashboard.html">
+      <a routerLink="{{ homeUrl }}">
         <h3 class="logo">Grace Tree</h3>
       </a>
       <a class="mobile-options">
@@ -37,6 +37,7 @@
           </div>
         </li>
       </ul>
+      
       <ul [@mobileHeaderNavRight]="navRight" [ngClass]="navRight" class="nav-right">
         <li (clickOutside)="notificationOutsideClick('profile')" class="user-profile header-notification" [ngClass]="profileNotificationClass"
           (click)="toggleProfileNotification()">

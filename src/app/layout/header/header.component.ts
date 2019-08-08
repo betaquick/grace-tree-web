@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {animate, AUTO_STYLE, state, style, transition, trigger} from '@angular/animations';
 
+import { UserTypes } from '@betaquick/grace-tree-constants';
 import { User } from '../../shared/models/user-model';
 
 @Component({
@@ -56,10 +57,14 @@ export class HeaderComponent implements OnInit {
   public navRight: string;
   public searchWidth: number;
   public searchWidthString: string;
+  public homeUrl = '/';
 
   constructor() {}
 
   ngOnInit() {
+    if (this.user.userType) {
+      this.homeUrl = (this.user.userType === UserTypes.TreeAdmin ? '/company' : '/user');
+    }
     this.liveNotification = 'an-off';
     this.profileNotification = 'an-off';
 
