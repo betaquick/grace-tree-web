@@ -35,6 +35,10 @@ export class AddDeliveryComponent implements OnInit {
     this.loading = false;
     this.deliveryInfo = new DeliveryInfo();
     this.deliveryInfo.userProducts = [];
+    // @ts-ignore
+    this.deliveryInfo.preferences = {
+      service_needs: null
+    };
     this.deliveryInfo.address = new Address();
     this.deliveryInfo.address.state = this.stateArray[0].abbr;
 
@@ -66,14 +70,32 @@ export class AddDeliveryComponent implements OnInit {
       return;
     }
 
+    const toBoolean = (value: string | boolean): boolean => {
+      if (typeof value === 'boolean') {
+        return value;
+      }
+      return value === 'true';
+    };
+
     this.deliveryInfo.userProducts = this.deliveryInfo.userProducts.map(product => {
       const  {productId, status} = product;
       return {productId, status: utils.getBoolean(status)};
-    }).filter(p => p.status);
+    });
+
+    this.deliveryInfo.preferences = {
+      ...this.deliveryInfo.preferences,
+      self_pickup: toBoolean(this.deliveryInfo.preferences.self_pickup),
+      getEstimateInfo: toBoolean(this.deliveryInfo.preferences.getEstimateInfo)
+    };
+
+    if (!this.deliveryInfo.preferences.getEstimateInfo) {
+      this.deliveryInfo.preferences.service_needs = null;
+    }
 
     this.loading = true;
 
-    this.authService.addDeliveryInfo(this.deliveryInfo)
+    this.authService.addDeliveryInfo({...this.deliveryInfo,
+      userProducts: this.deliveryInfo.userProducts.filter(p => p.status)})
       .pipe(finalize(() => this.loading = false))
       .subscribe(
         () => this.router.navigate(['/user-registration/agreement']),

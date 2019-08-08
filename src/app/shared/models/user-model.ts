@@ -77,6 +77,12 @@ export class RegisterUser {
   userType?: string;
 }
 
+export class UserPreferences {
+  getEstimateInfo: boolean;
+  service_needs: string;
+  self_pickup: boolean;
+}
+
 export class UserProduct extends Product {
   userProductId?: number;
   userId?: number;
@@ -86,6 +92,7 @@ export class UserProduct extends Product {
 export class DeliveryInfo {
   userProducts: Array<UserProduct>;
   address: Address;
+  preferences?: UserPreferences;
 }
 
 export class ScheduleDelivery {
