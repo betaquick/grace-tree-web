@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="alert alert-danger background-danger" 
-                *ngIf="(deliveryForm.dirty || deliveryForm.submitted) && ( deliveryInfo.preferences.getEstimateInfo === 'true' && !deliveryInfo.preferences?.service_needs?.length )">
+                *ngIf="(deliveryForm.dirty || deliveryForm.submitted) && ( toBoolean(deliveryInfo.preferences.getEstimateInfo) && !deliveryInfo.preferences?.service_needs?.length )">
                   Service Needs are required since you opted in.
                 </div>
               </div>
@@ -126,7 +126,7 @@
                   </label>
               </div>
 
-              <ng-container *ngIf="deliveryInfo.preferences.getEstimateInfo === 'true'">
+              <ng-container *ngIf="toBoolean(deliveryInfo.preferences.getEstimateInfo)">
                 <div class="row m-b-20">
                     <div class="col-md-12">
                       <h3 class="text-left">
