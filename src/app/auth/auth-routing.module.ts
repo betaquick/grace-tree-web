@@ -33,7 +33,8 @@ const routes: Routes = [
       { path: 'add-delivery', component: AddDeliveryComponent },
       { path: 'agreement', component: AgreementComponent },
       { path: 'verification', component: UserVerificationComponent },
-      { path: 'verification/:verifyType/:token', component: UserVerificationComponent }
+      { path: 'verification/:verifyType/:token', component: UserVerificationComponent },
+      { path: '**', redirectTo: '' }
     ]
   },
   {
@@ -43,7 +44,8 @@ const routes: Routes = [
       { path: '', component: CompanyRegistrationComponent },
       { path: 'add-business', component: AddBusinessComponent },
       { path: 'verification', component: CompanyVerificationComponent },
-      { path: 'verification/:verifyType/:token', component: CompanyVerificationComponent }
+      { path: 'verification/:verifyType/:token', component: CompanyVerificationComponent },
+      { path: '**', redirectTo: '' }
     ]
   }
 ];
