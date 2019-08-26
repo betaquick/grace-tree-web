@@ -25,38 +25,38 @@
               <div>
                 <div class="input-group">
                   <span class="input-group-prepend">
-                    <label class="input-group-text red" *ngIf="!email.isVerified">
+                    <label class="input-group-text red" *ngIf="!email?.isVerified">
                       <span>Not verified</span>
                     </label>
-                    <label class="input-group-text green" *ngIf="email.isVerified">
+                    <label class="input-group-text green" *ngIf="email?.isVerified">
                       <span>Verified</span>
                     </label>
                   </span>
                   <input class="form-control" [(ngModel)]="email.emailAddress" required />
-                  <button *ngIf="!email.isVerified" class="input-group-addon btn btn-primary" (click)="verifyEmail()">
+                  <button *ngIf="!email?.isVerified" class="input-group-addon btn btn-primary" (click)="verifyEmail()">
                     <span class="">Resend Link</span>
                   </button>
                 </div>
 
                 <div class="input-group">
                   <span class="input-group-prepend">
-                    <label class="input-group-text red" *ngIf="!phone.isVerified">
+                    <label class="input-group-text red" *ngIf="!phone?.isVerified">
                       <span>Not verified</span>
                     </label>
-                    <label class="input-group-text green" *ngIf="phone.isVerified">
+                    <label class="input-group-text green" *ngIf="phone?.isVerified">
                       <span>Verified</span>
                     </label>
                   </span>
                   <input class="form-control" [(ngModel)]="phone.phoneNumber" required>
-                  <button *ngIf="!phone.isVerified" class="input-group-addon btn btn-primary" (click)="verifyPhone()">
+                  <button *ngIf="!phone?.isVerified" class="input-group-addon btn btn-primary" (click)="verifyPhone()">
                     <span class="">Resend Link</span>
                   </button>
                 </div>
                   
               </div>
                 
-              <p class="m-t-25 text-primary" *ngIf="email.isVerified && phone.isVerified">Your account has been fully verified, which means you can
-                now proceed to the <a [routerLink]="['/login']">login page</a></p>
+              <p class="m-t-25" *ngIf="email?.isVerified && phone?.isVerified">Your account has been fully verified, which means you can
+                now proceed to the <a [routerLink]="['/login']" class="text-primary">login page</a></p>
             </div>
           </div>
         </div>

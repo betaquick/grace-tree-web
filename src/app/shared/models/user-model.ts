@@ -13,12 +13,22 @@ export class Phone {
   primary: boolean;
   phoneType?: string;
   isVerified?: boolean;
+  constructor() {
+    this.phoneNumber = '';
+    this.primary = true;
+    this.isVerified = false;
+  }
 }
 
 export class Email {
   emailAddress: string;
   primary: boolean;
   isVerified?: boolean;
+  constructor() {
+    this.emailAddress = '';
+    this.primary = true;
+    this.isVerified = false;
+  }
 }
 
 export class Address {

@@ -3,10 +3,10 @@ import { finalize } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { VerificationTypes } from '@betaquick/grace-tree-constants';
 import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { AuthService } from '../../auth.service';
-import { Email, Phone } from '../../../shared/models/user-model';
+import { Email, Phone, User } from '../../../shared/models/user-model';
 
 @Component({
   selector: 'app-user-verification',
@@ -20,20 +20,30 @@ export class UserVerificationComponent implements OnInit {
   loading: boolean;
   email: Email;
   phone: Phone;
+  user: User;
 
   constructor(
     private authService: AuthService,
     private activatedRoute: ActivatedRoute,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.loading = false;
-    const {user} = this.authService;
+    this.user = this.authService.user;
 
-    if (user) {
-      this.email = _.find(user.emails, e => e.primary);
-      this.phone = _.find(user.phones, p => p.primary);
+    if (this.user) {
+      this.email = _.find(this.user.emails, e => e.primary);
+      this.phone = _.find(this.user.phones, p => p.primary);
+    }
+
+    if (!this.email) {
+      this.email = new Email();
+    }
+
+    if (!this.phone) {
+      this.phone = new Phone();
     }
 
     this.activatedRoute.params.subscribe((params: Params) => {
@@ -53,8 +63,8 @@ export class UserVerificationComponent implements OnInit {
       .subscribe(
         response => {
           const { user } = response;
-          this.email = user.email;
-          this.phone = user.phone;
+          this.email = user.email || new Email();
+          this.phone = user.phone || new Phone();
 
           if (verifyType === VerificationTypes.Email) {
             this.toastr.success('Your email address was successfully verified.');
@@ -62,7 +72,12 @@ export class UserVerificationComponent implements OnInit {
             this.toastr.success('Your phone number was successfully verified.');
           }
         },
-        err => this.toastr.error(err)
+        err => {
+          if (_.isEmpty(this.user)) {
+            this.toastr.error(err);
+            this.router.navigate(['/']);
+          }
+        }
       );
   }
 
