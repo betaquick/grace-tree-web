@@ -16,7 +16,6 @@ export class Phone {
   constructor() {
     this.phoneNumber = '';
     this.primary = true;
-    this.isVerified = false;
   }
 }
 
@@ -27,7 +26,6 @@ export class Email {
   constructor() {
     this.emailAddress = '';
     this.primary = true;
-    this.isVerified = false;
   }
 }
 
