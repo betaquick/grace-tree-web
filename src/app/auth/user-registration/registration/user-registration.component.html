@@ -21,13 +21,19 @@
               <div class="col-sm-12">
                 <div class="alert alert-danger background-danger" *ngIf="(firstName.dirty || registerForm.submitted) && firstName.errors?.required">First name is required</div>
                 <div class="alert alert-danger background-danger" *ngIf="(lastName.dirty || registerForm.submitted) && lastName.errors?.required">Last name is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="(number.dirty || registerForm.submitted) && number.errors?.required">Phone number is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="(number.dirty || registerForm.submitted) && number.errors?.phone">Phone number is not valid</div>
+                <div class="alert alert-danger background-danger" *ngIf="(home_number.dirty || registerForm.submitted) && home_number.errors?.required">Home Phone number is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="(home_number.dirty || registerForm.submitted) && home_number.errors?.phone">Home Phone number is not valid</div>
+                <div class="alert alert-danger background-danger" *ngIf="(cell_number.dirty || registerForm.submitted) && cell_number.errors?.required">Cell Phone number is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="(cell_number.dirty || registerForm.submitted) && cell_number.errors?.phone">Cell Phone number is not valid</div>
+                <div class="alert alert-danger background-danger" *ngIf="(work_number.dirty || registerForm.submitted) && work_number.errors?.required">Work Phone number is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="(work_number.dirty || registerForm.submitted) && work_number.errors?.phone">Work Phone number is not valid</div>
                 <div class="alert alert-danger background-danger" *ngIf="(password.dirty || registerForm.submitted) && password.errors?.required">Password is required</div>
                 <div class="alert alert-danger background-danger" *ngIf="(password.dirty || registerForm.submitted) && password.errors?.minlength">Password is too short</div>
                 <div class="alert alert-danger background-danger" *ngIf="(confirmPassword.dirty || registerForm.submitted) && confirmPassword.errors?.equalTo">Password is not the same</div>
-                <div class="alert alert-danger background-danger" *ngIf="(email.dirty || registerForm.submitted) && email.errors?.required">Email is required</div>
-                <div class="alert alert-danger background-danger" *ngIf="(email.dirty || registerForm.submitted) && email.errors?.email">Email is invalid</div>
+                <div class="alert alert-danger background-danger" *ngIf="(email.dirty || registerForm.submitted) && email.errors?.required">Primary Email is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="(email.dirty || registerForm.submitted) && email.errors?.email">Primary Email is invalid</div>
+                <div class="alert alert-danger background-danger" *ngIf="(secondaryemail.dirty || registerForm.submitted) && secondaryemail.errors?.required">Secondary Email is required</div>
+                <div class="alert alert-danger background-danger" *ngIf="(secondaryemail.dirty || registerForm.submitted) && secondaryemail.errors?.email">Secondary Email is invalid</div>
               </div>
               <!-- start name -->
               <!-- start name -->
@@ -57,9 +63,36 @@
                 </div>
                 <div class="span6 unit">
                   <div class="input">
-                    <input [ngClass]="{'form-control-danger': number.dirty && number.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
-                      type="text" class="form-control" #number="ngModel" id="number" name="number" placeholder="Primary Phone Number"
+                    <input [ngClass]="{'form-control-danger': secondaryemail.dirty && secondaryemail.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                      type="email" name="secondaryemail" #secondaryemail="ngModel" placeholder="Secondary Email" [(ngModel)]="user.emails[1].emailAddress"
+                      required email>
+                  </div>
+                </div>
+              </div>
+              <div class="j-row">
+                <div class="span6 unit">
+                  <div class="input">
+                    <input [ngClass]="{'form-control-danger': home_number.dirty && home_number.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                      type="text" class="form-control" #home_number="ngModel" id="home_number" name="number" placeholder="Home Phone Number"
                       [(ngModel)]="user.phones[0].phoneNumber" required phone="US">
+                  </div>
+                </div>
+
+                <div class="span6 unit">
+                  <div class="input">
+                    <input [ngClass]="{'form-control-danger': cell_number.dirty && cell_number.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                      type="text" class="form-control" #cell_number="ngModel" name="cell_number" placeholder="Cell Phone Number"
+                      [(ngModel)]="user.phones[1].phoneNumber" required phone="US">
+                  </div>
+                </div>
+              </div>
+              <div class="">
+
+                <div class="unit">
+                  <div class="input">
+                    <input [ngClass]="{'form-control-danger': work_number.dirty && work_number.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                      type="text" class="form-control" #work_number="ngModel" name="work_number" placeholder="Work Phone Number"
+                      [(ngModel)]="user.phones[2].phoneNumber" required phone="US">
                   </div>
                 </div>
               </div>

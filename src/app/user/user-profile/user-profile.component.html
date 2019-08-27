@@ -38,15 +38,19 @@
                                       <th scope="row">Primary Phone number</th>
                                       <td>{{user?.phones[0]?.phoneNumber || 'N/A' }}</td>
                                     </tr>
-                                    <tr *ngIf="user.phones.length > 1">
-                                      <th scope="row">Secondary Phone number</th>
+                                    <tr>
+                                      <th scope="row">Cell Phone number</th>
                                       <td>{{user?.phones[1]?.phoneNumber}}</td>
+                                    </tr>
+                                    <tr>
+                                      <th scope="row">Work Phone number</th>
+                                      <td>{{user?.phones[2]?.phoneNumber}}</td>
                                     </tr>
                                     <tr>
                                       <th scope="row">Primary Email Address</th>
                                       <td>{{user?.emails[0]?.emailAddress || 'N/A'}}</td>
                                     </tr>
-                                    <tr *ngIf="user.emails.length > 1">
+                                    <tr>
                                       <th scope="row">Secondary Email Address</th>
                                       <td>{{user?.emails[1]?.emailAddress}}</td>
                                     </tr>
@@ -83,9 +87,21 @@
                                     Phone number is required</div>
                                   <div class="alert alert-danger background-danger" *ngIf="primaryNum.dirty && primaryNum.errors?.phone">Primary
                                     Phone number is not valid</div>
+                                  <div class="alert alert-danger background-danger" *ngIf="secondaryNum.dirty && secondaryNum.errors?.phone">Cell
+                                    Phone number is not valid</div>
+                                  <div class="alert alert-danger background-danger" *ngIf="secondaryNum.dirty && secondaryNum.errors?.required">Cell
+                                    Phone number is required</div>
+                                  <div class="alert alert-danger background-danger" *ngIf="tertiaryNum.dirty && tertiaryNum.errors?.phone">Work
+                                    Phone number is not valid</div>
+                                  <div class="alert alert-danger background-danger" *ngIf="tertiaryNum.dirty && tertiaryNum.errors?.required">Work
+                                    Phone number is required</div>
                                   <div class="alert alert-danger background-danger" *ngIf="primaryEmail.dirty && primaryEmail.errors?.required">Primary
                                     Email is required</div>
                                   <div class="alert alert-danger background-danger" *ngIf="primaryEmail.dirty && primaryEmail.errors?.email">Primary
+                                    Email is invalid</div>
+                                  <div class="alert alert-danger background-danger" *ngIf="secondaryEmail.dirty && secondaryEmail.errors?.required">Secondary
+                                    Email is required</div>
+                                  <div class="alert alert-danger background-danger" *ngIf="secondaryEmail.dirty && secondaryEmail.errors?.email">Secondary
                                     Email is invalid</div>
                                   <div class="alert alert-danger background-danger" *ngIf="errorMessage">{{errorMessage}}</div>
                                 </div>
@@ -112,14 +128,22 @@
                                         <input [ngClass]="{'form-control-danger': primaryNum.dirty && primaryNum.invalid}"
                                           [ngModelOptions]="{updateOn: 'blur'}" type="text" class="form-control" name="primaryNum"
                                           placeholder="Primary Phone Number" #primaryNum="ngModel" [(ngModel)]="user.phones[0].phoneNumber"
-                                          required>
+                                          required required phone="US">
                                       </div>
                                     </div>
                                     <div class="span6 unit">
                                       <div class="input">
-                                        <input type="text" class="form-control" name="secondaryNum" placeholder="Secondary Phone Number"
-                                          [(ngModel)]="user.phones[1].phoneNumber">
+                                        <input type="text" class="form-control" name="secondaryNum" placeholder="Cell Phone Number"
+                                          [(ngModel)]="user.phones[1].phoneNumber" required phone="US" #secondaryNum="ngModel"
+                                          [ngClass]="{'form-control-danger': secondaryNum.dirty && secondaryNum.invalid}">
                                       </div>
+                                    </div>
+                                  </div>
+                                  <div class="unit">
+                                    <div class="input">
+                                      <input type="text" class="form-control" name="tertiaryNum" placeholder="Work Phone Number"
+                                        [(ngModel)]="user.phones[2].phoneNumber" required phone="US" #tertiaryNum="ngModel"
+                                        [ngClass]="{'form-control-danger': tertiaryNum.dirty && tertiaryNum.invalid}">
                                     </div>
                                   </div>
                                   <div class="unit">
@@ -127,13 +151,14 @@
                                       <input [ngClass]="{'form-control-danger': primaryEmail.dirty && primaryEmail.invalid}"
                                         [ngModelOptions]="{updateOn: 'blur'}" type="email" name="primaryEmail"
                                         #primaryEmail="ngModel" placeholder="Primary Email Address" [(ngModel)]="user.emails[0].emailAddress"
-                                        required>
+                                        required email>
                                     </div>
                                   </div>
                                   <div class="unit">
                                     <div class="input">
                                       <input type="email" id="secondaryEmail" name="secondaryEmail" placeholder="Secondary Email Address"
-                                        [(ngModel)]="user.emails[1].emailAddress">
+                                        [(ngModel)]="user.emails[1].emailAddress" required email #secondaryEmail="ngModel"
+                                        [ngClass]="{'form-control-danger': secondaryEmail.dirty && secondaryEmail.invalid}">
                                     </div>
                                   </div>
                                   <!-- end name email -->

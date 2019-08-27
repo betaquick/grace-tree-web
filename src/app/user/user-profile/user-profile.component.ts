@@ -41,6 +41,18 @@ export class UserProfileComponent implements OnInit, OnDestroy {
     this.userProducts = [new UserProduct()];
     this.primaryAddress = _.head(_.get(this.user, 'addresses'));
 
+    if (this.user.phones.length < 3) {
+      this.user.phones.push({ ...(new Phone()), phoneType: PhoneTypes.MOBILE });
+    }
+
+    if (this.user.phones.length < 3) {
+      this.user.phones.push({ ...(new Phone()), phoneType: PhoneTypes.WORK });
+    }
+
+    if (this.user.emails.length < 2) {
+      this.user.emails.push(new Email());
+    }
+
     this.getUserProducts();
   }
 

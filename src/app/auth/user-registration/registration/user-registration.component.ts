@@ -26,8 +26,10 @@ export class UserRegistrationComponent implements OnInit {
   ngOnInit() {
     this.loading = false;
     this.user = new RegisterUser();
-    this.user.emails = [new Email()];
-    this.user.phones = [new Phone()];
+    this.user.emails = [new Email(), { ...(new Email()), primary: false }];
+    this.user.phones = [{...new Phone(), phoneType: PhoneTypes.HOME },
+      { ...(new Phone()), primary: false, phoneType: PhoneTypes.MOBILE },
+      { ...(new Phone()), primary: false, phoneType: PhoneTypes.WORK }];
   }
 
   register() {
@@ -40,7 +42,6 @@ export class UserRegistrationComponent implements OnInit {
     }
     this.user.emails[0].primary = true;
     this.user.phones[0].primary = true;
-    this.user.phones[0].phoneType = PhoneTypes.MOBILE;
     this.user.userType = UserTypes.General;
 
     this.loading = true;
