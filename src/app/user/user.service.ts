@@ -48,6 +48,13 @@ export class UserService implements OnDestroy {
       );
   }
 
+  deactivateAccount(userId: number) {
+    return this.http.delete(`${AppConfig.API_URL}/user/${userId}`)
+      .pipe(
+        catchError(utils.handleError)
+      );
+  }
+
   getUserProducts(): Observable<UserProduct[]> {
     if (this.userProducts) {
       return of(this.userProducts);

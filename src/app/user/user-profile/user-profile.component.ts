@@ -5,7 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 
 import { Email, Phone, RegisterUser, UserProduct, Address } from '../../shared/models/user-model';
 import { UserService } from '../user.service';
+import { AuthService } from '../../auth/auth.service';
 import { PhoneTypes } from '@betaquick/grace-tree-constants';
+import { Router } from '@angular/router';
 import { utils } from '../../shared/utils';
 import { SessionStorage } from 'ngx-store';
 
@@ -30,6 +32,8 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   constructor(
     private userService: UserService,
+    private auth: AuthService,
+    private router: Router,
     private toastr: ToastrService
   ) { }
 
@@ -171,6 +175,24 @@ export class UserProfileComponent implements OnInit, OnDestroy {
         () => {
           this.toastr.success('Delivery preference updated successfully');
           this.isPreferenceEdit = false;
+        },
+        err => this.toastr.error(err)
+      );
+  }
+
+  deactivateUser() {
+    if (this.loading) {
+      return;
+    }
+
+    this.loading = true;
+
+    this.userService.deactivateAccount(this.auth.user.userId)
+      .pipe(finalize(() => this.loading = false))
+      .subscribe(
+        () => {
+          this.auth.logout();
+          this.router.navigate(['/']);
         },
         err => this.toastr.error(err)
       );
