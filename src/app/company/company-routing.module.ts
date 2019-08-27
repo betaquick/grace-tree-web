@@ -20,7 +20,7 @@ const routes: Routes = [{
   path: 'company',
   component: ContainerComponent,
   canActivate: [AuthGuard, RoleGuard],
-  data: {roles: [UserTypes.TreeAdmin]},
+  data: {roles: [UserTypes.TreeAdmin, UserTypes.Crew]},
   children: [{
     path: '',
     children: [
