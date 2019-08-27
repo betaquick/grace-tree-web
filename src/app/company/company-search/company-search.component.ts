@@ -31,7 +31,7 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
   public DIRECTIONS = DIRECTIONS;
   mapView = true;
   userStatus = UserStatus;
-  currentSortMethod: SortKey = 'status';
+  currentSortMethod: SortKey = 'distance';
   reversed = false;
 
   // initial center position for the map
@@ -140,7 +140,7 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
           if (_.size(data.users) === 0) {
             this.toastr.warning('No users found.');
           }
-          this.recipients = [...data.users].sort((a, b) => a['status'] === UserStatus.Ready ? -1 : 1);
+          this.recipients = [...data.users];
           this.paginate(null);
           this.lat = data.coordinates.lat;
           this.lng = data.coordinates.lng;
@@ -167,10 +167,11 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
     } else {
       this.currentSortMethod = sortKey as SortKey;
       this.reversed = false;
-      if (['distance', 'status'].indexOf(sortKey) > -1) {
+      if (['distance'].indexOf(sortKey) > -1) {
         this.recipients.sort((a, b) => a[sortKey] > b[sortKey] ? 1 : -1);
       }
     }
+    this.getNewItemsInView();
   }
 
   sortingBy(key: string | SortKey): boolean {
