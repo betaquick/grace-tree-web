@@ -32,7 +32,7 @@
                                     <div>
                                       <h4>Recipient</h4>
                                       <h6 class="d-inline-block">
-                                        {{recipient.firstName}} {{recipient.lastName}}
+                                        {{recipient.profile?.firstName}} {{recipient.profile?.lastName}}
                                       </h6>
                                       <span class="label label-warning" *ngIf="recipient.status === userStatus.Pause">Pause</span>
                                       <span class="label label-success" *ngIf="recipient.status === userStatus.Ready">Ready</span>
@@ -40,7 +40,13 @@
                                     <div class="f-13 text-muted m-b-15">
                                       {{recipient.street}}, {{recipient.city}}, {{recipient.state}}, {{recipient.zip}}
                                     </div>
-                                    <p *ngIf="recipient.deliveryInstruction">{{recipient.deliveryInstruction}}</p>
+                                    <div class="f-13 m-b-15">
+                                      Email(s): <span *ngFor="let email of recipient.emails; let isLast = last" class="text-muted"> {{ email?.emailAddress }} <span *ngIf="email?.primary">(primary)</span> {{ isLast ? '' : ', ' }}</span>
+                                    </div>
+                                    <div class="f-13 m-b-15">
+                                      Phone(s): <span *ngFor="let phone of recipient.phones; let isLast = last" class="text-muted"> {{ phone?.phoneNumber }} <span *ngIf="phone?.phoneNumber">(primary)</span>  {{ isLast ? '' : ', ' }}</span>
+                                    </div>
+                                    <p *ngIf="recipient.deliveryInstruction">{{recipient.deliveryInstruction || 'No Delivery Instruction'}}</p>
                                     <div class="m-t-15">
                                       <label class="badge badge-warning" *ngFor="let product of recipient.products;">
                                         {{product.productDesc}} </label>
