@@ -31,7 +31,7 @@ export class AgreementComponent implements OnInit {
   }
 
   acceptAgreement() {
-    if (this.loading) {
+    if (this.loading || !this.acceptAcceptment) {
       return;
     }
     this.loading = true;
