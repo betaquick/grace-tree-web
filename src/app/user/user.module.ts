@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { CustomFormsModule } from 'ng5-validation';
 import { UiSwitchModule } from 'ngx-ui-switch';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 import { UserRoutingModule } from './user-routing.module';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
@@ -22,7 +23,12 @@ import { UpdateDeliveryComponent } from './user-deliveries/update-delivery/updat
     CustomFormsModule,
     UiSwitchModule,
     SharedModule,
-    GooglePlaceModule
+    GooglePlaceModule,
+    SweetAlert2Module.forRoot({
+      buttonsStyling: false,
+      customClass: 'modal-content',
+      cancelButtonClass: 'btn'
+    })
   ],
   providers: [UserService],
   declarations: [

@@ -292,8 +292,53 @@
 
           <app-user-profile-address [address]="primaryAddress"></app-user-profile-address>
 
+          <div class="row">
+            <div class="col-xl-12 col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h5 class="card-header-text text-danger">Deactivate Account</h5>
+                </div>
+                <div class="card-block">
+                  <div class="view-info">
+                    <div class="row">
+                      <div class="col-12">
+                        <p>
+                          Deactivating your account will render you unable to log in, you will also no longer appear in searches.
+                        </p>
+                        <button class="btn btn-danger waves-effect waves-light m-r-20" 
+                        [disabled]="loading"
+                        [swal]="deactivateSwal"
+                        (confirm)="deactivateUser()"
+                        >
+                            <i class="icofont icofont-trash"></i> Deactivate?
+                        </button>
+                      </div>
+                      <!-- end of col-lg-12 -->
+                    </div>
+                    <!-- end of row -->
+                  </div>
+                  <!-- end of view-info -->
+                  
+                </div>
+                <!-- end of card-block -->
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<swal
+  #deactivateSwal
+  title="Deactivate account?"
+  text="This cannot be undone"
+  type="warning"
+  confirmButtonClass="btn btn-danger mr-2"
+  confirmButtonColor="red"
+  confirmButtonText="Confirm deactivation"
+  [showCancelButton]="true"
+  [focusCancel]="true">
+</swal>
