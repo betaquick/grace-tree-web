@@ -8,7 +8,6 @@ exports.utils = {
             return throw_1._throw('Something went wrong: ' + _.get(error, 'error.message', 'Unknown'));
         }
         // The backend returned an unsuccessful response code.
-        console.error(("Backend returned code " + error.status + ", ") + "body was: ", error.error);
         var body = _.get(error, 'error.body');
         var errorMsg = (typeof body === 'string') ? body : 'Something went wrong. Please contact support!';
         // return an observable with a user-facing error message

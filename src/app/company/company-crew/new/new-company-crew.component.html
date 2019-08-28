@@ -32,6 +32,10 @@
                           is required</div>
                         <div class="alert alert-danger background-danger" *ngIf="email.dirty && email.errors?.email">Email
                           is invalid</div>
+                        <div class="alert alert-danger background-danger" *ngIf="phone.dirty && phone.errors?.required">Phone Number
+                          is required</div>
+                        <div class="alert alert-danger background-danger" *ngIf="phone.dirty && phone.errors?.phone">Phone Number
+                          is invalid</div>
                       </div>
                       <div class="row">
                         <div class="col-lg-12">
@@ -56,11 +60,20 @@
                                     </div>
                                   </div>
                                 </div>
-                                <div class="unit">
-                                  <div class="input">
-                                    <input [ngClass]="{'form-control-danger': email.dirty && email.invalid}"
-                                      [ngModelOptions]="{updateOn: 'blur'}" type="email" id="email" name="email" #email="ngModel"
-                                      placeholder="Primary Email" [(ngModel)]="crew.email" required email>
+                                <div class="j-row">
+                                  <div class="span6 unit">
+                                    <div class="input">
+                                      <input [ngClass]="{'form-control-danger': email.dirty && email.invalid}"
+                                        [ngModelOptions]="{updateOn: 'blur'}" type="email" id="email" name="email" #email="ngModel"
+                                        placeholder="Primary Email" [(ngModel)]="crew.email" required email>
+                                    </div>
+                                  </div>
+                                  <div class="span6 unit">
+                                    <div class="input">
+                                      <input [ngClass]="{'form-control-danger': phone.dirty && phone.invalid}"
+                                        [ngModelOptions]="{updateOn: 'blur'}" type="text" id="phone" name="phoneNumber" #phone="ngModel"
+                                        placeholder="Phone Number" [(ngModel)]="crew.phoneNumber" required phone="US">
+                                    </div>
                                   </div>
                                 </div>
                                 <div class="j-row">
