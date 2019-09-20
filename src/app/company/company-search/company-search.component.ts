@@ -140,13 +140,28 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
           if (_.size(data.users) === 0) {
             this.toastr.warning('No users found.');
           }
-          this.recipients = [...data.users];
+          this.recipients = [...this.addScheduledDeliveryInfo(data.users)];
           this.paginate(null);
           this.lat = data.coordinates.lat;
           this.lng = data.coordinates.lng;
         },
         err => this.toastr.error(err)
       );
+  }
+
+  addScheduledDeliveryInfo(users: {
+    deliveries: any[];
+    acceptedScheduled?: number;
+    pendingScheduled?: number
+  }[] = []): any[] {
+    users.forEach(user => {
+      user.acceptedScheduled = (user.deliveries || [])
+        .filter(({ status }) => status === UserDeliveryStatus.Accepted).length;
+      user.pendingScheduled = (user.deliveries || [])
+        .filter(({ status }) => status === UserDeliveryStatus.Pending).length;
+    });
+
+    return users;
   }
 
   attachSortEventListener(): void {
