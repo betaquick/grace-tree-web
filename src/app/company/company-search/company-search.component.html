@@ -60,6 +60,7 @@
                                 {{user.firstName}} {{user.lastName}}
                                 <span class="label label-warning" *ngIf="user.status === userStatus.Pause">Pause</span>
                                 <span class="label label-success" *ngIf="user.status === userStatus.Ready">Ready</span>
+                                <span class="label label-success" *ngIf="user.deliveries?.length">Pending Delivery</span>
                               </h5>
                               <h6 class="body">{{user.email}}</h6>
                               <h6 class="body">{{user.phoneNumber}}</h6>
@@ -70,6 +71,12 @@
                                 </button>
                                 <a *ngIf="user.status === userStatus.Ready" [routerLink]="['/company/setup-delivery', user.userId]"
                                   class="btn btn-primary btn-sm">Setup Delivery</a>
+                                <span class="btn btn-sm btn-outline-primary my-1" *ngIf="user.acceptedScheduled">
+                                  {{ user.acceptedScheduled || 0 }} Accepted Scheduled Deliveries
+                                </span>
+                                <span class="btn btn-sm btn-outline-primary my-1" *ngIf="user.pendingScheduled">
+                                  {{ user.pendingScheduled || 0 }} Pending Scheduled Deliveries
+                                </span>
                               </h6>
                             </agm-info-window>
                           </agm-marker>
@@ -108,7 +115,7 @@
                           </tr>
                           <tr *ngFor="let user of currentlyShowing; let i = index;">
                             <td>
-                              <div class="checkbox-fade fade-in-primary" *ngIf="user.status === userStatus.Pause">
+                              <div class="checkbox-fade fade-in-primary" *ngIf="(user.status === userStatus.Pause) && !user.deliveries?.length">
                                 <label>
                                   <input type="checkbox" [(ngModel)]="currentlyShowing[i].selected" name="user{{i}}">
                                   <span class="cr">
