@@ -22,8 +22,7 @@ import { SessionStorage } from 'ngx-store';
 export class UserProfileComponent implements OnInit, OnDestroy {
 
   isProfileEdit: boolean;
-  isPreferenceEdit: boolean;
-  userProducts: UserProduct[];
+  userProducts: UserProduct[] = [];
   loading: boolean;
   errorMessage: string;
   primaryAddress: Address;
@@ -39,7 +38,6 @@ export class UserProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isProfileEdit = false;
-    this.isPreferenceEdit = false;
     this.loading = false;
 
     this.userProducts = [new UserProduct()];
@@ -153,31 +151,20 @@ export class UserProfileComponent implements OnInit, OnDestroy {
       );
   }
 
-  updateDeliveryPreference() {
-    if (this.loading === true) {
-      return;
-    }
-
-    const userProducts = _.map(this.userProducts, userProduct => {
-      const  { productId, status } = userProduct;
-
-      return {
-        productId,
-        status: utils.getBoolean(status)
-      };
-    });
-
+  handleDeliveryPreference(newProductsWithStatus) {
     this.loading = true;
-
-    this.userService.updateUserProducts(userProducts)
-      .pipe(finalize(() => this.loading = false))
-      .subscribe(
-        () => {
-          this.toastr.success('Delivery preference updated successfully');
-          this.isPreferenceEdit = false;
-        },
-        err => this.toastr.error(err)
-      );
+    this.userService.updateUserProducts(newProductsWithStatus)
+    .pipe(finalize(() => this.loading = false))
+    .subscribe(
+      (updatedProducts) => {
+        this.userProducts = [...updatedProducts]; // trigger refresh
+        this.toastr.success('Delivery preference updated successfully');
+      },
+      err => {
+        this.toastr.error(err);
+        this.getUserProducts();
+      }
+    );
   }
 
   deactivateUser() {

@@ -13,6 +13,7 @@ import { UserAddressComponent } from './user-address/user-address.component';
 import { UserService } from './user.service';
 import { SharedModule } from '../shared/shared.module';
 import { UserDeliveriesComponent } from './user-deliveries/user-deliveries.component';
+import { UserDeliveryPreferenceComponent } from './user-deliveries/preferences/preferences.component';
 import { UpdateDeliveryComponent } from './user-deliveries/update-delivery/update-delivery.component';
 
 @NgModule({
@@ -36,7 +37,8 @@ import { UpdateDeliveryComponent } from './user-deliveries/update-delivery/updat
     UserProfileComponent,
     UserAddressComponent,
     UserDeliveriesComponent,
-    UpdateDeliveryComponent
+    UpdateDeliveryComponent,
+    UserDeliveryPreferenceComponent
   ]
 })
 export class UserModule { }

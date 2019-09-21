@@ -6,7 +6,7 @@ import { UserStatus } from '@betaquick/grace-tree-constants';
 import { Router } from '@angular/router';
 
 import { UserService } from '../user.service';
-import { User } from '../../shared/models/user-model';
+import { User, UserProduct } from '../../shared/models/user-model';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -23,6 +23,7 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
   pendingCount = 0;
   deliveries = [];
   delivery: any = {};
+  userProducts: UserProduct[] = [];
 
   constructor(
     private router: Router,
@@ -35,6 +36,7 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
 
     this.getPendingDeliveries();
     this.getRecentDeliveries();
+    this.getUserProducts();
   }
 
   ngOnDestroy() {}
@@ -85,6 +87,28 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
           }
         }
       );
+  }
+
+  getUserProducts() {
+    this.userService
+      .getUserProducts()
+      .subscribe(userProducts => this.userProducts = userProducts,
+      err => this.toastr.error(err)
+    );
+  }
+
+  handleDeliveryPreference(newProductsWithStatus) {
+    this.userService.updateUserProducts(newProductsWithStatus)
+    .subscribe(
+      (updatedProducts) => {
+        this.userProducts = [...updatedProducts]; // trigger refresh
+        this.toastr.success('Delivery preference updated successfully');
+      },
+      err => {
+        this.toastr.error(err);
+        this.getUserProducts();
+      }
+    );
   }
 
   closeModal() {
