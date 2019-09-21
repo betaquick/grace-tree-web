@@ -5,6 +5,7 @@ import { CustomFormsModule } from 'ng5-validation';
 import { AgmCoreModule } from '@agm/core';
 import { GooglePlaceModule } from 'ngx-google-places-autocomplete';
 
+import { RestrictedGuard } from '../auth/restricted.guard';
 import { CompanyRoutingModule } from './company-routing.module';
 import { CompanyDashboardComponent } from './company-dashboard/company-dashboard.component';
 import { CompanyProfileComponent } from './company-profile/company-profile.component';
@@ -18,6 +19,7 @@ import { SetupDeliveryComponent } from './setup-delivery/setup-delivery.componen
 import { SharedModule } from '../shared/shared.module';
 import { ManageDeliveryComponent } from './manage-delivery/manage-delivery.component';
 import { CrewProfileComponent } from './crew-profile/crew-profile.component';
+import { CompanyUsersListComponent } from './company-users-list/users-list.component';
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
@@ -30,7 +32,7 @@ import { CrewProfileComponent } from './crew-profile/crew-profile.component';
     SharedModule,
     GooglePlaceModule
   ],
-  providers: [CompanyService],
+  providers: [CompanyService, RestrictedGuard],
   declarations: [
     CompanyDashboardComponent,
     CompanyProfileComponent,
@@ -38,6 +40,7 @@ import { CrewProfileComponent } from './crew-profile/crew-profile.component';
     NewCompanyCrewComponent,
     CompanySearchComponent,
     CompanyDeliveriesComponent,
+    CompanyUsersListComponent,
     ManageDeliveryComponent,
     SetupDeliveryComponent,
     CrewProfileComponent,

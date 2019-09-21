@@ -1,5 +1,5 @@
 import { Injectable, OnDestroy } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map, catchError, flatMap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { SessionStorage } from 'ngx-store';
@@ -10,6 +10,7 @@ import { AppConfig } from '../app.config';
 import { utils } from '../shared/utils';
 import { BusinessInfo } from '../shared/models/company-model';
 import { Template } from '../shared/models/template-model';
+import { UserStatus } from '@betaquick/grace-tree-constants';
 
 @Injectable()
 export class CompanyService implements OnDestroy {
@@ -108,6 +109,24 @@ export class CompanyService implements OnDestroy {
 
           return body;
         }),
+        catchError(utils.handleError)
+      );
+  }
+
+  getUsers(onlyActive?: boolean, searchTerm?: string) {
+    let params = new HttpParams();
+
+    if (searchTerm) {
+      params = params.append('term', searchTerm);
+    }
+
+    if (onlyActive) {
+      params = params.append('status', UserStatus.Ready);
+    }
+    return this.http
+      .get(`${AppConfig.API_URL}/users`, { params })
+      .pipe(
+        map(response => _.get(response, 'body')),
         catchError(utils.handleError)
       );
   }

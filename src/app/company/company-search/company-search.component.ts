@@ -40,10 +40,9 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
   zoom = 8;
 
   LIMIT = 10;
-  offset = 0;
+  offset = 1;
 
   recipients = [];
-  currentlyShowing = [];
   links = [];
   recipient: any = {};
 
@@ -88,46 +87,6 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  getNewItemsInView(): void {
-    this.currentlyShowing = [...this.recipients
-      .slice(this.offset * this.LIMIT,  (this.offset + 1) * this.LIMIT)];
-  }
-
-  paginate(evt: { direction: DIRECTIONS, page: number }) {
-    const pages = this.howManyPages(this.recipients, this.LIMIT);
-    if (!evt) {
-      this.currentlyShowing = [...(this.recipients || []).slice(0, this.LIMIT)];
-    } else {
-      if (evt.page > -1 && evt.page < pages) {
-        this.offset = evt.page;
-        this.getNewItemsInView();
-      } else {
-        if (evt.direction === DIRECTIONS.Forwards && (pages > this.offset + 1)) {
-          this.offset++;
-          this.getNewItemsInView();
-        } else if ( evt.direction === DIRECTIONS.Backwards && (this.offset > 0)) {
-          this.offset--;
-          this.getNewItemsInView();
-        }
-      }
-    }
-    if (this.bulkScheduleRef) {
-      (this.bulkScheduleRef.nativeElement as HTMLInputElement).checked = false;
-    }
-    this.generatePaginationLinks();
-  }
-
-  howManyPages(items: any[] = [], perPage: number): number {
-    return (Math.ceil(items.length / perPage));
-  }
-
-  generatePaginationLinks(): void {
-    const pages = this.howManyPages(this.recipients, this.LIMIT);
-    this.links = Array(pages)
-      .fill(0)
-      .map((e, index) => index);
-  }
-
   search() {
     this.loading = true;
 
@@ -141,7 +100,7 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
             this.toastr.warning('No users found.');
           }
           this.recipients = [...this.addScheduledDeliveryInfo(data.users)];
-          this.paginate(null);
+          this.offset = 1;
           this.lat = data.coordinates.lat;
           this.lng = data.coordinates.lng;
         },
@@ -186,7 +145,7 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
         this.recipients.sort((a, b) => a[sortKey] > b[sortKey] ? 1 : -1);
       }
     }
-    this.getNewItemsInView();
+    this.offset = 1;
   }
 
   sortingBy(key: string | SortKey): boolean {
@@ -213,7 +172,7 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
   toggleAllUsers(e) {
     let recipients;
     if (e.target.checked) {
-      recipients = this.currentlyShowing.map(recipient => {
+      recipients = this.recipients.map(recipient => {
         if (recipient.status === UserStatus.Pause) {
           return { ...recipient, selected: true };
         }
@@ -221,7 +180,7 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
         return recipient;
       });
     } else {
-      recipients = this.currentlyShowing.map(recipient => {
+      recipients = this.recipients.map(recipient => {
         if (recipient.status === UserStatus.Pause) {
           return { ...recipient, selected: false };
         }
@@ -230,12 +189,12 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.currentlyShowing = recipients;
+    this.recipients = recipients;
   }
 
   sendRequest() {
     const users = [];
-    this.currentlyShowing.forEach(recipient => {
+    this.recipients.forEach(recipient => {
       if (recipient.selected) {
         users.push(recipient.userId);
       }
@@ -260,5 +219,9 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
     } else {
       window.alert('You must select one or more users');
     }
+  }
+
+  getOverallIndex(index: number): number {
+    return ((this.offset - 1) * this.LIMIT) + index;
   }
 }

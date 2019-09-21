@@ -1,0 +1,103 @@
+<div class="pcoded-content">
+    <div class="pcoded-inner-content">
+      <!-- Main-body start -->
+      <div class="main-body">
+        <div class="page-wrapper">
+          <!-- Page-header start -->
+  
+          <!-- Page body start -->
+          <div class="page-body">
+            <div class="row">
+              <div class="col-sm-12">
+                <!-- Google map search card start -->
+                <div class="card">
+                  <div class="card-header">
+                    <h5>Search For Users</h5>
+                  </div>
+                  <div class="card-block">
+                    <div class="row">
+                      <div class="col-xl-12">
+                        <div class="">
+                          <form #searchForm="ngForm" (ngSubmit)="searchForm.form.valid && search()">
+                            <div class="input-group input-group-button">
+                              <input type="text" [ngClass]="{'form-control-danger': address.dirty && address.invalid}"
+                                [ngModelOptions]="{updateOn: 'blur'}" class="form-control" placeholder="Enter Search Term [First Name or Last Name]"
+                                name="address" #address="ngModel" [(ngModel)]="searchParams.term">
+                              <div class="input-group-append">
+                                <button type="submit" class="btn btn-primary" [disabled]="loading">
+                                  <span *ngIf="loading"><img src="assets/spinner_blue_white_trans.svg" style="width: 1.5em; object-fit: contain;"/></span>
+                                  Search
+                                </button>
+                              </div>
+                            </div>
+                            <div class="checkbox-fade fade-in-primary d-">
+                              <label>
+                                <input type="checkbox" [(ngModel)]="searchParams.onlyActive" name="onlyActive">
+                                <span class="cr">
+                                  <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                                </span>
+                                <span class="text-inverse">Only Users in Ready State</span>
+                              </label>
+                            </div>
+                          </form>
+                        </div>
+                        <div class="clearfix"></div>
+                        <br>
+                        
+                        <div class="table-responsive">
+                          <table class="table">
+                            <tr>
+                              <th>
+                                #
+                              </th>
+                              <th>Name</th>
+                              <th>Email Address</th>
+                              <th>
+                                Status
+                              </th>
+                            </tr>
+                            <tr *ngFor="let user of users | slice: (offset-1) * LIMIT : (offset-1) * LIMIT + LIMIT; let i = index;">
+                              <td>{{ ((offset - 1) * LIMIT) + (i + 1) }}</td>
+                              <td>
+                                {{user.firstName}} {{user.lastName}}
+                                <div class="m-t-15">
+                                    <ng-container *ngFor="let productDesc of user.productDesc; let pdIndex = index">
+                                      <label class="badge badge-warning">  {{productDesc}} </label>
+                                      <br *ngIf="!((pdIndex + 1) % 3)">
+                                    </ng-container>
+                                </div>
+                              </td>
+                              <td>
+                                  <span class="text-muted">{{ user.email }}</span>
+                              </td>
+                              <td>
+                                <span class="label label-warning" *ngIf="user.status === userStatus.Pause">Pause</span>
+                                <span class="label label-success" *ngIf="user.status === userStatus.Ready">Ready</span>
+                              </td>
+                            </tr>
+                          </table>
+
+                          <ngb-pagination
+                            class="pagination justify-content-center mx-auto mb-2"
+                            [(page)]="offset"
+                            [pageSize]="LIMIT"
+                            [collectionSize]="users?.length"></ngb-pagination>
+                        </div>
+  
+                        <!-- start -->
+                        <div class="clearfix"></div>
+                        <br>
+                      </div>
+                      <!-- end -->
+                    </div>
+                  </div>
+                </div>
+                <!-- Google map search card end -->
+              </div>
+            </div>
+          </div>
+          <!-- Page body end -->
+        </div>
+      </div>
+    </div>
+</div>
