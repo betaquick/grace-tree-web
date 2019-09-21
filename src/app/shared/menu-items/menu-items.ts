@@ -137,14 +137,14 @@ const USERSMENUWHITELIST = [
 
 const ADMIN_WITH_USERS_LIST_MENU = {
   label: 'Navigation',
-  main: [...ADMIN_MENU.main, {
+  main: [{
   state: 'users-list',
   main_state: 'company',
   short_label: 'U',
   name: 'Users',
   type: 'link',
   icon: 'ti-user'
-}]};
+  }, ...ADMIN_MENU.main, ]};
 
 @Injectable()
 export class MenuItems {

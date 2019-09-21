@@ -56,8 +56,8 @@
                                 Status
                               </th>
                             </tr>
-                            <tr *ngFor="let user of currentlyShowing; let i = index;">
-                              <td>{{ i + 1 }}</td>
+                            <tr *ngFor="let user of users | slice: (offset-1) * LIMIT : (offset-1) * LIMIT + LIMIT; let i = index;">
+                              <td>{{ ((offset - 1) * LIMIT) + (i + 1) }}</td>
                               <td>
                                 {{user.firstName}} {{user.lastName}}
                                 <div class="m-t-15">
@@ -76,31 +76,12 @@
                               </td>
                             </tr>
                           </table>
-                          <nav aria-label="Search results pagination" *ngIf="links?.length > 1" class="d-flex">
-                            <ul class="pagination justify-content-center mx-auto mb-2">
-                              <li class="page-item" 
-                              (click)="paginate({ direction: DIRECTIONS.Backwards })"
-                              [class.disabled]="offset === 0">
-                                <span class="page-link" aria-label="Previous">
-                                  <span aria-hidden="true">&laquo;</span>
-                                  <span class="sr-only">Previous</span>
-                                </span>
-                              </li>
-                              <li *ngFor="let page of links"
-                              (click)="paginate({ page: page })"
-                              [class.active]="page === offset"
-                              class="page-item">
-                                <span class="page-link">{{ page + 1 }}</span>
-                              </li>
-                              <li (click)="paginate({ direction: DIRECTIONS.Forwards })"
-                              class="page-item" [class.disabled]="offset + 1 > recipients?.length / LIMIT">
-                                <span class="page-link" aria-label="Next">
-                                  <span aria-hidden="true">&raquo;</span>
-                                  <span class="sr-only">Next</span>
-                                </span>
-                              </li>
-                            </ul>
-                          </nav>
+
+                          <ngb-pagination
+                            class="pagination justify-content-center mx-auto mb-2"
+                            [(page)]="offset"
+                            [pageSize]="LIMIT"
+                            [collectionSize]="users?.length"></ngb-pagination>
                         </div>
   
                         <!-- start -->

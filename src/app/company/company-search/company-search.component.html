@@ -113,11 +113,11 @@
                             <th>Delivery Note</th>
                             <th></th>
                           </tr>
-                          <tr *ngFor="let user of currentlyShowing; let i = index;">
+                          <tr *ngFor="let user of recipients | slice: (offset-1) * LIMIT : (offset-1) * LIMIT + LIMIT; let i = index;">
                             <td>
                               <div class="checkbox-fade fade-in-primary" *ngIf="(user.status === userStatus.Pause) && !user.deliveries?.length">
                                 <label>
-                                  <input type="checkbox" [(ngModel)]="currentlyShowing[i].selected" name="user{{i}}">
+                                  <input type="checkbox" [(ngModel)]="recipients[getOverallIndex(i)].selected" name="user{{getOverallIndex(i)}}">
                                   <span class="cr">
                                     <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
                                   </span>
@@ -157,32 +157,15 @@
                             </td>
                           </tr>
                         </table>
-                        <nav aria-label="Search results pagination" *ngIf="links?.length > 1" class="d-flex">
-                          <ul class="pagination justify-content-center mx-auto mb-2">
-                            <li class="page-item" 
-                            (click)="paginate({ direction: DIRECTIONS.Backwards })"
-                            [class.disabled]="offset === 0">
-                              <span class="page-link" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                              </span>
-                            </li>
-                            <li *ngFor="let page of links"
-                            (click)="paginate({ page: page })"
-                            [class.active]="page === offset"
-                            class="page-item">
-                              <span class="page-link">{{ page + 1 }}</span>
-                            </li>
-                            <li (click)="paginate({ direction: DIRECTIONS.Forwards })"
-                            class="page-item" [class.disabled]="offset + 1 > recipients?.length / LIMIT">
-                              <span class="page-link" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                              </span>
-                            </li>
-                          </ul>
-                        </nav>
                       </div>
+                      <div class="w-100 d-flex">
+                          <ngb-pagination *ngIf="!mapView && recipients?.length"
+                          class="pagination justify-content-center mx-auto mb-2"
+                          [(page)]="offset"
+                          [pageSize]="LIMIT"
+                          [collectionSize]="recipients?.length"></ngb-pagination>
+                      </div>
+                     
 
                       <!-- start -->
                       <div class="clearfix"></div>
