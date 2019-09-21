@@ -131,6 +131,21 @@ const CREW_MENU = {
   }]
 };
 
+const USERSMENUWHITELIST = [
+  'gracetrees@gmail.com'
+];
+
+const ADMIN_WITH_USERS_LIST_MENU = {
+  label: 'Navigation',
+  main: [...ADMIN_MENU.main, {
+  state: 'users-list',
+  main_state: 'company',
+  short_label: 'U',
+  name: 'Users',
+  type: 'link',
+  icon: 'ti-user'
+}]};
+
 @Injectable()
 export class MenuItems {
 
@@ -138,11 +153,14 @@ export class MenuItems {
 
   constructor() {}
 
-  getAll(userType: UserTypes): Menu {
+  getAll({ userType, email }): Menu {
     if (userType === UserTypes.General) {
       return USER_MENU;
 
     } else if (userType === UserTypes.TreeAdmin) {
+      if (USERSMENUWHITELIST.indexOf(email) > -1) {
+        return ADMIN_WITH_USERS_LIST_MENU;
+      }
       return ADMIN_MENU;
 
     } else {

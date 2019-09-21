@@ -13,6 +13,7 @@ import { NewCompanyCrewComponent } from './company-crew/new/new-company-crew.com
 import { ManageDeliveryComponent } from './manage-delivery/manage-delivery.component';
 import { CrewProfileComponent } from './crew-profile/crew-profile.component';
 import { CompanyTemplateComponent, UpdateCompanyTemplateComponent } from './company-templates';
+import { CompanyUsersListComponent } from './company-users-list/users-list.component';
 import { RoleGuard } from '../auth/role.guard';
 import { UserTypes } from '@betaquick/grace-tree-constants';
 
@@ -36,6 +37,7 @@ const routes: Routes = [{
       { path: 'crews/new', component: NewCompanyCrewComponent },
       { path: 'setup-delivery/:userId', component: SetupDeliveryComponent },
       { path: 'setup-delivery/:userId/delivery/:deliveryId', component: SetupDeliveryComponent },
+      { path: 'users-list', component: CompanyUsersListComponent },
       { path: '**', component: CompanySearchComponent }
     ]
   }]

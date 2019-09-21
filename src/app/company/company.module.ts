@@ -18,6 +18,7 @@ import { SetupDeliveryComponent } from './setup-delivery/setup-delivery.componen
 import { SharedModule } from '../shared/shared.module';
 import { ManageDeliveryComponent } from './manage-delivery/manage-delivery.component';
 import { CrewProfileComponent } from './crew-profile/crew-profile.component';
+import { CompanyUsersListComponent } from './company-users-list/users-list.component';
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
@@ -38,6 +39,7 @@ import { CrewProfileComponent } from './crew-profile/crew-profile.component';
     NewCompanyCrewComponent,
     CompanySearchComponent,
     CompanyDeliveriesComponent,
+    CompanyUsersListComponent,
     ManageDeliveryComponent,
     SetupDeliveryComponent,
     CrewProfileComponent,

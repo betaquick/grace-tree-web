@@ -1,0 +1,22 @@
+.pcoded-content {
+    margin-left: 235px;
+  }
+  
+  .alert {
+    margin-bottom: 10px;
+  }
+  
+  .input-group-append {
+    margin-left: 10px;
+  }
+  
+  th[data-sort] {
+    cursor: pointer;
+  }
+  
+  ul.pagination li {
+    cursor: pointer;
+    &.disabled {
+      cursor: none;
+    }
+  }

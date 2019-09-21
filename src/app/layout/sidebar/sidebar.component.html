@@ -8,7 +8,7 @@
 
     <div class="pcoded-navigation-label">{{menuItems.getAll(user.userType).label}}</div>
     <ul class="pcoded-item pcoded-left-item">
-      <li [routerLinkActive]="['active']" *ngFor="let asideItem of menuItems.getAll(user.userType).main">
+      <li [routerLinkActive]="['active']" *ngFor="let asideItem of menuItems.getAll(user).main">
         <a [routerLink]="['/', asideItem.main_state, asideItem.state]" *ngIf="asideItem.main_state; else mainContent">
           <span class="pcoded-micon">
             <i class="{{ asideItem.icon }}"></i>
