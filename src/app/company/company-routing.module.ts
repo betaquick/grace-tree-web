@@ -15,6 +15,7 @@ import { CrewProfileComponent } from './crew-profile/crew-profile.component';
 import { CompanyTemplateComponent, UpdateCompanyTemplateComponent } from './company-templates';
 import { CompanyUsersListComponent } from './company-users-list/users-list.component';
 import { RoleGuard } from '../auth/role.guard';
+import { RestrictedGuard } from '../auth/restricted.guard';
 import { UserTypes } from '@betaquick/grace-tree-constants';
 
 const routes: Routes = [{
@@ -37,7 +38,7 @@ const routes: Routes = [{
       { path: 'crews/new', component: NewCompanyCrewComponent },
       { path: 'setup-delivery/:userId', component: SetupDeliveryComponent },
       { path: 'setup-delivery/:userId/delivery/:deliveryId', component: SetupDeliveryComponent },
-      { path: 'users-list', component: CompanyUsersListComponent },
+      { path: 'users-list', component: CompanyUsersListComponent, canActivate: [RestrictedGuard] },
       { path: '**', component: CompanySearchComponent }
     ]
   }]
