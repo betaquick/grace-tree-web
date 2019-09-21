@@ -56,9 +56,6 @@ export class UserService implements OnDestroy {
   }
 
   getUserProducts(): Observable<UserProduct[]> {
-    // if (this.userProducts) {
-    //   return of(this.userProducts);
-    // }
     return this.http.get(`${AppConfig.API_URL}/user/products`)
       .pipe(
         map(response => {
