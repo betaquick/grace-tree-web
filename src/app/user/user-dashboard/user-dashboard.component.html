@@ -41,6 +41,10 @@
                 </div>
               </div>
             </div>
+
+            <app-delivery-preference
+            [userProducts]="userProducts"
+            (deliveryPreferenceUpdatedEvent)="handleDeliveryPreference($event)"></app-delivery-preference>
             <!-- Recent Orders start -->
             <div class="col-xl-12 col-md-12">
               <div class="card">
