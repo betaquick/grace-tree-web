@@ -1,5 +1,6 @@
 import { Injectable} from '@angular/core';
 import { UserTypes } from '@betaquick/grace-tree-constants';
+import { User } from '../models/user-model';
 
 export interface MainMenuItems {
   state: string;
@@ -153,7 +154,7 @@ export class MenuItems {
 
   constructor() {}
 
-  getAll({ userType, email }): Menu {
+  getAll({ userType, email }: User): Menu {
     if (userType === UserTypes.General) {
       return USER_MENU;
 
