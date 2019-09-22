@@ -106,6 +106,7 @@ export class DeliveryInfo {
 export class ScheduleDelivery {
   assignedToUserId?: number;
   users?: Array<number>;
+  userId?: number;
   details?: string;
   additionalRecipientText?: string;
   additionalCompanyText?: string;
