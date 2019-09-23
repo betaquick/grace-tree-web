@@ -63,7 +63,9 @@ export class UpdateDeliveryComponent implements OnInit, OnDestroy {
   getUserProducts() {
     this.userService.getUserProducts()
       .subscribe(
-        userProducts => this.userProducts = userProducts,
+        userProducts => {
+          this.userProducts = (userProducts || []).filter(p => p.status);
+        },
         err => this.toastr.error(err)
       );
   }
