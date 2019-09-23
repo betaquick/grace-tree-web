@@ -64,7 +64,7 @@
                               </h5>
                               <h6 class="body">{{user.email}}</h6>
                               <h6 class="body">{{user.phoneNumber}}</h6>
-                              <h6 class="body">{{ user.distance }} miles away</h6>
+                              <h6 class="body">{{ (user.distance || 0) | number : '1.1-1' }} miles away</h6>
                               <h6 class="body">
                                 <button (click)="openNote(modalDefault, user)" class="btn btn-sm btn-outline-primary">
                                   View Note
