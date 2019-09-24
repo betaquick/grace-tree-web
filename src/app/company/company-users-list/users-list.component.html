@@ -77,11 +77,15 @@
                             </tr>
                           </table>
 
-                          <ngb-pagination
-                            class="pagination justify-content-center mx-auto mb-2"
-                            [(page)]="offset"
-                            [pageSize]="LIMIT"
-                            [collectionSize]="users?.length"></ngb-pagination>
+                          <div class="d-flex w-100">
+                            <ngb-pagination
+                              class="pagination justify-content-center mx-auto mb-2"
+                              [(page)]="offset"
+                              [pageSize]="LIMIT"
+                              [maxSize]="10"
+                              [rotate]="true"
+                              [collectionSize]="users?.length"></ngb-pagination>
+                          </div>
                         </div>
   
                         <!-- start -->
