@@ -88,16 +88,16 @@ export class SetupDeliveryComponent implements OnInit {
 
     this.loading = true;
 
-    this.delivery.userId = this.recipient.userId;
     this.delivery.statusCode = DeliveryStatusCodes.Scheduled;
     this.delivery.isAssigned = true;
 
     let scheduleDelivery;
     if (this.deliveryId) {
+      this.delivery.userId = this.recipient.userId;
       scheduleDelivery = this.companyService.updateDelivery(this.deliveryId, this.delivery);
     } else {
       this.delivery.userDeliveryStatus = UserDeliveryStatus.Accepted;
-
+      this.delivery.users = [this.recipient.userId];
       scheduleDelivery = this.companyService.scheduleDelivery(this.delivery);
     }
 
