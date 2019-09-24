@@ -33,7 +33,7 @@
         <td>
           <button *ngIf="delivery.statusCode !== statusCodes.Requested" (click)="emitDelivery('click', delivery)" class="btn btn-sm btn-outline-primary">View</button>
           
-          <ng-template [ngIf]="user.userType !== userTypes.General">
+          <ng-template [ngIf]="(user.userType !== userTypes.General) && (delivery.statusCode !== statusCodes.Expired)">
             <button (click)="emitDelivery('link', delivery)" class="btn btn-sm btn-outline-success"
               *ngIf="manageableDelivery(delivery)">Manage</button>
           </ng-template>
