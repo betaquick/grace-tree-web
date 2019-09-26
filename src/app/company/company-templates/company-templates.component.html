@@ -21,18 +21,27 @@
                           <th>Date Created</th>
                           <th colspan="2"></th>
                         </tr>
-                        <tr *ngFor="let template of templates">
-                          <td class="constrain__width w-20" title="{{template.notificationType}}">{{template.notificationType}}</td>
-                          <td class="constrain__width w-30" title="{{template.message}}">{{ template.message }}</td>
-                          <td>{{template.createdAt | date: 'MMMM d, y'}}</td>
-                          <td>
-                            <a [routerLink]="['.', template.templateId]"
-                            class="tabledit-update-button btn btn-primary waves-effect waves-light"
-                            style="float: none;margin: 0;" title="Update Template">
+                        <ng-container *ngFor="let templateGroup of grouped_templates; let lastGroup = last;">
+                          <tr *ngFor="let template of templateGroup">
+                            <td class="constrain__width w-20" title="{{template.notificationType}}">{{template.notificationType}}</td>
+                            <td class="constrain__width w-30" title="{{template.message}}">{{ template.message }}</td>
+                            <td>{{template.createdAt | date: 'MMMM d, y'}}</td>
+                            <td>
+                              <a [routerLink]="['.', template.templateId]"
+                              class="tabledit-update-button btn btn-primary waves-effect waves-light"
+                              style="float: none;margin: 0;" title="Update Template">
+                                  <span class="icofont icofont-ui-edit"></span>
+                              </a>
+                            </td>
+                          </tr>
+                          <tr *ngIf="!lastGroup">
+                            <td colspan="4">
+                              <span style="opacity: 0" class="tabledit-update-button btn btn-primary waves-effect waves-light">
                                 <span class="icofont icofont-ui-edit"></span>
-                            </a>
-                          </td>
-                        </tr>
+                              </span>
+                            </td>
+                          </tr>
+                        </ng-container>
                       </table>
                     </div>
                   </div>
