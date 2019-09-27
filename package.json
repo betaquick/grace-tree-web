@@ -23,7 +23,7 @@
     "@angular/platform-browser": "^5.2.0",
     "@angular/platform-browser-dynamic": "^5.2.0",
     "@angular/router": "^5.2.0",
-    "@betaquick/grace-tree-constants": "^1.0.15",
+    "@betaquick/grace-tree-constants": "^1.0.16",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-beta.5",
     "@sweetalert2/ngx-sweetalert2": "^5.1.0",
     "@swimlane/ngx-datatable": "^11.0.4",
