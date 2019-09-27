@@ -56,7 +56,7 @@ export class CompanyTemplateComponent implements OnInit {
 
       [
         templates.find(t => t.notificationType === NotificationTypes.CrewRegistrationEmail),
-        templates.find(t => t.notificationType === 'CREW REGISTRATION SMS'),
+        templates.find(t => t.notificationType === NotificationTypes.CrewRegistrationSMS),
       ],
 
       [
@@ -71,14 +71,14 @@ export class CompanyTemplateComponent implements OnInit {
 
       [
         templates.find(t => t.notificationType === NotificationTypes.UserRegistrationAdminEmail),
-        templates.find(t => t.notificationType === 'NOTIFY ADMIN OF USER REGISTRATION SMS'),
+        templates.find(t => t.notificationType === NotificationTypes.UserRegistrationAdminSMS),
       ],
 
       [
         templates.find(t => t.notificationType === NotificationTypes.UserStatusEmail),
         templates.find(t => t.notificationType === NotificationTypes.UserDeliveryEmail),
         templates.find(t => t.notificationType === NotificationTypes.DeliveryWarningEmail),
-        templates.find(t => t.notificationType === 'USER STATUS UPDATE SMS'),
+        templates.find(t => t.notificationType === NotificationTypes.UserStatusSMS),
         templates.find(t => t.notificationType === NotificationTypes.UserDeliverySMS),
         templates.find(t => t.notificationType === NotificationTypes.DeliveryWarningSMS),
       ]
