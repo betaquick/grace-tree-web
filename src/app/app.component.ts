@@ -23,7 +23,8 @@ export class AppComponent implements OnInit {
         return false;
     });
     window.addEventListener('unhandledrejection', function (e) {
-      LogRocket.captureException(new Error(e.reason.message));
+      LogRocket.captureException(new Error((e as PromiseRejectionEvent).reason.message));
+
     });
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
