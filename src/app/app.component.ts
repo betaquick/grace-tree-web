@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
+import * as LogRocket from 'logrocket';
 
 @Component({
   selector: 'app-root',
@@ -12,6 +13,19 @@ export class AppComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
+    LogRocket.init('xclwbm/grace-tree-services');
+    window.onerror = function (message, file, line, col, error) {
+      LogRocket.captureException(error);
+      return false;
+    };
+    window.addEventListener('error', function (e) {
+        LogRocket.captureException(e.error);
+        return false;
+    });
+    window.addEventListener('unhandledrejection', function (e) {
+      LogRocket.captureException(new Error((e as PromiseRejectionEvent).reason.message));
+
+    });
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
         return;
