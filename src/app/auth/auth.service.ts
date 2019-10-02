@@ -19,6 +19,7 @@ import {
 import { utils } from '../shared/utils';
 import { BusinessInfo } from '../shared/models/company-model';
 import { Product } from '../shared/models/product-model';
+import * as LogRocket from 'logrocket';
 
 @Injectable()
 export class AuthService implements OnDestroy {
@@ -163,6 +164,10 @@ export class AuthService implements OnDestroy {
     this.user = _.get(credentials, 'user');
     this.company = _.get(credentials, 'user.company', null);
     this.isLoggedIn = true;
+    LogRocket.identify(`${this.user.userId}`, {
+      name: `${this.user.firstName} ${this.user.lastName}`,
+      email: this.user.email
+    });
     return credentials;
   }
 
