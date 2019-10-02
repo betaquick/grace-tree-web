@@ -73,8 +73,8 @@
                                     <h6 class="d-inline-block">
                                       {{delivery.firstName}} {{delivery.lastName}}
                                     </h6>
-                                    <span class="label label-warning" *ngIf="delivery.status === userStatus.Pause">Pause</span>
-                                    <span class="label label-success" *ngIf="delivery.status === userStatus.Ready">Ready</span>
+                                    <span class="label label-warning" *ngIf="delivery.userStatus === userStatus.Pause">Pause</span>
+                                    <span class="label label-success" *ngIf="delivery.userStatus === userStatus.Ready">Ready</span>
                                   </div>
                                   <div class="f-13 text-muted m-b-15">
                                     {{delivery.street}}, {{delivery.city}}, {{delivery.state}}, {{delivery.zip}}

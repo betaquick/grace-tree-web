@@ -148,6 +148,14 @@ export class CompanySearchComponent implements OnInit, OnDestroy {
     this.offset = 1;
   }
 
+  getUniqueEmails(user: { email?: string; validEmails?: string[] }): string[] {
+    return _.uniq([user.email, ...(user.validEmails || [])]);
+  }
+
+  getUniquePhoneNumbers(user: { phoneNumber?: string[] }): string[] {
+    return _.uniq(user.phoneNumber || []);
+  }
+
   sortingBy(key: string | SortKey): boolean {
     return this.currentSortMethod === key;
   }
