@@ -25,7 +25,17 @@
         "scss/style.scss",
         "styles.scss"
       ],
-      "scripts": [],
+      "scripts": [
+        "assets/js/jquery.min.js",
+        "assets/js/jquery-ui.min.js",
+        "assets/js/excanvas.js",
+        "assets/js/jquery.slimscroll.js",
+        "assets/js/SmoothScroll.js",
+        "assets/js/jquery.mCustomScrollbar.concat.min.js",
+        "assets/js/pcoded.min.js",
+        "assets/js/vertical/vertical-layout.min.js",
+        "assets/js/script.js"
+      ],
       "environmentSource": "environments/environment.ts",
       "environments": {
         "dev": "environments/environment.ts",
