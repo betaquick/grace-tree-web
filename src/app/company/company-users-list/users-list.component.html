@@ -72,6 +72,7 @@
                                       <label class="badge badge-warning">  {{productDesc}} </label>
                                       <br *ngIf="!((pdIndex + 1) % 3)">
                                     </ng-container>
+                                    <label class="badge badge-danger" *ngIf="!user.productDesc?.length">  No Products </label>
                                 </div>
                               </td>
                               <td>
@@ -139,6 +140,7 @@
           <label class="badge badge-warning">  {{productDesc}} </label>
           <br *ngIf="!((pdIndex + 1) % 3)">
         </ng-container>
+        <label class="badge badge-danger" *ngIf="!recipient.productDesc?.length">  No Products </label>
     </div>
     <div class="f-13 m-y-15">
         Email(s): <span *ngFor="let email of recipient.emails; let isLast = last" class="text-muted"> {{ email }} {{ isLast ? '' : ', ' }}</span>
