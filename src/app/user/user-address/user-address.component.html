@@ -51,18 +51,20 @@
                 <form #addressForm="ngForm" (ngSubmit)="addressForm.form.valid && updateAddress()">
                   <div class="general-info j-forms">
                     <div class="col-sm-12">
-                      <div class="alert alert-danger background-danger" *ngIf="street.dirty && street.errors?.required">
+                      <div class="alert alert-danger background-danger my-1" *ngIf="street.dirty && street.errors?.required">
                         Street
                         is required</div>
-                      <div class="alert alert-danger background-danger" *ngIf="state.dirty && state.errors?.required">
+                      <div class="alert alert-danger background-danger my-1" *ngIf="state.dirty && state.errors?.required">
                         State
                         is required</div>
-                      <div class="alert alert-danger background-danger" *ngIf="city.dirty && city.errors?.required">City
+                      <div class="alert alert-danger background-danger my-1" *ngIf="city.dirty && city.errors?.required">City
                         is required</div>
-                      <div class="alert alert-danger background-danger" *ngIf="deliveryInstruction.dirty && (deliveryInstruction.errors?.required || !deliveryInstruction.value?.trim().length)">
+                      <div class="alert alert-danger background-danger my-1" *ngIf="zip.dirty && zip.errors?.required">Zip code
+                          is required</div>
+                      <div class="alert alert-danger background-danger my-1" *ngIf="deliveryInstruction.dirty && (deliveryInstruction.errors?.required || !deliveryInstruction.value?.trim().length)">
                         Delivery Instruction is required
                       </div>
-                      <div class="alert alert-danger background-danger" *ngIf="errorMessage">{{errorMessage}}</div>
+                      <div class="alert alert-danger background-danger my-1" *ngIf="errorMessage">{{errorMessage}}</div>
                     </div>
                     <div class="col-lg-6">
                       <div class="unit">
@@ -103,7 +105,7 @@
                         <textarea
                           [ngClass]="{'form-control-danger': deliveryInstruction.dirty && (deliveryInstruction.invalid || !deliveryInstruction.value?.trim().length)}"
                           [ngModelOptions]="{updateOn: 'blur'}" type="text" placeholder="Delivery Instruction"
-                          #deliveryInstruction="ngModel" name="deliveryInstruction"
+                          #deliveryInstruction="ngModel" name="deliveryInstruction" required
                           [(ngModel)]="address.deliveryInstruction" id="deliveryInstruction" rows="5">
                         {{ address.deliveryInstruction }}
                         </textarea>
