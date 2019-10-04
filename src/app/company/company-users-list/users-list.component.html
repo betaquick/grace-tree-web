@@ -50,7 +50,7 @@
                               <th>
                                 #
                               </th>
-                              <th>Name</th>
+                              <th>User Details</th>
                               <th>Delivery Note</th>
                               <th>Email(s)</th>
                               <th>
@@ -64,6 +64,9 @@
                                   {{user.firstName}} {{user.lastName}}
                                 </div>
                                 <span class="text-muted">{{ user.address }}</span>
+                                <div>
+                                  {{ user.phones }}
+                                </div>
                                 <div class="m-t-15">
                                     <ng-container *ngFor="let productDesc of user.productDesc; let pdIndex = index">
                                       <label class="badge badge-warning">  {{productDesc}} </label>
