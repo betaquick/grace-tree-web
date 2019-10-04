@@ -36,6 +36,8 @@ export class CompanyUsersListComponent implements OnInit {
     onlyActive: false
   };
 
+  recipient: any = {};
+
   constructor(
     private companyService: CompanyService,
     private toastr: ToastrService,
@@ -44,6 +46,11 @@ export class CompanyUsersListComponent implements OnInit {
   ngOnInit() {
     this.loading = false;
     this.getAllUsers();
+  }
+
+  openNote(modal: any, recipient) {
+    this.recipient = recipient;
+    modal.show();
   }
 
   getAllUsers() {
