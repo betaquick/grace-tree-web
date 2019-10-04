@@ -51,7 +51,8 @@
                                 #
                               </th>
                               <th>Name</th>
-                              <th>Email Address</th>
+                              <th>Delivery Note</th>
+                              <th>Email(s)</th>
                               <th>
                                 Status
                               </th>
@@ -59,7 +60,10 @@
                             <tr *ngFor="let user of users | slice: (offset-1) * LIMIT : (offset-1) * LIMIT + LIMIT; let i = index;">
                               <td>{{ ((offset - 1) * LIMIT) + (i + 1) }}</td>
                               <td>
-                                {{user.firstName}} {{user.lastName}}
+                                <div>
+                                  {{user.firstName}} {{user.lastName}}
+                                </div>
+                                <span class="text-muted">{{ user.address }}</span>
                                 <div class="m-t-15">
                                     <ng-container *ngFor="let productDesc of user.productDesc; let pdIndex = index">
                                       <label class="badge badge-warning">  {{productDesc}} </label>
@@ -68,7 +72,13 @@
                                 </div>
                               </td>
                               <td>
-                                  <span class="text-muted">{{ user.email }}</span>
+                                <span class="text-muted">{{ user.deliveryInstruction || 'No Delivery Note' }}</span>
+                              </td>
+                              <td>
+                                <ng-container *ngFor="let email of user.emails">
+                                    <span class="text-muted">{{ email }}</span>
+                                    <br>
+                                </ng-container>
                               </td>
                               <td>
                                 <span class="label label-warning" *ngIf="user.status === userStatus.Pause">Pause</span>
