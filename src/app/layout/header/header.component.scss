@@ -38,3 +38,7 @@
     }
   }
 }
+
+nav[pcoded-header-position='fixed'].opened {
+  min-height: 112px;
+}

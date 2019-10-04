@@ -79,7 +79,7 @@ export class HeaderComponent implements OnInit {
 
   toggleProfileNotification() {
     this.profileNotification = this.profileNotification === 'an-off' ? 'an-animate' : 'an-off';
-    this.profileNotificationClass = this.profileNotification === 'an-animate' ? 'active' : '';
+    this.profileNotificationClass = this.profileNotification === 'an-animate' ? '' : 'active';
   }
 
   notificationOutsideClick(ele: string) {

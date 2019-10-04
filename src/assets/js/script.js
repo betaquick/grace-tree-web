@@ -57,6 +57,8 @@ $(document).ready(function() {
     });
     $(".mobile-options").on('click', function() {
         $(".navbar-container .nav-right").slideToggle('slow');
+        $(".navbar-container .nav-right").toggleClass('d-none');
+        $("nav[pcoded-header-position='fixed']").toggleClass('opened');
     });
     $(".search-btn").on('click', function() {
         $(".main-search").addClass('open');
