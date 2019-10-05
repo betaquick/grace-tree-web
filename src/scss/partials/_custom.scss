@@ -1267,6 +1267,16 @@ canvas {
   width: 500px;
 }
 
+@media (max-width: 600px) {
+  .login-card.auth-body {
+    width: 80%;
+
+    p {
+      font-size: 0.8em;
+    }
+  }
+}
+
 .j-forms {
   background: none;
   border: none;
