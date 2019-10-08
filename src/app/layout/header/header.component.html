@@ -38,7 +38,7 @@
         </li>
       </ul>
       
-      <ul [@mobileHeaderNavRight]="navRight" [ngClass]="navRight" class="nav-right d-none">
+      <ul [@mobileHeaderNavRight]="navRight" [ngClass]="navRight" class="nav-right">
         <li (clickOutside)="notificationOutsideClick('profile')" class="user-profile header-notification" [ngClass]="profileNotificationClass"
           (click)="toggleProfileNotification()">
           <a href="javascript:">

@@ -1,10 +1,23 @@
 import {Component, OnInit} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
+import {NavigationEnd, Router, NavigationStart} from '@angular/router';
 import * as LogRocket from 'logrocket';
 import { SessionStorage } from 'ngx-store';
 
 
 import { User } from './shared/models/user-model';
+
+const isPcodedRefPage = (pathname?: string): boolean => {
+  if (!pathname) {
+    return false;
+  }
+
+  switch (pathname.split('/').slice(1)[0]) {
+    case 'user': case 'company':
+      return true;
+    default:
+      return false;
+  }
+};
 
 @Component({
   selector: 'app-root',
@@ -37,9 +50,15 @@ export class AppComponent implements OnInit {
       LogRocket.captureException(new Error((e as PromiseRejectionEvent).reason.message));
 
     });
+    let previousUrl = null;
     this.router.events.subscribe((evt) => {
       if (!(evt instanceof NavigationEnd)) {
         return;
+      } else {
+          if (isPcodedRefPage(evt.url) && (previousUrl && !isPcodedRefPage(previousUrl))) {
+            window.location.href = evt.url;
+          }
+        previousUrl = evt.url;
       }
       window.scrollTo(0, 0);
     });

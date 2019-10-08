@@ -41,4 +41,36 @@
 
 nav[pcoded-header-position='fixed'].opened {
   min-height: 112px;
+
+  .navbar-container {
+    ul.navbar-right {
+      display: block;
+    }
+  }
+}
+
+nav[pcoded-header-position='fixed'] {
+  .navbar-container.container-fluid {
+    ul.navbar-right {
+      display: none !important;
+    }
+  }
+
+  .header-navbar .navbar-wrapper .navbar-container .nav-right {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  nav[pcoded-header-position='fixed'].header-navbar 
+   .navbar-wrapper .navbar-container .nav-right {
+    display: none !important;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  nav[pcoded-header-position='fixed'].header-navbar.opened 
+   .navbar-wrapper .navbar-container .nav-right {
+    display: block !important;
+  }
 }
