@@ -72,7 +72,7 @@
               <div class="j-row">
                 <div class="span6 unit">
                   <div class="input">
-                    <input [ngClass]="{'form-control-danger': home_number.dirty && home_number.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                    <input [ngClass]="{'form-control-danger': home_number.dirty && home_number.invalid}"
                       type="text" class="form-control" #home_number="ngModel" id="home_number" name="number" placeholder="Home Phone Number"
                       [(ngModel)]="user.phones[0].phoneNumber" required phone="US">
                   </div>
@@ -80,7 +80,7 @@
 
                 <div class="span6 unit">
                   <div class="input">
-                    <input [ngClass]="{'form-control-danger': cell_number.dirty && cell_number.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                    <input [ngClass]="{'form-control-danger': cell_number.dirty && cell_number.invalid}"
                       type="text" class="form-control" #cell_number="ngModel" name="cell_number" placeholder="Cell Phone Number"
                       [(ngModel)]="user.phones[1].phoneNumber" required phone="US">
                   </div>
@@ -90,7 +90,7 @@
 
                 <div class="unit">
                   <div class="input">
-                    <input [ngClass]="{'form-control-danger': work_number.dirty && work_number.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                    <input [ngClass]="{'form-control-danger': work_number.dirty && work_number.invalid}"
                       type="text" class="form-control" #work_number="ngModel" name="work_number" placeholder="Work Phone Number"
                       [(ngModel)]="user.phones[2].phoneNumber" required phone="US">
                   </div>
@@ -107,7 +107,7 @@
                 </div>
                 <div class="span6 unit">
                   <div class="input" class="form-group">
-                    <input [ngClass]="{'form-control-danger': confirmPassword.dirty && confirmPassword.invalid}" [ngModelOptions]="{updateOn: 'blur'}"
+                    <input [ngClass]="{'form-control-danger': confirmPassword.dirty && confirmPassword.invalid}"
                       type="password" id="confirmPassword" name="confirmPassword" #confirmPassword="ngModel" placeholder="Confirm Password"
                       [(ngModel)]="user.confirmPassword" [equalTo]="password" />
                   </div>
