@@ -41,7 +41,7 @@
                             
               <div class="row m-b-20">
                 <div class="col-md-12">
-                  <h3 class="text-left">Delivery Address and Instructions</h3>
+                  <h3 class="text-left">Delivery Address</h3>
                 </div>
               </div>
 
@@ -76,10 +76,16 @@
                 </div>
               </div> 
 
+              <div class="row m-b-20">
+                <div class="col-md-12">
+                  <h3 class="text-left">Delivery Instructions</h3>
+                </div>
+              </div>
+
               <div class="unit">
                 <textarea
-                    [ngClass]="{'form-control-danger': deliveryInstruction.dirty && (deliveryInstruction.invalid || !deliveryInstruction.value?.trim().length)}"
-                    type="text" placeholder="Delivery Instruction" required
+                    [ngClass]="{'form-control-danger': deliveryInstruction.dirty && (deliveryInstruction.invalid || !deliveryInstruction.value?.trim()?.length)}"
+                    type="text" placeholder="Your delivery preference" required
                     #deliveryInstruction="ngModel" name="deliveryInstruction"
                     [(ngModel)]="deliveryInfo.address.deliveryInstruction" rows="5">
                   {{ deliveryInfo.address.deliveryInstruction }}
