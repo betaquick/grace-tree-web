@@ -6,7 +6,7 @@ import { finalize } from 'rxjs/operators';
 
 import { CompanyService } from '../company.service';
 import { BusinessInfo } from '../../shared/models/company-model';
-import { User, ScheduleDelivery } from '../../shared/models/user-model';
+import { User, ScheduleDelivery, UserProduct } from '../../shared/models/user-model';
 import { Template } from '../../shared/models/template-model';
 
 @Component({
@@ -22,6 +22,8 @@ export class SetupDeliveryComponent implements OnInit {
   company: BusinessInfo;
   crews: User[];
   recipientTemplate: Template;
+  recipientProducts: UserProduct[] = [];
+  products: UserProduct[] = [];
   crewTemplate: Template;
 
   delivery: ScheduleDelivery;
@@ -51,6 +53,8 @@ export class SetupDeliveryComponent implements OnInit {
         this.router.navigate(['/company/search']);
       }
     });
+
+    // select all user selected products by default
   }
 
   getDeliveryInfo(userId: number) {
@@ -58,6 +62,10 @@ export class SetupDeliveryComponent implements OnInit {
       .subscribe(
         deliveryInfo => {
           this.recipient = deliveryInfo.recipient;
+          this.products = deliveryInfo.recipient.products || [];
+          this.recipientProducts = (deliveryInfo.recipient.products || [])
+            .filter(p => p.status);
+          this.recipient.products = this.recipientProducts;
           this.company = deliveryInfo.company;
           this.crews = deliveryInfo.crews;
         },

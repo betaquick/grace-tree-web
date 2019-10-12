@@ -56,6 +56,16 @@
 
     <div class="form-group row">
       <label class="col-sm-12 col-form-label">
+        <strong>Products in Delivery</strong>
+      </label>
+      <div class="col-sm-12">
+        <span *ngFor="let product of delivery?.deliveryProducts">{{ product }}</span>
+        <span *ngIf="!delivery?.deliveryProducts?.length"> &nbsp; - &nbsp; </span>
+      </div>
+    </div>
+
+    <div class="form-group row">
+      <label class="col-sm-12 col-form-label">
           <strong>Crew Member</strong>
       </label>
       <div class="col-sm-12">

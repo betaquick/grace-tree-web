@@ -113,4 +113,5 @@ export class ScheduleDelivery {
   statusCode?: string;
   userDeliveryStatus?: string;
   isAssigned?: boolean;
+  products?: UserProduct[];
 }

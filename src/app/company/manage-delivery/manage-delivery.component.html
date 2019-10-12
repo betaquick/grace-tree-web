@@ -147,6 +147,37 @@
                       </div>
                     </div>
 
+                  <!-- Update Products -->
+                  <div class="form-group row">
+                    <label for="" class="col-sm-2 col-form-label">Select Products</label>
+                    <div class="col-sm-10">
+                      <ng-select
+                          [(ngModel)]="delivery.deliveryProducts"
+                          [closeOnSelect]="false"
+                          [items]="products"
+                          [multiple]="true"
+                          [ngClass]="{ 'ng-invalid': !delivery?.deliveryProducts?.length }"
+                          [searchable]="false"
+                          bindValue="productId"
+                          name="products[]"
+                          [compareWith]="compareFn"
+                          placeholder="Select prducts">
+                          <ng-template ng-option-tmp let-product="item" let-index="index">
+                            <span>{{ product.productDesc }}</span>
+                          </ng-template>
+                          <ng-template ng-label-tmp let-product="item" let-clear="clear">
+                            <span (click)="clear(product)" aria-hidden="true" class="ng-value-icon right">×</span>
+                            <span class="px-1">{{ product.productDesc }}</span>
+                          </ng-template>
+                      </ng-select>
+                      <div *ngIf="deliveryForm.submitted && !delivery?.deliveryProducts?.length"
+                          class="invalid-feedback d-block">
+                        <div *ngIf="!delivery?.deliveryProducts?.length">At least a product is required</div>
+                      </div>
+                    </div>
+                  </div>
+
+
                   <!-- Message Recipient -->
                   <div class="form-group row">
                     <label class="col-sm-2 col-form-label">Send Message to Recipient</label>

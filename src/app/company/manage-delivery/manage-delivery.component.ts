@@ -7,7 +7,7 @@ import { UserStatus, UserDeliveryStatus, DeliveryStatusCodes } from '@betaquick/
 import { SessionStorage } from 'ngx-store';
 import { CompanyService } from '../company.service';
 import { BusinessInfo as Company } from '../../shared/models/company-model';
-import { User } from '../../shared/models/user-model';
+import { User, UserProduct } from '../../shared/models/user-model';
 import * as _ from 'lodash';
 
 @Component({
@@ -26,6 +26,7 @@ export class ManageDeliveryComponent implements OnInit, OnDestroy {
   deliveries = [];
   delivery: any = {};
   crews: User[] = [];
+  products: UserProduct[] = [];
   recipients: User[] = [];
   deliveryId: number;
   isScheduled: boolean;
@@ -63,6 +64,7 @@ export class ManageDeliveryComponent implements OnInit, OnDestroy {
       .subscribe(deliveries => {
         this.deliveries = deliveries;
         this.delivery = deliveries[0];
+        this.products = this.delivery.products;
         this.isScheduled = this.deliveries[0].statusCode === DeliveryStatusCodes.Scheduled;
       },
         err => this.toastr.error(err)
@@ -91,6 +93,7 @@ export class ManageDeliveryComponent implements OnInit, OnDestroy {
     data.userDeliveryStatus = this.delivery.deliveryStatus;
     data.assignedByUserId = this.user.userId || this.delivery.assignedByUserId;
     data.details = this.delivery.details || '';
+    data.products = this.delivery.deliveryProducts;
     this.companyService.updateDelivery(this.deliveryId, data)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
@@ -101,6 +104,13 @@ export class ManageDeliveryComponent implements OnInit, OnDestroy {
         },
         err => this.toastr.error(err)
       );
+  }
+
+  compareFn(product: UserProduct, selected: UserProduct | number ): boolean {
+    if (typeof selected === 'number') {
+      return product.productId === selected;
+    }
+    return product.productId === selected.productId;
   }
 
   ngOnDestroy(): void {}
