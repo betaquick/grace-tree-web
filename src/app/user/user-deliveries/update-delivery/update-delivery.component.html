@@ -60,6 +60,14 @@
                     </div>
 
                     <div class="form-group row">
+                      <label class="col-sm-2 col-form-label">Products in Delivery</label>
+                      <div class="m-t-15">
+                        <label class="badge badge-success ml-2" *ngFor="let product of delivery?.deliveryProducts;">
+                          {{product}} </label>
+                      </div>
+                    </div>
+
+                    <div class="form-group row">
                       <label class="col-sm-2 col-form-label">Additional Message</label>
                       <div class="col-sm-10">
                         {{delivery.additionalRecipientText}}

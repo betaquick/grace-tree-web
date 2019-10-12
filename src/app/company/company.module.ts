@@ -20,6 +20,7 @@ import { SharedModule } from '../shared/shared.module';
 import { ManageDeliveryComponent } from './manage-delivery/manage-delivery.component';
 import { CrewProfileComponent } from './crew-profile/crew-profile.component';
 import { CompanyUsersListComponent } from './company-users-list/users-list.component';
+import { NgSelectModule } from '@ng-select/ng-select';
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
@@ -28,6 +29,7 @@ import { CompanyUsersListComponent } from './company-users-list/users-list.compo
     CommonModule,
     CompanyRoutingModule,
     FormsModule,
+    NgSelectModule,
     CustomFormsModule,
     SharedModule,
     GooglePlaceModule
