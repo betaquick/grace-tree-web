@@ -7,7 +7,7 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { _throw } from 'rxjs/observable/throw';
-import { catchError } from 'rxjs/operators';
+import { catchError, filter } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
@@ -26,9 +26,10 @@ export class AuthErrorInterceptor implements HttpInterceptor {
           if ((error.status === 401) || (error.error && error.error.status === 401)) {
             this.auth.logout();
             this.router.navigate(['/login']);
+            const body = 'Authentication Failed';
+            return _throw({ body, error: { body } });
           }
-          const body = 'Authentication Failed';
-          return _throw({ body, error: { body } });
+          return _throw(error);
         })
       );
   }
