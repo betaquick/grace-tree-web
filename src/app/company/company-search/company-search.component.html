@@ -72,8 +72,13 @@
                                 </ng-container>
                                 <label class="badge badge-danger" *ngIf="!user.productDesc?.length">  No Products </label>
                               </div>
-                              <h6 class="body">{{ getUniqueEmails(user) }}</h6>
-                              <h6 class="body">{{ getUniquePhoneNumbers(user) }}</h6>
+                              <h6 class="body">
+                                <span *ngFor="let mail of getUniqueEmails(user); let isLastMail = last">{{ mail }}<span *ngIf="!isLastMail">, </span>
+                                </span>
+                              </h6>
+                              <h6 class="body">
+                                <span *ngFor="let phone of getUniquePhoneNumbers(user); let isLastPhone = last">{{ phone }}<span *ngIf="!isLastPhone">, </span></span>
+                              </h6>
                               <h6 class="body">{{ (user.distance || 0) | number : '1.1-1' }} miles away</h6>
                               <h6 class="body">
                                 <button (click)="openNote(modalDefault, user)" class="btn btn-sm btn-outline-primary">
@@ -234,10 +239,10 @@
         <label class="badge badge-danger" *ngIf="!recipient.productDesc?.length">  No Products </label>
     </div>
     <div class="f-13 m-b-15">
-        Email(s): <span *ngFor="let email of getUniqueEmails(recipient); let isLast = last" class="text-muted"> {{ email }} {{ isLast ? '' : ', ' }}</span>
+        Email(s): <span *ngFor="let email of getUniqueEmails(recipient); let isLastEmail = last" class="text-muted"> {{ email }} {{ isLastEmail ? '' : ', ' }}</span>
     </div>
     <div class="f-13 m-b-15">
-      Phone(s): <span *ngFor="let phone of getUniquePhoneNumbers(recipient); let isLast = last" class="text-muted"> {{ phone }} {{ isLast ? '' : ', ' }}</span>
+      Phone(s): <span *ngFor="let phone of getUniquePhoneNumbers(recipient); let isLastFone = last" class="text-muted"> {{ phone }} {{ isLastFone ? '' : ', ' }}</span>
     </div>
     <p>Note: {{recipient.deliveryInstruction || "No delivery instructions"}}</p>
     <span class="label label-warning" *ngIf="recipient.status === userStatus.Pause">Pause</span>
