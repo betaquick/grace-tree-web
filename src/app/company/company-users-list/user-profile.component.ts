@@ -98,7 +98,7 @@ export class CompanyUserProfileComponent implements OnInit, OnDestroy {
 
     this.loading = true;
 
-    this.userService.deactivateAccount(this.auth.user.userId)
+    this.userService.deactivateAccount(this.user.userId)
       .pipe(finalize(() => this.loading = false))
       .subscribe(
         () => {
