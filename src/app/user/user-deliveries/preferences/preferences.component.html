@@ -3,7 +3,7 @@
       <div class="card-header">
         <h5 class="card-header-text">Delivery Preference</h5>
         <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
-          (click)="isPreferenceEdit=!isPreferenceEdit">
+          (click)="isPreferenceEdit=!isPreferenceEdit" *ngIf="!readonly">
           <i class="icofont icofont-edit"></i>
         </button>
       </div>

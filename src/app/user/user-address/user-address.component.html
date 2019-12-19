@@ -4,7 +4,7 @@
       <div class="card-header">
         <h5 class="card-header-text">Delivery Address and Delivery Instructions</h5>
         <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right"
-          (click)="editMode=!editMode">
+          (click)="editMode=!editMode" *ngIf="!readonly">
           <i class="icofont icofont-edit"></i>
         </button>
       </div>

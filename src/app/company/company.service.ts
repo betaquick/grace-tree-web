@@ -28,7 +28,7 @@ export class CompanyService implements OnDestroy {
     return this.http
       .put(`${AppConfig.API_URL}/user/company`, { company, user })
       .pipe(
-        flatMap(() => this.fetchUserData()),
+        flatMap(() => this.fetchUserData(null)),
         map(response => {
           return response;
         }),
@@ -40,7 +40,7 @@ export class CompanyService implements OnDestroy {
     return this.http
       .put(`${AppConfig.API_URL}/user/profile`, profile)
       .pipe(
-        flatMap(() => this.fetchUserData()),
+        flatMap(() => this.fetchUserData(null)),
         map(response => {
           return response;
         }),
@@ -204,13 +204,15 @@ export class CompanyService implements OnDestroy {
       );
   }
 
-  fetchUserData(): Observable<User> {
-    return this.http.get(`${AppConfig.API_URL}/user/${this.user.userId}`)
+  fetchUserData(userId?: number): Observable<User> {
+    return this.http.get(`${AppConfig.API_URL}/user/${userId || this.user.userId}`)
       .pipe(
         map(response => {
-          this.user = _.get(response, 'body');
-          this.company = _.get(response, 'body.company');
-          return {user: this.user, company: this.company};
+          if (!userId) {
+            this.user = _.get(response, 'body');
+            this.company = _.get(response, 'body.company');
+          }
+          return {user: _.get(response, 'body'), company: _.get(response, 'body.company')};
         }),
         catchError(utils.handleError)
       );
