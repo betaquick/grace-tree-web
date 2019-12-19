@@ -15,6 +15,7 @@ import { utils } from '../../../shared/utils';
 export class UserDeliveryPreferenceComponent implements OnInit, OnChanges {
 
   @Input() userProducts: any[] = [];
+  @Input() readonly: boolean;
   @Output() deliveryPreferenceUpdatedEvent: EventEmitter<{productId: number; status: boolean}[]> = new EventEmitter<any>();
   isPreferenceEdit: boolean;
   loading: boolean;

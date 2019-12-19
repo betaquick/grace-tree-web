@@ -61,7 +61,9 @@
                               <td>{{ ((offset - 1) * LIMIT) + (i + 1) }}</td>
                               <td>
                                 <div>
-                                  {{user.firstName}} {{user.lastName}}
+                                  <a [routerLink]="[user.userId, 'profile']" style="font-weight: 700">
+                                    {{user.firstName}} {{user.lastName}}
+                                  </a>
                                 </div>
                                 <span class="text-muted">{{ user.address }}</span>
                                 <div>

@@ -24,6 +24,7 @@ export class UserAddressComponent implements OnInit {
   editMode: boolean;
   errorMessage: string;
   @Input() address: Address;
+  @Input() readonly: boolean;
   loading: boolean;
   stateArray: State[] = states;
 
