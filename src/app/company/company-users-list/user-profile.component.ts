@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as _ from 'lodash';
-import { finalize, switchMap, catchError  } from 'rxjs/operators';
+import { finalize, switchMap, catchError } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/observable/of';
@@ -37,11 +37,11 @@ export class CompanyUserProfileComponent implements OnInit, OnDestroy {
   isProfileEdit: boolean;
   userProducts: UserProduct[] = [];
   loading: boolean;
+  userLoading = true;
   errorMessage: string;
   primaryAddress: Address;
 
   user: User;
-  // TODO (oneeyedsunday) fetchingUser indicator
 
   constructor(
     private userService: UserService,
@@ -64,7 +64,7 @@ export class CompanyUserProfileComponent implements OnInit, OnDestroy {
         this.router.navigate(['/company']);
         return Observable.of([]);
       })
-    ).subscribe(({ user, company }) => {
+    ).subscribe(({ user }) => {
       this.user = user;
       this.userProducts = user.products;
       this.primaryAddress = _.head(_.get(this.user, 'addresses'));
@@ -79,6 +79,8 @@ export class CompanyUserProfileComponent implements OnInit, OnDestroy {
       if (this.user.emails.length < 2) {
         this.user.emails.push(new Email());
       }
+
+      this.userLoading = false;
     });
 
   }
