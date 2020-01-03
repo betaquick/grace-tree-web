@@ -29,5 +29,12 @@ export const utils = {
       default:
         return false;
     }
+  },
+
+  trimValue(value: string | undefined): string {
+    if (value === null || value === undefined || !(value || '').length || typeof value !== 'string') {
+        return value;
+    }
+    return (value || '').trim();
   }
 };

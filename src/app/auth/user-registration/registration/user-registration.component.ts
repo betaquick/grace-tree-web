@@ -46,7 +46,9 @@ export class UserRegistrationComponent implements OnInit {
 
     this.loading = true;
 
-    this.authService.register(this.user)
+    const trimmedUser = RegisterUser.trimValues(this.user);
+
+    this.authService.register(trimmedUser)
     .pipe(finalize(() => this.loading = false))
       .subscribe(
         () => this.router.navigate(['/user-registration/add-delivery']),
