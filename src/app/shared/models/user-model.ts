@@ -1,5 +1,6 @@
 import { Product } from './product-model';
 import { UserTypes } from '@betaquick/grace-tree-constants';
+import { utils } from '../utils';
 
 export class Profile {
   status?: String;
@@ -83,6 +84,21 @@ export class RegisterUser {
   password?: string;
   confirmPassword?: string;
   userType?: string;
+
+  static trimValues(user: RegisterUser): RegisterUser {
+    // copy values over
+    user = JSON.parse(JSON.stringify(user));
+    (user.firstName) && (user.firstName = utils.trimValue(user.firstName));
+    (user.lastName) && (user.lastName = utils.trimValue(user.lastName));
+    (user.phoneNumber) && (user.phoneNumber = utils.trimValue(user.phoneNumber));
+    user.email && (user.email = utils.trimValue(user.email));
+    (user.emails || []).forEach(emailObj => {
+      if (emailObj && emailObj.emailAddress) {
+        emailObj.emailAddress = utils.trimValue(emailObj.emailAddress);
+      }
+    });
+    return user;
+  }
 }
 
 export class UserPreferences {
