@@ -88,10 +88,18 @@ export class RegisterUser {
   static trimValues(user: RegisterUser): RegisterUser {
     // copy values over
     user = JSON.parse(JSON.stringify(user));
-    (user.firstName) && (user.firstName = utils.trimValue(user.firstName));
-    (user.lastName) && (user.lastName = utils.trimValue(user.lastName));
-    (user.phoneNumber) && (user.phoneNumber = utils.trimValue(user.phoneNumber));
-    user.email && (user.email = utils.trimValue(user.email));
+    if (user.firstName) {
+      user.firstName = utils.trimValue(user.firstName);
+    }
+    if (user.lastName) {
+      user.lastName = utils.trimValue(user.lastName);
+    }
+    if (user.phoneNumber) {
+      user.phoneNumber = utils.trimValue(user.phoneNumber);
+    }
+    if (user.email) {
+      user.email = utils.trimValue(user.email);
+    }
     (user.emails || []).forEach(emailObj => {
       if (emailObj && emailObj.emailAddress) {
         emailObj.emailAddress = utils.trimValue(emailObj.emailAddress);
