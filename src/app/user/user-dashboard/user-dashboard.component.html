@@ -17,10 +17,19 @@
                   </div>
                 </div>
                 <div class="card-block">
-                  <i class="fa st-icon st-icon" [ngClass]="{ 'fa-pause-circle bg-danger': !status, 'fa-play-circle bg-success': status }"></i>
+                  <i class="fa st-icon st-icon"
+                     [ngClass]="{ 'fa-pause-circle bg-danger': !status, 'fa-play-circle bg-success': status }"></i>
                   <div class="text-left d-flex cus-switch justify-content-between">
-                    <h3 class="d-inline-block">{{status ? 'Ready' : 'Pause'}}</h3>
-                    <ui-switch color="#2ed8b6" [(ngModel)]="status" (ngModelChange)="updateUserState($event, modalDefault)"></ui-switch>
+                    <h3 class="d-inline-block">{{status ? 'Ready' : 'Paused'}}</h3>
+                    <ui-switch [color]="'#2ED8B6'" [defaultBgColor]="'#FF5370'" [(ngModel)]="status"
+                               [loading]="isLoading"
+                               [beforeChange]="updateUserState"
+                               [class.text-success]="status  && !isLoading"
+                               [class.text-danger]="!status && !isLoading">
+                      <i class="fa fa-play" *ngIf="status && !isLoading"></i>
+                      <i class="fa fa-pause" *ngIf="!status && !isLoading"></i>
+                      <i class="fa fa-spinner fa-pulse" *ngIf="isLoading"></i>
+                    </ui-switch>
                   </div>
                 </div>
               </div>
@@ -43,8 +52,8 @@
             </div>
 
             <app-delivery-preference
-            [userProducts]="userProducts"
-            (deliveryPreferenceUpdatedEvent)="handleDeliveryPreference($event)"></app-delivery-preference>
+              [userProducts]="userProducts"
+              (deliveryPreferenceUpdatedEvent)="handleDeliveryPreference($event)"></app-delivery-preference>
             <!-- Recent Orders start -->
             <div class="col-xl-12 col-md-12">
               <div class="card">
@@ -85,11 +94,14 @@
     </button>
   </div>
   <div class="app-modal-body">
-    Please note that you will start receiving deliveries when you change your status to Ready. Deliveries can be scheduled at any time without notice.
+    Please note that you will start receiving deliveries when you change your status to Ready. Deliveries can be
+    scheduled at any time without notice.
   </div>
   <div class="app-modal-footer">
     <div class="text-center">
-      <button type="button" class="btn btn-primary waves-effect waves-light m-r-20" (click)="updateStatus('Ready')">Go to Ready</button>
+      <button type="button" class="btn btn-success waves-effect waves-light m-r-20" (click)="goToReady()">Go
+        to Ready
+      </button>
       <a href="javascript:" class="btn btn-danger waves-effect" (click)="closeModal()">Pause</a>
     </div>
   </div>

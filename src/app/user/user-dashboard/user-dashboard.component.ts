@@ -1,12 +1,15 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { SessionStorage } from 'ngx-store';
-import * as _ from 'lodash';
 import { UserStatus } from '@betaquick/grace-tree-constants';
 import { Router } from '@angular/router';
 
 import { UserService } from '../user.service';
 import { User, UserProduct } from '../../shared/models/user-model';
+import { finalize, tap } from 'rxjs/operators';
+import { of } from 'rxjs/observable/of';
+import { Observable } from 'rxjs/Observable';
+import { ModalBasicComponent } from '../../shared/modal-basic/modal-basic.component';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -18,28 +21,41 @@ import { User, UserProduct } from '../../shared/models/user-model';
 export class UserDashboardComponent implements OnInit, OnDestroy {
 
   @SessionStorage() user: User = new User();
+  @ViewChild('modalDefault') modalDefault: ModalBasicComponent;
   status: boolean;
-  modal: any;
   pendingCount = 0;
   deliveries = [];
   delivery: any = {};
   userProducts: UserProduct[] = [];
+  isLoading = false;
+
+  updateUserState: Observable<boolean> = new Observable((observer: any) => {
+    this.isLoading = true;
+
+    if (!this.status) {
+      this.modalDefault.show();
+    } else {
+      return this.updateStatus(UserStatus.Pause).subscribe(observer);
+    }
+  });
 
   constructor(
     private router: Router,
     private userService: UserService,
     private toastr: ToastrService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
-    this.status = this.user.profile.status === UserStatus.Ready ? true : false;
+    this.status = this.user.profile.status === UserStatus.Ready;
 
     this.getPendingDeliveries();
     this.getRecentDeliveries();
     this.getUserProducts();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() {
+  }
 
   getPendingDeliveries() {
     this.userService.getPendingDeliveries()
@@ -57,64 +73,71 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
       );
   }
 
-  updateUserState(value: boolean, modal) {
-    const status = value ? UserStatus.Ready : UserStatus.Pause;
 
-    if (status === UserStatus.Ready) {
-      this.modal = modal;
-      modal.show();
-    } else {
-      this.updateStatus(status);
-    }
+  updateStatus(status: string): Observable<boolean> {
+    return this.userService.updateStatus(status)
+      .pipe(
+        finalize(() => {
+          this.isLoading = false;
+          if (this.modalDefault) {
+            this.modalDefault.hide();
+          }
+        }),
+        tap(
+          () => {
+            this.toastr.success('Status updated successfully');
+
+            return of(true);
+          },
+          err => {
+            this.toastr.error(err);
+
+            return of(false);
+          },
+          () => {
+            this.status = this.user.profile.status === UserStatus.Ready;
+            if (this.modalDefault) {
+              this.modalDefault.hide();
+            }
+          }
+        ));
   }
 
-  updateStatus(status: string) {
-    this.userService.updateStatus(status)
-      .subscribe(
-        () => {
-          this.status = status === UserStatus.Ready ? true : false;
-          this.toastr.success('Status updated successfully');
-
-          if (this.modal) {
-            this.modal.hide();
-          }
-        },
-        err => {
-          this.toastr.error(err);
-
-          if (this.modal) {
-            this.modal.hide();
-          }
-        }
-      );
+  goToReady() {
+    if (this.modalDefault) {
+      this.modalDefault.hide();
+    }
+    this.updateStatus(UserStatus.Ready).subscribe();
   }
 
   getUserProducts() {
     this.userService
       .getUserProducts()
-      .subscribe(userProducts => this.userProducts = userProducts,
-      err => this.toastr.error(err)
-    );
+      .subscribe(
+        userProducts => this.userProducts = userProducts,
+        err => this.toastr.error(err)
+      );
   }
 
   handleDeliveryPreference(newProductsWithStatus) {
     this.userService.updateUserProducts(newProductsWithStatus)
-    .subscribe(
-      (updatedProducts) => {
-        this.userProducts = [...updatedProducts]; // trigger refresh
-        this.toastr.success('Delivery preference updated successfully');
-      },
-      err => {
-        this.toastr.error(err);
-        this.getUserProducts();
-      }
-    );
+      .subscribe(
+        (updatedProducts) => {
+          this.userProducts = [...updatedProducts]; // trigger refresh
+          this.toastr.success('Delivery preference updated successfully');
+        },
+        err => {
+          this.toastr.error(err);
+          this.getUserProducts();
+        }
+      );
   }
 
   closeModal() {
-    this.status = false;
-
-    this.modal.hide();
+    this.isLoading = false;
+    if (this.modalDefault) {
+      this.modalDefault.hide();
+    }
   }
 
   updateDelivery({ delivery }) {
