@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-sm-12">
         <div class="login-card card-block auth-body mr-auto ml-auto">
-          <form class="md-float-material" #agreementForm="ngForm" (ngSubmit)="agreementForm.form.valid && acceptAgreement()">
+          <form class="md-float-material" #agreementForm="ngForm" (ngSubmit)="agreementForm.form.valid && correctName && allTermsAgreed && acceptAgreement()">
             <div class="text-center">
               <h3 class="logo">ChipDump</h3>
             </div>
@@ -17,32 +17,43 @@
               <hr />
 
               <div class="terms">
-                <p>I understand that by signing up to participate in this totally free program, I am agreeing to do
-                  these four things:</p>
+                <p>I understand that by signing up to participate in ChipDump, a totally free program, I am agreeing to the following:</p>
                 <ol class="list-modal">
-                  <li>Informing ChipDump when I am ready to receive a delivery.</li><br>
-                  <li>Informing ChipDump every time I receive a delivery.</li><br>
-                  <li>Informing ChipDump of my status going forward after receiving a delivery; if I am ready for another
-                    delivery or if I would like to wait or be marked inactive for a period of time.</li><br>
-                  <li>Informing ChipDump of any changes to my profile, including keeping the dumping location updated and
-                    current.</li>
+                  <ng-container *ngFor="let termAndCond of terms">
+                      <div class="form-check">
+                          <input type="checkbox" value="true" class="form-check-input"
+                          #term required>
+                          <label class="form-check-label">
+                          <span class="text-inverse">{{ termAndCond }}</span>
+                          </label>
+                      </div>
+                  </ng-container>
                 </ol>
-                <p>
-                  <b>*DISCLAIMER:</b>
-                  ChipDump Products & Services is a free, information management service designed to put people that want wood & dirt products in touch with people (Mostly Arborists & Landscapers), that have wood and dirt products to give away. ChipDump has no employees or authority over the Arborists/Landscapers that participate in the program. Should issues or problems arise regarding any aspect of a delivery, those should be resolved between the recipient and the delivering party/Arborist/Landscaper.
-                </p>
               </div>
-              <div class="row m-t-25 m-b-25 text-left">
-                <div class="col-sm-12 col-xs-12">
-                  <div class="checkbox-fade fade-in-primary">
-                    <label>
-                      <input type="checkbox" [(ngModel)]="acceptAcceptment" #agreement="ngModel" name="agreement" id="agreement" required>
-                      <span class="cr">
-                        <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
-                      </span>
-                      <span class="text-inverse">I have read, understand and agree with this disclaimer.</span>
-                    </label>
-                    <div class="alert alert-danger" *ngIf="agreement.invalid && agreementForm.submitted && agreement.errors?.required">Please accept terms and condition agreement</div></div></div>
+              <div class="j-row">
+                <div class="form-group col-12">
+                    <label for="" class="col-form-label">Your Name: </label>
+                    <input  
+                    [(ngModel)]="clientName"
+                    placeholder="[Your First Name] [Your Last Name]"
+                    #nameRef="ngModel" [ngModelOptions]="{ 'standalone': true }"
+                    required  [ngClass]="{ 'wrong__name':  agreementForm.submitted && (!!nameRef?.errors || !correctName) }"
+                    class="form-control"
+                    style="border: none; border-bottom: 3px solid #000"
+                    type="text"/>
+                </div>
+              </div>
+              <div class="j-row">
+                <div class="col-12">
+                  <div class="alert alert-danger mb-1" 
+                    *ngIf="agreementForm.submitted && !allTermsAgreed">
+                    Please accept <b>ALL</b> terms and condition agreement
+                  </div>
+                  <div class="alert alert-danger mb-2" 
+                    *ngIf="agreementForm.submitted && !correctName">
+                    Please type your name in the space provided above "{{ expectedName }}"
+                  </div>
+                </div>
               </div>
               <div class="j-row">
                 <div class="col-12">
