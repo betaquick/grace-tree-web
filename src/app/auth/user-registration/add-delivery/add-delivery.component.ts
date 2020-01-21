@@ -92,11 +92,18 @@ export class AddDeliveryComponent implements OnInit {
 
     this.loading = true;
 
+    const processedServiceNeeds = (this.deliveryInfo.preferences.service_needs || '').trim().length
+      ? this.deliveryInfo.preferences.service_needs : '[Nothing Entered]';
+
+    const getEstimateInfo = this.toBoolean(this.deliveryInfo.preferences.getEstimateInfo);
+
     this.authService.addDeliveryInfo({...this.deliveryInfo,
       preferences: {
         ...this.deliveryInfo.preferences,
         self_pickup: this.toBoolean(this.deliveryInfo.preferences.self_pickup),
-        getEstimateInfo: this.toBoolean(this.deliveryInfo.preferences.getEstimateInfo)
+        getEstimateInfo,
+        // set service needs to null if opted out of estimate info
+        service_needs: getEstimateInfo ? processedServiceNeeds : null
       }})
       .pipe(finalize(() => this.loading = false))
       .subscribe(
