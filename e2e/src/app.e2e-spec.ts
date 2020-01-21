@@ -1,14 +1,16 @@
 import { GraceTreeWebPage } from './app.po';
+import { browser } from 'protractor';
 
-describe('grace-tree-web App', function () {
+describe('Grace Tree Web App', function () {
   let page: GraceTreeWebPage;
 
   beforeEach(() => {
     page = new GraceTreeWebPage();
   });
 
-  it('should display welcome message', () => {
+  it('should navigate to sign up page', () => {
     page.navigateTo();
-    expect(page.getParagraphText()).toEqual('Welcome to app!');
+
+    expect(browser.getCurrentUrl()).toEqual('http://localhost:4206/signup');
   });
 });
