@@ -51,7 +51,7 @@ export class CompanyTemplateComponent implements OnInit {
     this.grouped_templates = [
       [
         templates.find(t => t.notificationType === NotificationTypes.CompanyDeliveryEmail),
-        templates.find(t => t.notificationType === NotificationTypes.CompanyDeliveryEmail),
+        templates.find(t => t.notificationType === NotificationTypes.CompanyDeliverySMS),
       ],
 
       [
