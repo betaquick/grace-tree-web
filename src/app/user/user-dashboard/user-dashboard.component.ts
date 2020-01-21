@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { SessionStorage } from 'ngx-store';
+import { LocalStorage, SessionStorage } from 'ngx-store';
 import { UserStatus } from '@betaquick/grace-tree-constants';
 import { Router } from '@angular/router';
 
@@ -21,6 +21,7 @@ import { ModalBasicComponent } from '../../shared/modal-basic/modal-basic.compon
 export class UserDashboardComponent implements OnInit, OnDestroy {
 
   @SessionStorage() user: User = new User();
+  @LocalStorage() defaultStateChanged = false;
   @ViewChild('modalDefault') modalDefault: ModalBasicComponent;
   status: boolean;
   pendingCount = 0;
@@ -86,6 +87,7 @@ export class UserDashboardComponent implements OnInit, OnDestroy {
         tap(
           () => {
             this.toastr.success('Status updated successfully');
+            this.defaultStateChanged = true;
 
             return of(true);
           },
