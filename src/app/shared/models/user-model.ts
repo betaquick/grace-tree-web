@@ -3,9 +3,9 @@ import { UserTypes } from '@betaquick/grace-tree-constants';
 import { utils } from '../utils';
 
 export class Profile {
-  status?: String;
+  status?: string;
   agreement ? = false;
-  createdAt?: String;
+  createdAt?: string;
 }
 export class Phone {
   userPhoneId?: number;
