@@ -5,6 +5,8 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "update-protractor": "cd ./node_modules/protractor && npm i webdriver-manager@latest",
+    "update-webdriver": "node ./node_modules/protractor/bin/webdriver-manager update",
     "build:prod": "ng build --prod",
     "test": "ng test --sourcemaps=false",
     "test-coverage": "ng test --watch=false --code-coverage --source-map=false",
@@ -70,7 +72,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint"
-    }  
+    }
   },
   "devDependencies": {
     "@angular/cli": "^1.7.3",
