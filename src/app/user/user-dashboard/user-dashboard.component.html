@@ -5,6 +5,14 @@
       <div class="page-wrapper">
 
         <div class="page-body">
+
+          <div *ngIf="user.profile.status === 'Pause' && !defaultStateChanged" class="alert alert-warning alert-dismissible m-3">
+            <i class="fa fa-exclamation-circle"></i>
+            Your profile is now set to Pause by default. In order to indicate that you are ready to receive a delivery,
+            You must set your profile to Ready by switching the red toggle switch to indicate you're Ready.
+            If you are not ready for a delivery, yet, you can leave it as it is on Pause mode.
+          </div>
+
           <div class="row">
 
             <div class="col-md-6 col-xl-6">
