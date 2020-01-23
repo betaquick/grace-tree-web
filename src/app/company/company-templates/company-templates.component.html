@@ -23,7 +23,12 @@
                         </tr>
                         <ng-container *ngFor="let templateGroup of grouped_templates; let lastGroup = last;">
                           <tr *ngFor="let template of templateGroup">
-                            <td class="constrain__width w-20" title="{{template.notificationType}}">{{template.notificationType}}</td>
+                            <td class="constrain__width w-20" title="{{template.description || template.notificationType}}">
+                             <span>{{template.notificationType}}</span> <br>
+                             <small>
+                               {{ template.description || 'No Description' }}
+                             </small>
+                            </td>
                             <td class="constrain__width w-30" title="{{template.message}}">{{ template.message }}</td>
                             <td>{{template.createdAt | date: 'MMMM d, y'}}</td>
                             <td>
