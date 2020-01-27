@@ -44,7 +44,7 @@ describe('Register Page', function() {
       browser.waitForAngularEnabled(false);
 
       browser.wait(ExpectedConditions.urlContains('add-delivery'));
-      expect(browser.getCurrentUrl()).toBe('http://localhost:4206/user-registration/add-delivery');
+      expect(browser.getCurrentUrl()).toContain('/user-registration/add-delivery');
 
       // Remove the logged in user
       browser.executeScript('window.localStorage.clear();');

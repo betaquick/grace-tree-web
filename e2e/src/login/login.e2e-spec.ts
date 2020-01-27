@@ -1,4 +1,4 @@
-import { browser, ExpectedConditions, element, by, $ } from 'protractor';
+import { $, browser, ExpectedConditions } from 'protractor';
 import { LoginPage } from './login.po';
 
 describe('Login Page', function () {

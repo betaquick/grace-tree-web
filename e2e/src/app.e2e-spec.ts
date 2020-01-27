@@ -11,6 +11,6 @@ describe('Grace Tree Web App', function () {
   it('should navigate to sign up page', () => {
     page.navigateTo();
 
-    expect(browser.getCurrentUrl()).toEqual('http://localhost:4206/signup');
+    expect(browser.getCurrentUrl()).toContain('/signup');
   });
 });
