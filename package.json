@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 4206",
     "build": "ng build",
     "update-protractor": "cd ./node_modules/protractor && npm i webdriver-manager@latest",
     "update-webdriver": "node ./node_modules/protractor/bin/webdriver-manager update",

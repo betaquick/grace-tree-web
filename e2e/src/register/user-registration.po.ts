@@ -7,8 +7,10 @@ export class UserRegistrationPage {
   newUser = {
     firstName: 'Samuel',
     lastName: 'Peters',
-    phone: '555-1784-394',
-    email: `samuelpeters${this.randomString}@gmail.com`,
+    phone: '+12133734253',
+    phone2: '+12133734254',
+    phone3: '+12133734255',
+    email: `developer${this.randomString}@gmail.com`,
     password: '1q2w3e4r5t',
     confirmPassword: '1q2w3e4r5t',
     timeZone: 'America/Denver'
@@ -17,17 +19,20 @@ export class UserRegistrationPage {
   existingUser = {
     firstName: 'Samuel',
     lastName: 'Peters',
-    phone: '555-1784-394',
-    email: 'admin@fccc.net',
+    phone: '+12133734253',
+    phone2: '+12133734254',
+    phone3: '+12133734255',
+    email: 'developer@gmail.com',
     password: '1q2w3e4r5t',
     confirmPassword: '1q2w3e4r5t',
-    timeZone: 'America/Denver'
   };
 
   wrongDetails = {
     firstName: 'Samuel',
     lastName: 'Peters',
-    phone: '555-1784-394',
+    phone: '+12133734253',
+    phone2: '+12133734254',
+    phone3: '+12133734255',
     email: 'admin@fccc.net',
     password: 'password',
     confirmPassword: 'passwordmismatch',
@@ -60,8 +65,8 @@ export class UserRegistrationPage {
     element(by.css('input[name="email"]')).sendKeys(credentials.email);
     element(by.css('input[name="secondaryemail"]')).sendKeys(credentials.email);
     element(by.css('input[name="number"]')).sendKeys(credentials.phone);
-    element(by.css('input[name="cell_number"]')).sendKeys(credentials.phone);
-    element(by.css('input[name="work_number"]')).sendKeys(credentials.phone);
+    element(by.css('input[name="cell_number"]')).sendKeys(credentials.phone2);
+    element(by.css('input[name="work_number"]')).sendKeys(credentials.phone3);
     element(by.css('input[name="password"]')).sendKeys(credentials.password);
     element(by.css('input[name="confirmPassword"]')).sendKeys(credentials.confirmPassword);
   }
