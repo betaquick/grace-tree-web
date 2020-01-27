@@ -6,6 +6,9 @@ const { SpecReporter } = require('jasmine-spec-reporter');
 exports.config = {
   allScriptsTimeout: 60000,
   specs: [
+    './src/app.e2e-spec.ts',
+    './src/register/register.e2e-spec.ts',
+    './src/login/login.e2e-spec.ts',
     './src/**/*.e2e-spec.ts'
   ],
   capabilities: {
@@ -21,7 +24,7 @@ exports.config = {
       prefs: {
         'download': {
           'prompt_for_download': false,
-          'default_directory': process.cwd(),
+          'default_directory': process.cwd()
         }
       }
     }

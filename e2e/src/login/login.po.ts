@@ -8,8 +8,8 @@ export class LoginPage {
   };
 
   validCredentials = {
-    email: 'developer@gmail.com',
-    password: 'developer'
+    email: `developer@gmail.com`,
+    password: '1q2w3e4r5t'
   };
 
   navigateTo() {

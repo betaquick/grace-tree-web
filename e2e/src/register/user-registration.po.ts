@@ -10,7 +10,7 @@ export class UserRegistrationPage {
     phone: '+12133734253',
     phone2: '+12133734254',
     phone3: '+12133734255',
-    email: `developer${this.randomString}@gmail.com`,
+    email: `developer@gmail.com`,
     password: '1q2w3e4r5t',
     confirmPassword: '1q2w3e4r5t',
     timeZone: 'America/Denver'
