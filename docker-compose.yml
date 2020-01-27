@@ -5,13 +5,15 @@ x-env:
   environment:
     - DB_HOST=mysql
     - API_URL=http://localhost:8083
-    - WEB_URL=http://localhost:4200
+    - WEB_URL=http://localhost:4206
     - DB_USERNAME=root
     - DB_PASSWORD=root
     - DB_PORT=3306
     - PORT=8083
     - TZ=UTC
     - ADMIN_EMAIL=support@bhsehr.com
+    - DEBUG=grace-tree*
+    - NODE_ENV=docker
 
 services:
   mysql:
@@ -26,7 +28,7 @@ services:
       - '3305:3306'
     expose:
       - '3306'
-    #volumes:
+      #volumes:
       #- db:/var/lib/mysql
     # Solves the Incorrect date value issue
     command: --sql_mode="NO_ENGINE_SUBSTITUTION"
@@ -52,23 +54,24 @@ services:
       context: .
       dockerfile: Dockerfile
     # Wait for server to be up and running before serving angular app
-    command: bash -c "./wait-for-it.sh grace-tree-server:8083 -t 60 -- ng serve --host=0.0.0.0 --configuration=docker"
+    command: bash -c "./wait-for-it.sh grace-tree-server:8083 -t 60 -- ng serve --host=0.0.0.0 --env=docker"
     ports:
-      - '4200:4200'
+      - '4206:4206'
     expose:
-      - '4200'
+      - '4206'
     links:
       - grace-tree-server
 
   grace-tree-web-test:
     image: betaquick/grace-tree-web:latest
     # Wait for server to be up, before running unit and protractor tests
-    command : >
+    command: >
       bash -c "
         ./wait-for-it.sh grace-tree-server:8083 -t 0 &&
-        ng e2e --host=0.0.0.0 --configuration=docker"
+        ng e2e --env=docker
+      "
     links:
       - grace-tree-server
 
-#volumes:
+  #volumes:
   #db:
