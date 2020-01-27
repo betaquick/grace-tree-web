@@ -4,12 +4,12 @@ x-env:
   &env_variables
   environment:
     - DB_HOST=mysql
-    - API_URL=http://localhost:8081
+    - API_URL=http://localhost:8083
     - WEB_URL=http://localhost:4200
     - DB_USERNAME=root
     - DB_PASSWORD=root
     - DB_PORT=3306
-    - PORT=8081
+    - PORT=8083
     - TZ=UTC
     - ADMIN_EMAIL=support@bhsehr.com
 
@@ -37,9 +37,9 @@ services:
     # Wait for mysql to be up and running before seeding && starting server
     command: bash -c "./wait-for-it.sh mysql:3306 -t 60 -- npm run migrate && npm run seed && npm start"
     ports:
-      - '8081:8081'
+      - '8083:8083'
     expose:
-      - '8081'
+      - '8083'
     depends_on:
       - mysql
     links:
@@ -52,7 +52,7 @@ services:
       context: .
       dockerfile: Dockerfile
     # Wait for server to be up and running before serving angular app
-    command: bash -c "./wait-for-it.sh grace-tree-server:8081 -t 60 -- ng serve --host=0.0.0.0 --configuration=docker"
+    command: bash -c "./wait-for-it.sh grace-tree-server:8083 -t 60 -- ng serve --host=0.0.0.0 --configuration=docker"
     ports:
       - '4200:4200'
     expose:
@@ -65,7 +65,7 @@ services:
     # Wait for server to be up, before running unit and protractor tests
     command : >
       bash -c "
-        ./wait-for-it.sh grace-tree-server:8081 -t 0 &&
+        ./wait-for-it.sh grace-tree-server:8083 -t 0 &&
         ng e2e --host=0.0.0.0 --configuration=docker"
     links:
       - grace-tree-server
