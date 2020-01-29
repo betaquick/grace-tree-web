@@ -46,6 +46,20 @@
                                         </div>
                                       </div>
                                       <div class="unit">
+                                        <div class="input">
+                                          <span class="form-control-plaintext">Description</span>
+                                        </div>
+                                        <div class="input">
+                                            <textarea rows="2" cols="5" style="height: unset" placeholder="Template Description"
+                                            #content="ngModel" name="description" [(ngModel)]="template.description"></textarea>
+                                        </div>
+                                      </div>
+                                      <div class="unit">
+                                          <div class="input">
+                                            <span class="form-control-plaintext">
+                                                Message Body:
+                                            </span>
+                                          </div>
                                           <div class="input">
                                               <textarea rows="7" cols="5" style="height: unset" placeholder="Template Message, Drag placeholders from above"
                                               #content="ngModel" name="message" [(ngModel)]="template.message"></textarea>

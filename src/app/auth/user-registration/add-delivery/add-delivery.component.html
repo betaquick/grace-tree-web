@@ -102,7 +102,7 @@
 
               <div class="unit" *ngFor="let product of products; let i = index">
                 <label class="input select">
-                  <span>Want {{product.productDesc.replace(' OK?', '')}}?</span>
+                  <span>{{ product.hint }}</span>
                   <select name="product{{i}}" [(ngModel)]="deliveryInfo.userProducts[i].status">
                     <option value="false">No</option>
                     <option value="true">Yes</option>
