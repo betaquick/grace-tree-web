@@ -35,6 +35,7 @@ pipelines:
           - node
         size: 2x
         script:
+          - $(aws ecr get-login --no-include-email --region us-east-2)
           - docker build -f Dockerfile -t $DOCKER_WEB_IMAGE:latest .
           - docker tag $DOCKER_SERVER_IMAGE:latest $AWS_WEB_IMAGE:latest
           - docker push $AWS_WEB_IMAGE:latest
