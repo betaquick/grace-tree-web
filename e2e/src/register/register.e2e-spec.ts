@@ -1,6 +1,7 @@
 import { $, browser, ExpectedConditions } from 'protractor';
 import { RegisterPage } from './register.po';
 import { UserRegistrationPage } from './user-registration.po';
+import { UserDeliveryPage } from './user-delivery.po';
 
 describe('Register Page', function() {
   let registerPage: RegisterPage;
@@ -12,11 +13,11 @@ describe('Register Page', function() {
     browser.wait(ExpectedConditions.visibilityOf($('.login-card')));
   });
 
-  it('should show Register text', async () => {
+  it('should show register text', () => {
     expect(registerPage.registerText()).toBe('Sign Up');
   });
 
-  describe('register as user', async () => {
+  describe('User Registration Page', async () => {
     let userRegistrationPage: UserRegistrationPage;
 
     beforeEach(() => {
@@ -26,28 +27,70 @@ describe('Register Page', function() {
       userRegistrationPage = new UserRegistrationPage();
     });
 
-    it('should show page correctly', () => {
+    it('should show user registration text', () => {
       expect(userRegistrationPage.userRegistrationText()).toBe('User Registration');
     });
 
-    it('should show error message if passwords mismatch', async () => {
-      userRegistrationPage.fillRegistrationForm(userRegistrationPage.wrongDetails);
+    describe('Invalid User Registration', () => {
+      it('should show error message if passwords mismatch', () => {
+        userRegistrationPage.fillRegistrationForm(userRegistrationPage.wrongDetails);
 
-      browser.wait(ExpectedConditions.visibilityOf(userRegistrationPage.validationErrorMessage()));
-      expect(userRegistrationPage.validationErrorMessage().getText()).toContain('Password is not the same');
+        browser.wait(ExpectedConditions.visibilityOf(userRegistrationPage.validationErrorMessage()));
+        expect(userRegistrationPage.validationErrorMessage().getText()).toContain('Password is not the same');
+      });
     });
 
-    it('should register successfully with valid user credentials', async () => {
-      userRegistrationPage.fillRegistrationForm(userRegistrationPage.newUser);
+    describe('Valid User Registration', () => {
 
-      userRegistrationPage.registerButton.click();
-      browser.waitForAngularEnabled(false);
+      describe('succeeds', async () => {
+        let userDeliveryPage: UserDeliveryPage;
 
-      browser.wait(ExpectedConditions.urlContains('add-delivery'));
-      expect(browser.getCurrentUrl()).toContain('/user-registration/add-delivery');
+        beforeEach(() => {
+          userRegistrationPage.fillRegistrationForm(userRegistrationPage.newUser);
 
-      // Remove the logged in user
-      browser.executeScript('window.localStorage.clear();');
+          userRegistrationPage.registerButton.click();
+          browser.waitForAngularEnabled(false);
+        });
+
+        it('should navigate to add delivery page', () => {
+          browser.wait(ExpectedConditions.urlContains('/add-delivery'));
+          userDeliveryPage = new UserDeliveryPage();
+          expect(browser.getCurrentUrl()).toContain('/user-registration/add-delivery');
+
+
+          describe('Delivery Info', () => {
+            it('should be on the right page', () => {
+              expect(userDeliveryPage.deliveryText()).toBe('Delivery Address');
+            });
+
+            it('should add delivery details', () => {
+              userDeliveryPage.fillDeliveryForm(userDeliveryPage.delivery);
+
+              userRegistrationPage.registerButton.click();
+              browser.waitForAngularEnabled(false);
+
+              browser.wait(ExpectedConditions.urlContains('/dashboard'));
+            });
+          });
+        });
+      });
+
+      describe('fails', () => {
+        beforeEach(() => {
+          userRegistrationPage.fillRegistrationForm(userRegistrationPage.newUser);
+
+          userRegistrationPage.registerButton.click();
+          browser.waitForAngularEnabled(false);
+        });
+
+        it('should show email taken error', () => {
+          browser.wait(ExpectedConditions.visibilityOf(userRegistrationPage.errorToast()));
+
+          expect(userRegistrationPage.errorToast().getText())
+            .toBe('Email address(es) developer@gmail.com, developer@stack.net have already been taken');
+        });
+      });
     });
+
   });
 });

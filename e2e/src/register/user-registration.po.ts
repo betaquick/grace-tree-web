@@ -11,6 +11,7 @@ export class UserRegistrationPage {
     phone2: '+12133734254',
     phone3: '+12133734255',
     email: `developer@gmail.com`,
+    email2: 'developer@stack.net',
     password: '1q2w3e4r5t',
     confirmPassword: '1q2w3e4r5t',
     timeZone: 'America/Denver'
@@ -23,6 +24,7 @@ export class UserRegistrationPage {
     phone2: '+12133734254',
     phone3: '+12133734255',
     email: 'developer@gmail.com',
+    email2: 'developer@stack.net',
     password: '1q2w3e4r5t',
     confirmPassword: '1q2w3e4r5t',
   };
@@ -33,7 +35,8 @@ export class UserRegistrationPage {
     phone: '+12133734253',
     phone2: '+12133734254',
     phone3: '+12133734255',
-    email: 'admin@fccc.net',
+    email: 'admin@grace.tree',
+    email2: 'developer@stack.net',
     password: 'password',
     confirmPassword: 'passwordmismatch',
     timeZone: 'America/Denver'
@@ -51,6 +54,10 @@ export class UserRegistrationPage {
     return element(by.css('.alert-warning strong'));
   }
 
+  errorToast() {
+    return element(by.css('div.toast-message.ng-star-inserted'));
+  }
+
   validationErrorMessage() {
     return element(by.css('.alert.alert-danger.background-danger'));
   }
@@ -63,7 +70,7 @@ export class UserRegistrationPage {
     element(by.css('input[name="firstName"]')).sendKeys(credentials.firstName);
     element(by.css('input[name="lastName"]')).sendKeys(credentials.lastName);
     element(by.css('input[name="email"]')).sendKeys(credentials.email);
-    element(by.css('input[name="secondaryemail"]')).sendKeys(credentials.email);
+    element(by.css('input[name="secondaryemail"]')).sendKeys(credentials.email2);
     element(by.css('input[name="number"]')).sendKeys(credentials.phone);
     element(by.css('input[name="cell_number"]')).sendKeys(credentials.phone2);
     element(by.css('input[name="work_number"]')).sendKeys(credentials.phone3);

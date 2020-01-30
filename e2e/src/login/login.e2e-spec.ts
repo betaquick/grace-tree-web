@@ -15,7 +15,7 @@ describe('Login Page', function () {
     expect(loginPage.signInText()).toBe('Sign In');
   });
 
-  it('should show error message with invalid login details', async () => {
+  it('should show error message with invalid login details', () => {
     loginPage.fillLoginForm(loginPage.invalidCredentials);
     loginPage.loginButton.click();
     browser.wait(ExpectedConditions.visibilityOf(loginPage.errorMessage()));

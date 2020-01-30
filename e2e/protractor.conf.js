@@ -14,13 +14,13 @@ exports.config = {
   capabilities: {
     browserName: 'chrome',
     chromeOptions: {
-      args: [
-        '--disable-gpu',
-        '--window-size=1200,600',
-        '--no-sandbox',
-        '--headless',
-        '--test-type=browser'
-      ],
+      // args: [
+      //   '--disable-gpu',
+      //   '--window-size=1200,600',
+      //   '--no-sandbox',
+      //   '--headless',
+      //   '--test-type=browser'
+      // ],
       prefs: {
         'download': {
           'prompt_for_download': false,
