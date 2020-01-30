@@ -7,15 +7,16 @@ export const utils = {
   handleError(error: HttpErrorResponse) {
     LogRocket.captureException(error);
     if (navigator && !navigator.onLine) {
-      return _throw('Something went wrong, You seem to be offline');
+      return _throw('Something went wrong, You seem to be offline, Please check your internet connection & try again');
     }
-    if (error.name === 'NetworkError' || error.error instanceof ErrorEvent || error.error instanceof ProgressEvent) {
+    if (error.error instanceof ErrorEvent || error.error instanceof ProgressEvent) {
       // A client-side or network error occurred. Handle it accordingly.
-      return _throw('Something went wrong: ' + _.get(error, 'error.message', 'Unknown Error, Likely Internet Connectivity Issue '));
+      return _throw('Something went wrong: ' + _.get(error, 'error.message',
+        'Unknown Error, Likely Internet Connectivity Issue, Please check your internet connection & try again'));
     }
     // The backend returned an unsuccessful response code.
     const body = _.get(error, 'error.body');
-    const errorMsg = (typeof body === 'string') ? body : 'Something went wrong. Please contact support!';
+    const errorMsg = (typeof body === 'string') ? body : 'Something went wrong. Please contact support via gracetrees@gmail.com!';
     // return an observable with a user-facing error message
     return _throw(errorMsg);
   },
