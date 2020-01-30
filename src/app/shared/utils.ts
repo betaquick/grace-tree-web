@@ -6,9 +6,9 @@ import * as LogRocket from 'logrocket';
 export const utils = {
   handleError(error: HttpErrorResponse) {
     LogRocket.captureException(error);
-    if (error.error instanceof ErrorEvent) {
+    if (error.name === 'NetworkError' || error.error instanceof ErrorEvent || error.error instanceof ProgressEvent) {
       // A client-side or network error occurred. Handle it accordingly.
-      return _throw('Something went wrong: ' + _.get(error, 'error.message', 'Unknown'));
+      return _throw('Something went wrong: ' + _.get(error, 'error.message', 'Unknown Error, Likely Internet Connectivity Issue '));
     }
     // The backend returned an unsuccessful response code.
     const body = _.get(error, 'error.body');
