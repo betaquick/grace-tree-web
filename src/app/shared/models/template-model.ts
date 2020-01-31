@@ -4,4 +4,5 @@ export class Template {
   message: string;
   createdAt: string;
   notificationType: string;
+  description?: string;
 }
