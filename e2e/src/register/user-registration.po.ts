@@ -1,34 +1,6 @@
-import { browser, by, element, $$ } from 'protractor';
+import { by, element, $$ } from 'protractor';
 
 export class UserRegistrationPage {
-
-  randomString = Math.random().toString(36).slice(-5);
-
-  newUser = {
-    firstName: 'Samuel',
-    lastName: 'Peters',
-    phone: '+12133734253',
-    phone2: '+12133734254',
-    phone3: '+12133734255',
-    email: `developer@gmail.com`,
-    email2: 'developer@stack.net',
-    password: '1q2w3e4r5t',
-    confirmPassword: '1q2w3e4r5t',
-    timeZone: 'America/Denver'
-  };
-
-  existingUser = {
-    firstName: 'Samuel',
-    lastName: 'Peters',
-    phone: '+12133734253',
-    phone2: '+12133734254',
-    phone3: '+12133734255',
-    email: 'developer@gmail.com',
-    email2: 'developer@stack.net',
-    password: '1q2w3e4r5t',
-    confirmPassword: '1q2w3e4r5t',
-  };
-
   wrongDetails = {
     firstName: 'Samuel',
     lastName: 'Peters',
@@ -42,13 +14,24 @@ export class UserRegistrationPage {
     timeZone: 'America/Denver'
   };
 
-  navigateTo() {
-    return browser.get('/user-registration');
-  }
-
   get registerButton() {
     return element(by.css('button[type="submit"]'));
   }
+
+  newUser = (i: number = 0) => ({
+    firstName: 'Samuel',
+    lastName: 'Peters',
+    phone: `+1213373425${i}`,
+    phone2: `+1213373426${i}`,
+    phone3: `+1213373427${i}`,
+    email: `developer${i}@skills.net`,
+    email2: `developer${i}@stack.net`,
+    password: '1q2w3e4r5t',
+    confirmPassword: '1q2w3e4r5t',
+    timeZone: 'America/Denver'
+  })
+
+
 
   errorMessage() {
     return element(by.css('.alert-warning strong'));
@@ -66,7 +49,7 @@ export class UserRegistrationPage {
     return $$('h3.text-left').first().getText();
   }
 
-  fillRegistrationForm(credentials = this.newUser) {
+  fillRegistrationForm(credentials = this.newUser()) {
     element(by.css('input[name="firstName"]')).sendKeys(credentials.firstName);
     element(by.css('input[name="lastName"]')).sendKeys(credentials.lastName);
     element(by.css('input[name="email"]')).sendKeys(credentials.email);

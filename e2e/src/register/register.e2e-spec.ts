@@ -44,40 +44,62 @@ describe('Register Page', function() {
 
       describe('succeeds', async () => {
         let userDeliveryPage: UserDeliveryPage;
+        let i = 0;
 
         beforeEach(() => {
-          userRegistrationPage.fillRegistrationForm(userRegistrationPage.newUser);
+          userRegistrationPage.fillRegistrationForm(userRegistrationPage.newUser(i));
 
           userRegistrationPage.registerButton.click();
           browser.waitForAngularEnabled(false);
+          browser.wait(ExpectedConditions.urlContains('/add-delivery'));
+
+          userDeliveryPage = new UserDeliveryPage();
+
+          i++;
         });
 
         it('should navigate to add delivery page', () => {
-          browser.wait(ExpectedConditions.urlContains('/add-delivery'));
           userDeliveryPage = new UserDeliveryPage();
           expect(browser.getCurrentUrl()).toContain('/user-registration/add-delivery');
+        });
 
+        describe('Delivery Page', () => {
 
-          describe('Delivery Info', () => {
-            it('should be on the right page', () => {
-              expect(userDeliveryPage.deliveryText()).toBe('Delivery Address');
+          beforeEach(() => {
+          });
+
+          it('should show delivery text', () => {
+            expect(userDeliveryPage.deliveryText()).toBe('Delivery Address');
+          });
+
+          describe('Invalid Delivery Registration', () => {
+
+          });
+
+          describe('Valid Delivery Registration', () => {
+            describe('succeeds', () => {
+
             });
 
-            it('should add delivery details', () => {
-              userDeliveryPage.fillDeliveryForm(userDeliveryPage.delivery);
+            describe('fails', () => {
 
-              userRegistrationPage.registerButton.click();
-              browser.waitForAngularEnabled(false);
-
-              browser.wait(ExpectedConditions.urlContains('/dashboard'));
             });
+          });
+
+          it('should add delivery details', () => {
+            userDeliveryPage.fillDeliveryForm(userDeliveryPage.delivery);
+
+            userRegistrationPage.registerButton.click();
+            browser.waitForAngularEnabled(false);
+
+            browser.wait(ExpectedConditions.urlContains('/agreement'));
           });
         });
       });
 
       describe('fails', () => {
         beforeEach(() => {
-          userRegistrationPage.fillRegistrationForm(userRegistrationPage.newUser);
+          userRegistrationPage.fillRegistrationForm(userRegistrationPage.newUser());
 
           userRegistrationPage.registerButton.click();
           browser.waitForAngularEnabled(false);
@@ -86,8 +108,9 @@ describe('Register Page', function() {
         it('should show email taken error', () => {
           browser.wait(ExpectedConditions.visibilityOf(userRegistrationPage.errorToast()));
 
-          expect(userRegistrationPage.errorToast().getText())
-            .toBe('Email address(es) developer@gmail.com, developer@stack.net have already been taken');
+          expect(userRegistrationPage.errorToast().getText()).toBe(
+            `Email address(es) ${userRegistrationPage.newUser().email}, ${userRegistrationPage.newUser().email2} have already been taken`
+          );
         });
       });
     });
