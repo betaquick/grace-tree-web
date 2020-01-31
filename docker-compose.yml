@@ -14,6 +14,7 @@ x-env:
     - ADMIN_EMAIL=betaquickdevs@gmail.com
     - DEBUG=grace-tree*
     - NODE_ENV=docker
+    - SKIP_EXTERNAL_APIS=true
 
 services:
   mysql:
