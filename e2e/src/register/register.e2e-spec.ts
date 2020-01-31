@@ -2,6 +2,7 @@ import { $, browser, ExpectedConditions } from 'protractor';
 import { RegisterPage } from './register.po';
 import { UserRegistrationPage } from './user-registration.po';
 import { UserDeliveryPage } from './user-delivery.po';
+import { UserAgreementPage } from './user-agreement.po';
 
 describe('Register Page', function() {
   let registerPage: RegisterPage;
@@ -15,6 +16,7 @@ describe('Register Page', function() {
 
   it('should show register text', () => {
     expect(registerPage.registerText()).toBe('Sign Up');
+
   });
 
   describe('User Registration Page', async () => {
@@ -25,10 +27,12 @@ describe('Register Page', function() {
       browser.wait(ExpectedConditions.visibilityOf($('h3.text-left')));
 
       userRegistrationPage = new UserRegistrationPage();
+
     });
 
     it('should show user registration text', () => {
       expect(userRegistrationPage.userRegistrationText()).toBe('User Registration');
+
     });
 
     describe('Invalid User Registration', () => {
@@ -37,7 +41,9 @@ describe('Register Page', function() {
 
         browser.wait(ExpectedConditions.visibilityOf(userRegistrationPage.validationErrorMessage()));
         expect(userRegistrationPage.validationErrorMessage().getText()).toContain('Password is not the same');
+
       });
+
     });
 
     describe('Valid User Registration', () => {
@@ -54,19 +60,15 @@ describe('Register Page', function() {
           browser.wait(ExpectedConditions.urlContains('/add-delivery'));
 
           userDeliveryPage = new UserDeliveryPage();
-
           i++;
+
         });
 
-        it('should navigate to add delivery page', () => {
-          userDeliveryPage = new UserDeliveryPage();
+        it('should navigate to delivery page', () => {
           expect(browser.getCurrentUrl()).toContain('/user-registration/add-delivery');
         });
 
         describe('Delivery Page', () => {
-
-          beforeEach(() => {
-          });
 
           it('should show delivery text', () => {
             expect(userDeliveryPage.deliveryText()).toBe('Delivery Address');
@@ -77,23 +79,47 @@ describe('Register Page', function() {
           });
 
           describe('Valid Delivery Registration', () => {
+
             describe('succeeds', () => {
+              let userAgreementPage: UserAgreementPage;
 
-            });
+              beforeEach(() => {
+                userDeliveryPage.fillDeliveryForm(userDeliveryPage.delivery);
 
-            describe('fails', () => {
+                userRegistrationPage.registerButton.click();
+                browser.waitForAngularEnabled(false);
 
+                browser.wait(ExpectedConditions.urlContains('/agreement'));
+
+                userAgreementPage = new UserAgreementPage();
+              });
+
+              it('should navigate to agreement page', () => {
+                expect(browser.getCurrentUrl()).toContain('/user-registration/agreement');
+              });
+
+              describe('User Agreement Page', () => {
+                it('should show agreement text', () => {
+                  expect(userAgreementPage.agreementText()).toBe('Terms and Conditions');
+                });
+
+                describe('Agree To Terms & Condition', () => {
+                  describe('succeeds', () => {
+                    it('should navigate to verification page', () => {
+                      userAgreementPage.fillAgreementForm(userRegistrationPage.newUser());
+                      userAgreementPage.agreeButton.click();
+
+                      browser.waitForAngularEnabled(false);
+                      browser.wait(ExpectedConditions.urlContains('/verification'));
+
+                      expect(browser.getCurrentUrl()).toContain('/verification');
+                    });
+                  });
+                });
+              });
             });
           });
 
-          it('should add delivery details', () => {
-            userDeliveryPage.fillDeliveryForm(userDeliveryPage.delivery);
-
-            userRegistrationPage.registerButton.click();
-            browser.waitForAngularEnabled(false);
-
-            browser.wait(ExpectedConditions.urlContains('/agreement'));
-          });
         });
       });
 
@@ -111,8 +137,10 @@ describe('Register Page', function() {
           expect(userRegistrationPage.errorToast().getText()).toBe(
             `Email address(es) ${userRegistrationPage.newUser().email}, ${userRegistrationPage.newUser().email2} have already been taken`
           );
+
         });
       });
+
     });
 
   });

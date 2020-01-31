@@ -8,7 +8,7 @@ export class LoginPage {
   };
 
   validCredentials = {
-    email: `developer@gmail.com`,
+    email: `developer0@skills.net`,
     password: '1q2w3e4r5t'
   };
 
