@@ -1,0 +1,78 @@
+version: '2.1'
+
+x-env:
+  &env_variables
+  environment:
+    - DB_HOST=mysql
+    - API_URL=http://localhost:8083
+    - WEB_URL=http://localhost:4206
+    - DB_USERNAME=root
+    - DB_PASSWORD=root
+    - DB_PORT=3306
+    - PORT=8083
+    - TZ=UTC
+    - ADMIN_EMAIL=betaquickdevs@gmail.com
+    - DEBUG=grace-tree*
+    - NODE_ENV=docker
+    - SKIP_EXTERNAL_APIS=true
+
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'grace_tree_db'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'root'
+      MYSQL_ROOT_PASSWORD: 'root'
+    ports:
+      - '3305:3306'
+    expose:
+      - '3306'
+      #volumes:
+      #- db:/var/lib/mysql
+    # Solves the Incorrect date value issue
+    command: --sql_mode="NO_ENGINE_SUBSTITUTION"
+
+  grace-tree-server:
+    image: betaquick/grace-tree-server:latest
+    <<: *env_variables
+    # Wait for mysql to be up and running before seeding && starting server
+    command: bash -c "./wait-for-it.sh mysql:3306 -t 60 -- npm run migrate && npm run seed && npm start"
+    ports:
+      - '8083:8083'
+    expose:
+      - '8083'
+    depends_on:
+      - mysql
+    links:
+      - mysql
+
+  grace-tree-web:
+    image: betaquick/grace-tree-web:latest
+    container_name: grace-tree-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # Wait for server to be up and running before serving angular app
+    command: bash -c "./wait-for-it.sh grace-tree-server:8083 -t 60 -- ng serve --host=0.0.0.0 --env=docker"
+    ports:
+      - '4206:4206'
+    expose:
+      - '4206'
+    links:
+      - grace-tree-server
+
+  grace-tree-web-test:
+    image: betaquick/grace-tree-web:latest
+    # Wait for server to be up, before running unit and protractor tests
+    command: >
+      bash -c "
+        ./wait-for-it.sh grace-tree-server:8083 -t 0 &&
+        ng e2e --env=docker
+      "
+    links:
+      - grace-tree-server
+
+  #volumes:
+  #db:

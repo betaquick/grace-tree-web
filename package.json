@@ -3,8 +3,10 @@
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 4206",
     "build": "ng build",
+    "update-protractor": "cd ./node_modules/protractor && npm i webdriver-manager@latest",
+    "update-webdriver": "node ./node_modules/protractor/bin/webdriver-manager update",
     "build:prod": "ng build --prod",
     "test": "ng test --sourcemaps=false",
     "test-coverage": "ng test --watch=false --code-coverage --source-map=false",
@@ -70,10 +72,10 @@
   "husky": {
     "hooks": {
       "pre-commit": "npm run lint"
-    }  
+    }
   },
   "devDependencies": {
-    "@angular/cli": "^1.7.3",
+    "@angular/cli": "^1.7.4",
     "@angular/compiler-cli": "^5.2.0",
     "@angular/language-service": "^5.2.0",
     "@types/jasmine": "2.8.9",

@@ -28,3 +28,16 @@ pipelines:
         - npm run build:prod
         # - sonar-scanner
         - aws s3 sync --delete dist/. s3://app.gracetreeservices.com
+    - step:
+        name: Build and push docker image to Amazon ECR
+        image: betaquick/angular:latest
+        caches:
+          - node
+        size: 2x
+        script:
+          - $(aws ecr get-login --no-include-email)
+          - docker build -f Dockerfile -t $DOCKER_WEB_IMAGE:latest .
+          - docker tag $DOCKER_WEB_IMAGE:latest $AWS_WEB_IMAGE:latest
+          - docker push $AWS_WEB_IMAGE:latest
+        services:
+          - docker
