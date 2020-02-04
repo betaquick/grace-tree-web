@@ -30,7 +30,7 @@ pipelines:
         - aws s3 sync --delete dist/. s3://app.gracetreeservices.com
     - step:
         name: Build and push docker image to Amazon ECR
-        image: betaquick/angular:latest
+        image: betaquick/awscli:bleeding
         caches:
           - node
         size: 2x
