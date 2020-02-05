@@ -19,13 +19,13 @@ pipelines:
   branches:
     hotfix/protractor:
       - step:
-          image: python:3.6
+          image: radiumrasheed/aws-compose:alpha
           caches:
             - node
             - pip
           size: 2x
           script:
-            - pip install docker-compose
+            - $(aws ecr get-login --no-include-email)
             - docker-compose -v
             - docker-compose up --exit-code-from grace-tree-web-test --abort-on-container-exit mysql grace-tree-web grace-tree-web-test grace-tree-server
           services:

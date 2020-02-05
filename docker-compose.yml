@@ -15,6 +15,11 @@ x-env:
     - DEBUG=grace-tree*
     - NODE_ENV=docker
     - SKIP_EXTERNAL_APIS=true
+    - TWILIO_ACCOUNT_SID=demo
+    - TWILIO_AUTH_TOKEN=demo
+    - TWILIO_PHONE_NUMBER=demo
+    - GOOGLE_MAP_KEY=demo
+    - SLACK_WEBHOOK_URL=demo
     - DOCKER_REGISTRY=810258319030.dkr.ecr.us-east-1.amazonaws.com/betaquick
 
 services:
