@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve --port 4206",
     "build": "ng build",
-    "update-protractor": "cd ./node_modules/protractor && npm i webdriver-manager@latest",
+    "postinstall": "cd ./node_modules/protractor && npm i webdriver-manager@latest",
     "update-webdriver": "node ./node_modules/protractor/bin/webdriver-manager update",
     "build:prod": "ng build --prod",
     "test": "ng test --sourcemaps=false",
