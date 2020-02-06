@@ -15,6 +15,11 @@ x-env:
     - DEBUG=grace-tree*
     - NODE_ENV=docker
     - SKIP_EXTERNAL_APIS=true
+    - TWILIO_ACCOUNT_SID=${TWILIO_ACCOUNT_SID}
+    - TWILIO_AUTH_TOKEN=${TWILIO_AUTH_TOKEN}
+    - TWILIO_PHONE_NUMBER=${TWILIO_PHONE_NUMBER}
+    - GOOGLE_MAP_KEY=${GOOGLE_MAP_KEY}
+    - SLACK_WEBHOOK_URL=${SLACK_WEBHOOK_URL}
 
 services:
   mysql:
@@ -35,7 +40,7 @@ services:
     command: --sql_mode="NO_ENGINE_SUBSTITUTION"
 
   grace-tree-server:
-    image: betaquick/grace-tree-server:latest
+    image: ${DOCKER_REGISTRY}/grace-tree-server:latest
     <<: *env_variables
     # Wait for mysql to be up and running before seeding && starting server
     command: bash -c "./wait-for-it.sh mysql:3306 -t 60 -- npm run migrate && npm run seed && npm start"
@@ -49,7 +54,7 @@ services:
       - mysql
 
   grace-tree-web:
-    image: betaquick/grace-tree-web:latest
+    image: ${DOCKER_REGISTRY}/grace-tree-web:latest
     container_name: grace-tree-web
     build:
       context: .
@@ -64,11 +69,13 @@ services:
       - grace-tree-server
 
   grace-tree-web-test:
-    image: betaquick/grace-tree-web:latest
+    image: ${DOCKER_REGISTRY}/grace-tree-web:latest
     # Wait for server to be up, before running unit and protractor tests
     command: >
       bash -c "
         ./wait-for-it.sh grace-tree-server:8083 -t 0 &&
+        npm run install-webdriver &&
+        npm run update-webdriver &&
         ng e2e --env=docker
       "
     links:

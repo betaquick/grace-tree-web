@@ -1,43 +1,46 @@
-# This is a sample build configuration for JavaScript.
-# Check our guides at https://confluence.atlassian.com/x/14UWN for more examples.
-# Only use spaces to indent your .yml configuration.
-# -----
-# You can specify a custom docker image from Docker Hub as your build environment.
+# Grace Tree Web
+
+definitions:
+  services:
+    docker:
+      memory: 4096
+
 image: betaquick/angular:latest
 
 pipelines:
   default:
-  - step:
-      caches:
-      - node
-      script: # Modify the commands below to build your repository.
-      - npm install
-      - npm run lint
-      - npm run build
-      # - npm run test-coverage
-      # - sonar-scanner
-  branches:
-    master:
     - step:
-        name: Deploy to S3
-        deployment: production
-        image: betaquick/awscli:bleeding
-        script:
-        - npm install
-        - npm run lint
-        - npm run build:prod
-        # - sonar-scanner
-        - aws s3 sync --delete dist/. s3://app.gracetreeservices.com
-    - step:
-        name: Build and push docker image to Amazon ECR
-        image: betaquick/awscli:bleeding
         caches:
           - node
-        size: 2x
-        script:
-          - $(aws ecr get-login --no-include-email)
-          - docker build -f Dockerfile -t $DOCKER_WEB_IMAGE:latest .
-          - docker tag $DOCKER_WEB_IMAGE:latest $AWS_WEB_IMAGE:latest
-          - docker push $AWS_WEB_IMAGE:latest
-        services:
-          - docker
+        script: # Modify the commands below to build your repository.
+          - npm install
+          - npm run lint
+          - npm run build
+
+  branches:
+    master:
+      - step:
+          name: build, test and push docker image to Amazon ECR
+          image: radiumrasheed/aws-compose:alpha
+          caches:
+            - node
+            - pip
+          size: 2x
+          script:
+            - $(aws ecr get-login --no-include-email)
+            - docker build -f Dockerfile -t $DOCKER_WEB_IMAGE:latest .
+            - docker tag $DOCKER_WEB_IMAGE:latest $AWS_WEB_IMAGE:latest
+            - docker-compose up --exit-code-from grace-tree-web-test --abort-on-container-exit mysql grace-tree-web grace-tree-web-test grace-tree-server
+            - docker push $AWS_WEB_IMAGE:latest
+          services:
+            - docker
+
+      - step:
+          name: deploy to S3
+          deployment: production
+          image: betaquick/awscli:bleeding
+          script:
+            - npm install
+            - npm run lint
+            - npm run build:prod
+            - aws s3 sync --delete dist/. s3://app.gracetreeservices.com
