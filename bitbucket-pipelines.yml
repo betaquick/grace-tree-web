@@ -33,7 +33,7 @@ pipelines:
           size: 2x
           script:
             - $(aws ecr get-login --no-include-email)
-            - docker-compose up --exit-code-from grace-tree-web-test --abort-on-container-exit mysql grace-tree-web grace-tree-web-test grace-tree-server
+            - docker-compose up --build --exit-code-from grace-tree-web-test --abort-on-container-exit mysql grace-tree-web grace-tree-web-test grace-tree-server
           services:
             - docker
     master:

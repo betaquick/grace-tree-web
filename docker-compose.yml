@@ -74,6 +74,7 @@ services:
     command: >
       bash -c "
         ./wait-for-it.sh grace-tree-server:8083 -t 0 &&
+        npm run install-webdriver &&
         npm run update-webdriver &&
         ng e2e --env=docker
       "
