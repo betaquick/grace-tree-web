@@ -25,7 +25,7 @@ const isPcodedRefPage = (pathname?: string): boolean => {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'ChipDump';
+  title = 'GraceTreeProducts';
   @SessionStorage() user: User = new User();
 
   constructor(private router: Router) { }
