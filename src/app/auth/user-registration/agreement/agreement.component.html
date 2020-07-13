@@ -6,7 +6,7 @@
         <div class="login-card card-block auth-body mr-auto ml-auto">
           <form class="md-float-material" #agreementForm="ngForm" (ngSubmit)="agreementForm.form.valid && correctName && allTermsAgreed && acceptAgreement()">
             <div class="text-center">
-              <h3 class="logo">ChipDump</h3>
+              <h3 class="logo">GraceTreeProducts</h3>
             </div>
             <div class="auth-box">
               <div class="row">
@@ -17,7 +17,7 @@
               <hr />
 
               <div class="terms">
-                <p>I understand that by signing up to participate in ChipDump, a totally free program, I am agreeing to the following:</p>
+                <p>I understand that by signing up to participate in GraceTreeProducts, a totally free program, I am agreeing to the following:</p>
                 <ol class="list-modal">
                   <ng-container *ngFor="let termAndCond of terms">
                       <div class="form-check">
@@ -33,7 +33,7 @@
               <div class="j-row">
                 <div class="form-group col-12">
                     <label for="" class="col-form-label">Your Name: </label>
-                    <input  
+                    <input
                     [(ngModel)]="clientName"
                     placeholder="[Your First Name] [Your Last Name]"
                     #nameRef="ngModel" [ngModelOptions]="{ 'standalone': true }"
@@ -45,11 +45,11 @@
               </div>
               <div class="j-row">
                 <div class="col-12">
-                  <div class="alert alert-danger mb-1" 
+                  <div class="alert alert-danger mb-1"
                     *ngIf="agreementForm.submitted && !allTermsAgreed">
                     Please accept <b>ALL</b> terms and condition agreement
                   </div>
-                  <div class="alert alert-danger mb-2" 
+                  <div class="alert alert-danger mb-2"
                     *ngIf="agreementForm.submitted && !correctName">
                     Please type your name in the space provided above "{{ expectedName }}"
                   </div>

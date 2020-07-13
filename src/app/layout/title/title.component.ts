@@ -25,7 +25,7 @@ export class TitleComponent {
           });
         } while (currentRoute);
         if (title !== undefined ) {
-          this.titleService.setTitle(title + ' | ChipDump Service');
+          this.titleService.setTitle(title + ' | GraceTreeProducts Service');
         }
       });
   }
