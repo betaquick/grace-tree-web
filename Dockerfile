@@ -10,10 +10,10 @@ RUN apt-get update && apt-get install -yq google-chrome-stable
 WORKDIR /app
 
 # install and cache app dependencies
-COPY package.json /app/package.json
+COPY package*.json /app/
 
 RUN npm install -g @angular/cli@1.7.4
-RUN npm install
+RUN npm ci
 
 # add app
 COPY . /app
